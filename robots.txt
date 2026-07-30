@@ -1,0 +1,6 @@
+# PLACEHOLDER: replace https://example.com with the real domain
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://example.com/sitemap.xml

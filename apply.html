@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Start a Review — April H. Stone P.A.</title>
+<meta name="description" content="Begin an attorney review of your merchant cash advance agreements. Submitting this form starts a conversation; it does not create an attorney-client relationship.">
+<!-- PLACEHOLDER: domain https://example.com -->
+<link rel="canonical" href="https://example.com/apply.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   April H. Stone P.A. — shared stylesheet (inlined on every page, intentionally)
+   Attorney-led MCA debt restructuring.
+   Device-aware light/dark, manual toggle overrides.
+   ============================================================ */
+
+/* ---------- TOKENS ---------- */
+:root{
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --radius:3px;
+  --maxw:1180px;
+  --danger:#b2382c;
+}
+[data-theme="light"]{
+  --bg:#faf8f4;
+  --surface:#ffffff;
+  --surface-2:#f3f0e9;
+  --ink:#1c1a15;
+  --text:#46423a;
+  --muted:#7c766a;
+  --line:#e4dfd3;
+  --line-strong:#d3ccbb;
+  --band:#1c1a15;
+  --band-ink:#fbf9f4;
+  --band-text:#cdc6b6;
+  --shadow:0 18px 44px -28px rgba(40,34,18,.40);
+  --nav-bg:rgba(250,248,244,.92);
+  --field:#ffffff;
+  --accent:#8a6c30;
+  --accent-deep:#6f5626;
+  --accent-soft:rgba(138,108,48,.09);
+  --green:#23402f;
+  --panel-ink:#ffffff;
+  --panel-text:#cdd6cb;
+  --panel-kicker:#b9c9bd;
+}
+[data-theme="dark"]{
+  --bg:#121110;
+  --surface:#1a1917;
+  --surface-2:#222119;
+  --ink:#f4f1e9;
+  --text:#c4bfb2;
+  --muted:#8a847a;
+  --line:#2d2b27;
+  --line-strong:#3a3833;
+  --band:#0c0b0a;
+  --band-ink:#f6f3ea;
+  --band-text:#bdb7a8;
+  --shadow:0 24px 56px -28px rgba(0,0,0,.7);
+  --nav-bg:rgba(18,17,16,.92);
+  --field:#16150f;
+  --accent:#bd9a52;
+  --accent-deep:#a5843f;
+  --accent-soft:rgba(189,154,82,.10);
+  --green:#1e3729;
+  --panel-ink:#f2f6f0;
+  --panel-text:#c3cfc2;
+  --panel-kicker:#a9bdaf;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{
+  font-family:var(--body);background:var(--bg);color:var(--text);
+  line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  font-size:16.5px;transition:background .25s ease,color .25s ease;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.wrap-narrow{max-width:780px}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---------- TYPE ---------- */
+h1,h2,h3,h4{
+  font-family:var(--display);color:var(--ink);font-weight:600;
+  line-height:1.12;letter-spacing:0;
+}
+h1{font-size:clamp(2.5rem,5.2vw,4.05rem);font-weight:500}
+h2{font-size:clamp(1.95rem,3.6vw,2.8rem);font-weight:500}
+h3{font-size:1.42rem}
+.kicker{
+  font-family:var(--body);font-weight:600;font-size:.74rem;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:1.1rem;
+}
+.lede{font-size:1.12rem;color:var(--text);max-width:62ch}
+.serif-em{font-family:var(--display);font-style:italic;color:var(--accent);font-weight:500}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--body);font-weight:600;font-size:.92rem;
+  letter-spacing:.02em;padding:.95rem 1.9rem;border:1px solid transparent;
+  border-radius:var(--radius);cursor:pointer;
+  transition:background .16s,color .16s,border-color .16s,transform .16s;
+}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn-primary:disabled{opacity:.6;cursor:default}
+.btn-outline{background:transparent;border-color:var(--line-strong);color:var(--ink)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-onband{background:transparent;border-color:rgba(255,255,255,.30);color:var(--band-ink)}
+.btn-onband:hover{border-color:var(--accent);color:var(--accent)}
+.btn-lg{padding:1.1rem 2.3rem;font-size:1rem}
+.btn-ghostlink{
+  font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-ghostlink:hover{color:var(--accent-deep)}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:.85rem 32px;
+  display:flex;align-items:center;gap:1.4rem;
+}
+.brand{display:flex;align-items:center;flex-shrink:0;min-width:0}
+.brand-lock{display:flex;flex-direction:column;line-height:1;min-width:0}
+.brand-logo{height:27px;width:auto;display:block}
+[data-theme="light"] .logo-light{display:none}
+[data-theme="dark"]  .logo-dark{display:none}
+.brand-sub{
+  font-family:var(--body);font-size:.6rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);margin-top:6px;padding-left:2px;
+  white-space:nowrap;
+}
+.footer-brand .brand-logo{height:38px}
+.footer-tag{
+  font-family:var(--display);font-style:italic;font-size:1.08rem;
+  color:var(--accent);margin-top:.75rem;
+}
+.nav-links{display:flex;gap:1.7rem;margin-left:auto;align-items:center}
+.nav-links a{font-size:.86rem;font-weight:500;color:var(--text);transition:color .15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-side{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.theme-btn{
+  width:38px;height:38px;border:1px solid var(--line-strong);background:transparent;
+  border-radius:var(--radius);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.theme-btn svg{width:17px;height:17px}
+.burger{
+  display:none;flex-direction:column;gap:5px;width:40px;height:40px;
+  background:none;border:none;cursor:pointer;align-items:center;justify-content:center;
+}
+.burger span{width:22px;height:2px;background:var(--ink);transition:.22s;display:block}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{
+  display:none;flex-direction:column;background:var(--surface);
+  border-bottom:1px solid var(--line);padding:.5rem 32px 1.3rem;
+}
+.nav-mobile a{
+  padding:.85rem .2rem;font-size:.95rem;font-weight:500;color:var(--text);
+  border-bottom:1px solid var(--line);
+}
+.nav-mobile a.active{color:var(--accent)}
+.nav-mobile a:last-of-type{border-bottom:none}
+.nav-mobile .btn{margin-top:1rem}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--band);color:var(--band-text);padding:11rem 0 6.5rem;position:relative}
+.hero h1{color:var(--band-ink);max-width:19ch;margin-bottom:1.6rem}
+.hero .lede{color:var(--band-text);font-size:1.15rem;max-width:56ch;margin-bottom:1rem}
+.hero-attr{
+  font-family:var(--display);font-style:italic;font-size:1.16rem;
+  color:var(--accent);margin-bottom:2.4rem;
+}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.hero-rule{height:1px;background:rgba(255,255,255,.12);margin-bottom:2.4rem}
+.hero-points{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem}
+.hero-point .hp-label{
+  font-family:var(--display);font-size:1.7rem;color:var(--accent);
+  font-weight:600;margin-bottom:.2rem;
+}
+.hero-point p{font-size:.92rem;color:var(--band-text)}
+
+/* page-header used on consultation / apply */
+.page-head{background:var(--band);color:var(--band-text);padding:9.5rem 0 4rem;text-align:center}
+.page-head h1{color:var(--band-ink);max-width:20ch;margin:0 auto 1.1rem;font-size:clamp(2.2rem,4.4vw,3.3rem)}
+.page-head p{color:var(--band-text);max-width:56ch;margin:0 auto;font-size:1.05rem}
+
+/* ---------- SECTION ---------- */
+.section{padding:6rem 0}
+.section-alt{background:var(--surface)}
+.section-head{max-width:64ch;margin-bottom:3.4rem}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.section-head p{margin-top:.9rem;color:var(--muted)}
+
+/* ---------- SERVICES ---------- */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.svc{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:2.1rem 1.9rem;transition:border-color .18s,transform .18s;
+}
+.section-alt .svc{background:var(--bg)}
+.svc:hover{border-color:var(--accent);transform:translateY(-3px)}
+.svc-no{
+  font-family:var(--display);font-size:1.15rem;color:var(--accent);
+  border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.svc-no .svc-tag{
+  font-family:var(--body);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+}
+.svc h3{margin-bottom:.5rem}
+.svc p{font-size:.96rem;color:var(--text)}
+.svc .svc-link{margin-top:1.1rem;display:inline-block}
+
+/* ---------- FEATURE BAND ---------- */
+.feature{display:grid;grid-template-columns:1.05fr .95fr;gap:3.6rem;align-items:center}
+.feature-panel{background:var(--green);color:var(--panel-text);border-radius:var(--radius);padding:2.6rem 2.4rem}
+.feature-panel .kicker{color:var(--panel-kicker)}
+.feature-panel h3{color:var(--panel-ink);font-size:1.7rem;margin-bottom:1rem}
+.feature-panel p{color:var(--panel-text);font-size:.98rem;margin-bottom:1.4rem}
+.feature-list{list-style:none;display:grid;gap:.9rem}
+.feature-list li{position:relative;padding-left:1.6rem;font-size:.95rem;color:var(--panel-text)}
+.feature-list li::before{
+  content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;
+  background:var(--accent);border-radius:50%;
+}
+.feature-text p{margin-bottom:1.1rem;color:var(--text)}
+.feature-text p strong{color:var(--ink);font-weight:600}
+
+/* ---------- PROCESS ---------- */
+.proc{display:grid;gap:0;border-top:1px solid var(--line)}
+.proc-step{
+  display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:start;
+  padding:2.1rem 0;border-bottom:1px solid var(--line);
+}
+.proc-no{
+  font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--accent);
+  line-height:1;width:2.4rem;padding-top:.15rem;
+}
+.proc-body h3{font-size:1.32rem;margin-bottom:.4rem}
+.proc-body p{font-size:.96rem;color:var(--text);max-width:66ch}
+.proc-when{
+  font-family:var(--body);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;padding-top:.55rem;text-align:right;
+}
+.proc-foot{
+  margin-top:2rem;font-size:.92rem;color:var(--muted);max-width:70ch;
+  padding-left:1.1rem;border-left:2px solid var(--accent);
+}
+
+/* ---------- ABOUT ---------- */
+.about{display:grid;grid-template-columns:.85fr 1.15fr;gap:3.6rem;align-items:start}
+.about-text p{margin-bottom:1.1rem;color:var(--text)}
+.about-text p strong{color:var(--ink);font-weight:600}
+.portrait{
+  border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);
+  padding:1rem 1rem .2rem;box-shadow:var(--shadow);position:sticky;top:112px;
+}
+.section-alt .portrait{background:var(--bg)}
+.portrait img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;background:#b9b4ac;
+  border:1px solid var(--line);border-radius:2px;
+}
+[data-theme="dark"] .portrait img{background:#4a4740}
+.portrait-cap{padding:1.05rem .3rem 1.2rem;border-top:1px solid var(--line);margin-top:1rem}
+.portrait-name{font-family:var(--display);font-size:1.55rem;font-weight:600;color:var(--ink);line-height:1.2}
+.portrait-role{
+  font-family:var(--body);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-top:.4rem;
+}
+.portrait-note{font-size:.9rem;color:var(--muted);margin-top:.8rem;line-height:1.55}
+
+
+/* ---------- WHY GRID ---------- */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.4rem 3rem}
+.why-item{display:grid;grid-template-columns:auto 1fr;gap:1.1rem}
+.why-icon{
+  width:42px;height:42px;flex-shrink:0;border:1px solid var(--accent);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--display);font-size:1.2rem;
+}
+.why-item h3{font-size:1.22rem;margin-bottom:.3rem}
+.why-item p{font-size:.95rem;color:var(--text)}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:0;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  cursor:pointer;padding:1.3rem .2rem;font-family:var(--display);
+  font-size:1.22rem;font-weight:600;color:var(--ink);
+  list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:1.4rem;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 .2rem 1.4rem;color:var(--text);font-size:.98rem;max-width:72ch}
+.faq details p + p{padding-top:0;margin-top:-.6rem}
+
+/* ---------- CTA BAND ---------- */
+.cta{background:var(--green);color:var(--panel-text);padding:5rem 0;text-align:center}
+.cta h2{color:var(--panel-ink);margin-bottom:.7rem}
+.cta p{color:var(--panel-text);margin:0 auto 2rem;max-width:52ch}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ---------- FOOTER ---------- */
+.footer{background:var(--surface);border-top:1px solid var(--line);padding:3.6rem 0 0}
+.footer-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2.8rem}
+.footer-brand p{color:var(--muted);font-size:.92rem;max-width:34ch;margin-top:1rem}
+.footer-col h5{
+  font-family:var(--body);font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.26rem 0}
+.footer-col a:hover{color:var(--accent)}
+.footer-base{
+  border-top:1px solid var(--line);padding:1.5rem 0 2rem;
+  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+}
+.footer-base span{color:var(--muted);font-size:.8rem}
+.footer-base .disclaimer{max-width:64ch;line-height:1.55}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .btn,.svc{transition:none}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:980px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .svc-grid{grid-template-columns:1fr}
+  .feature,.about{grid-template-columns:1fr;gap:2.4rem}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-points{gap:1.6rem}
+  .portrait{position:static;max-width:420px}
+  .proc-step{grid-template-columns:auto 1fr;gap:1.2rem}
+  .proc-when{grid-column:2;text-align:left;padding-top:.6rem}
+}
+@media(max-width:560px){
+  html{scroll-padding-top:74px}
+  .wrap{padding:0 22px}
+  .nav-inner{padding:.7rem 22px;gap:.6rem}
+  .nav-mobile{padding-left:22px;padding-right:22px}
+  .brand-sub{display:none}
+  .hero{padding:8rem 0 4rem}
+  .page-head{padding:7.5rem 0 3rem}
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn{width:100%}
+  .hero-points{grid-template-columns:1fr;gap:1.3rem}
+  .section{padding:3.6rem 0}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-base{flex-direction:column;gap:.6rem}
+  .feature-panel{padding:2rem 1.6rem}
+  .cta-actions .btn{width:100%}
+}
+
+/* ---------- APPLY PAGE ---------- */
+.apply-shell{padding:8.5rem 0 5rem}
+.apply-intro{max-width:70ch;margin:0 auto 3rem;text-align:center}
+.apply-intro h1{font-size:clamp(2.1rem,4vw,3rem);margin-bottom:.9rem}
+.apply-intro p{color:var(--muted);font-size:1.02rem}
+.apply-grid{display:grid;grid-template-columns:250px 1fr;gap:3rem;align-items:start}
+
+/* progress rail */
+.rail{position:sticky;top:108px;display:flex;flex-direction:column;gap:0}
+.rail-item{display:flex;gap:.85rem;align-items:flex-start;padding:.55rem 0;color:var(--muted);font-size:.9rem}
+.rail-dot{
+  width:26px;height:26px;flex-shrink:0;border-radius:50%;
+  border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:600;font-family:var(--body);background:var(--surface);transition:.2s;
+}
+.rail-item.done .rail-dot{background:var(--green);border-color:var(--green);color:#fff}
+.rail-item.active .rail-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.rail-item.active{color:var(--ink);font-weight:600}
+.rail-item.done{color:var(--text)}
+.rail-label{padding-top:3px;line-height:1.3}
+.rail-step{display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* form card */
+.form-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:2.6rem 2.6rem 2rem;box-shadow:var(--shadow);
+}
+.fstep{display:none}
+.fstep.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fstep.active{animation:none}}
+.fstep h2{font-size:1.8rem;margin-bottom:.3rem}
+.fstep .step-sub{color:var(--muted);font-size:.95rem;margin-bottom:1.8rem}
+.fld{display:block;margin-bottom:1.15rem}
+.fld-label{display:block;font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.fld-label .opt{color:var(--muted);font-weight:400}
+.fld input,.fld select,.fld textarea{
+  width:100%;padding:.8rem .9rem;background:var(--field);
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  color:var(--ink);font-family:var(--body);font-size:16px;
+  transition:border-color .15s,box-shadow .15s;
+}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+}
+.fld input.bad,.fld select.bad{border-color:var(--danger);box-shadow:0 0 0 3px rgba(178,56,44,.12)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ferr{display:none;color:var(--danger);font-size:.78rem;margin-top:.3rem;font-weight:500}
+.ferr.show{display:block}
+
+/* owners */
+.owners-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.dcard{
+  border:1px solid var(--line);background:var(--surface-2);border-radius:var(--radius);
+  padding:1.2rem 1.2rem .1rem;position:relative;
+}
+.dc-title{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.dc-title .opt{font-size:.65rem;letter-spacing:.06em;color:var(--muted);font-weight:500;margin-left:.4rem;text-transform:none}
+
+/* debt table */
+.dt-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2)}
+.dt{width:100%;border-collapse:collapse;min-width:760px}
+.dt th{
+  text-align:left;font-family:var(--body);font-size:.7rem;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);padding:.7rem .6rem;border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+.dt td{padding:.45rem .4rem;border-bottom:1px solid var(--line);vertical-align:middle}
+.dt tr:last-child td{border-bottom:none}
+.dt input,.dt select{
+  width:100%;min-width:110px;padding:.6rem .6rem;background:var(--field);
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  color:var(--ink);font-family:var(--body);font-size:15px;
+}
+.dt input:focus,.dt select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.dt input.bad{border-color:var(--danger)}
+.dt .dt-x{width:34px}
+.dt-x button{
+  width:28px;height:28px;border:1px solid var(--line-strong);background:var(--field);
+  border-radius:var(--radius);color:var(--muted);cursor:pointer;font-size:.8rem;line-height:1;
+}
+.dt-x button:hover{border-color:var(--danger);color:var(--danger)}
+.addbtn{
+  width:100%;padding:.8rem;background:transparent;border:1px dashed var(--line-strong);
+  border-radius:var(--radius);color:var(--accent);font-family:var(--body);
+  font-size:.86rem;font-weight:600;cursor:pointer;margin-top:.8rem;transition:.15s;
+}
+.addbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+/* dropzones */
+.drop-label{display:block;font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+.drop{
+  border:1.5px dashed var(--line-strong);background:var(--field);border-radius:var(--radius);
+  padding:1.7rem 1rem;text-align:center;cursor:pointer;transition:.15s;
+}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop:focus-visible{border-color:var(--accent)}
+.drop .drop-t{font-weight:600;color:var(--ink);font-size:.92rem}
+.drop .drop-h{color:var(--muted);font-size:.82rem;margin-top:.25rem}
+.drop input[type=file]{display:none}
+.flist{margin-top:.6rem;display:grid;gap:.4rem}
+.fchip{
+  display:flex;justify-content:space-between;align-items:center;gap:.6rem;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:.5rem .7rem;font-size:.82rem;color:var(--text);
+}
+.fchip button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1}
+.fchip button:hover{color:var(--danger)}
+.upload-block{margin-bottom:1.8rem}
+
+/* review */
+.rev-card{
+  border:1px solid var(--line);background:var(--surface-2);border-radius:var(--radius);
+  padding:1.1rem 1.2rem;margin-bottom:1rem;
+}
+.rev-card h4{
+  font-family:var(--body);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.6rem;
+}
+.rev-row{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;padding:.3rem 0;border-bottom:1px solid var(--line)}
+.rev-row:last-child{border-bottom:none}
+.rev-row .rk{color:var(--muted);flex-shrink:0}
+.rev-row .rv{color:var(--ink);font-weight:600;text-align:right;word-break:break-word}
+
+/* consent + signature */
+.consent{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:.9rem;font-size:.9rem;color:var(--text);line-height:1.55}
+.consent input{margin-top:.35rem;accent-color:var(--green);flex-shrink:0;width:16px;height:16px}
+.sig-name input{
+  font-family:var(--display);font-size:1.5rem;font-weight:500;font-style:italic;
+  padding:.7rem .9rem;
+}
+
+/* nav + notices */
+.form-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.notice{
+  display:flex;gap:.6rem;align-items:flex-start;margin-top:1.4rem;
+  padding:.9rem 1rem;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:var(--radius);font-size:.82rem;color:var(--muted);line-height:1.55;
+}
+.notice svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;color:var(--green)}
+
+/* success */
+.done-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:3.4rem 2.6rem;text-align:center;box-shadow:var(--shadow);max-width:560px;margin:0 auto;
+}
+.done-mark{
+  width:64px;height:64px;margin:0 auto 1.4rem;border-radius:50%;
+  background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+}
+.done-card h2{font-size:1.9rem;margin-bottom:.6rem}
+.done-card p{color:var(--muted);max-width:46ch;margin:0 auto .7rem}
+
+@media(max-width:980px){
+  .apply-grid{grid-template-columns:1fr;gap:1.8rem}
+  .rail{position:static;flex-direction:row;flex-wrap:wrap;gap:.4rem 1rem}
+  .rail-item{font-size:.8rem}
+  .rail-label .rail-step{display:none}
+  .owners-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .apply-shell{padding:6.5rem 0 3rem}
+  .form-card{padding:1.6rem 1.3rem 1.4rem}
+  .frow{grid-template-columns:1fr;gap:0}
+  .rail-label{display:none}
+  .rail{justify-content:space-between}
+  .form-nav .btn{flex:1}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="April H. Stone P.A. — home">
+      <span class="brand-lock">
+        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-sub">Counsel for Your Business</span>
+      </span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="consultation.html">Consultation</a>
+    </nav>
+    <div class="nav-side">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light or dark theme"></button>
+      <a href="apply.html" class="btn btn-primary" style="padding:.7rem 1.3rem">Start a Review</a>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#process">Process</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="consultation.html">Consultation</a>
+    <a href="apply.html" class="btn btn-primary">Start a Review</a>
+  </div>
+</header>
+
+<section class="apply-shell">
+  <div class="wrap">
+    <div class="apply-intro reveal">
+      <span class="kicker">Start a Review</span>
+      <h1>Send the firm what you signed.</h1>
+      <p>Five steps. The more complete the paperwork, the faster an attorney can tell you where you actually stand. Submitting this does not create an attorney-client relationship and commits you to nothing.</p>
+    </div>
+
+    <div class="apply-grid" id="applyGrid">
+      <!-- progress rail -->
+      <div class="rail" id="rail" aria-hidden="true">
+        <div class="rail-item active">
+          <div class="rail-dot">1</div>
+          <div class="rail-label"><span class="rail-step">Step One</span>Business Information</div>
+        </div>
+        <div class="rail-item">
+          <div class="rail-dot">2</div>
+          <div class="rail-label"><span class="rail-step">Step Two</span>Owner Information</div>
+        </div>
+        <div class="rail-item">
+          <div class="rail-dot">3</div>
+          <div class="rail-label"><span class="rail-step">Step Three</span>Debt Obligations</div>
+        </div>
+        <div class="rail-item">
+          <div class="rail-dot">4</div>
+          <div class="rail-label"><span class="rail-step">Step Four</span>Documents</div>
+        </div>
+        <div class="rail-item">
+          <div class="rail-dot">5</div>
+          <div class="rail-label"><span class="rail-step">Step Five</span>Review &amp; Sign</div>
+        </div>
+      </div>
+
+      <!-- form -->
+      <div class="form-card" id="formCard">
+
+        <!-- ===== STEP 1 — BUSINESS ===== -->
+        <section class="fstep active" data-step="1" aria-label="Business information">
+          <h2>Business Information</h2>
+          <p class="step-sub">Start with the entity that signed the advance agreements.</p>
+
+          <label class="fld">
+            <span class="fld-label">Legal Company Name</span>
+            <input type="text" name="businessName" required autocomplete="organization" placeholder="Doe Contracting LLC">
+            <span class="ferr">Required.</span>
+          </label>
+
+          <div class="frow">
+            <label class="fld">
+              <span class="fld-label">Entity Type</span>
+              <select name="entityType" required>
+                <option value="">Select</option>
+                <option>Sole Proprietorship</option>
+                <option>Partnership</option>
+                <option>LLC</option>
+                <option>S Corporation</option>
+                <option>C Corporation</option>
+                <option>Other</option>
+              </select>
+              <span class="ferr">Required.</span>
+            </label>
+            <label class="fld">
+              <span class="fld-label">Industry</span>
+              <input type="text" name="industry" required placeholder="Construction, trucking, restaurant…">
+              <span class="ferr">Required.</span>
+            </label>
+          </div>
+
+          <div class="frow">
+            <label class="fld">
+              <!-- EIN auto-formats to XX-XXXXXXX -->
+              <span class="fld-label">EIN / Tax ID</span>
+              <input type="text" name="ein" required inputmode="numeric" maxlength="10" placeholder="12-3456789">
+              <span class="ferr">Required.</span>
+            </label>
+            <label class="fld">
+              <span class="fld-label">Annual Revenue</span>
+              <select name="annualRevenue" required>
+                <option value="">Select</option>
+                <option>Under $250,000</option>
+                <option>$250,000 – $500,000</option>
+                <option>$500,000 – $1,000,000</option>
+                <option>$1,000,000 – $2,500,000</option>
+                <option>$2,500,000 – $5,000,000</option>
+                <option>Over $5,000,000</option>
+              </select>
+              <span class="ferr">Required.</span>
+            </label>
+          </div>
+
+          <div class="frow">
+            <label class="fld">
+              <span class="fld-label">Time in Business</span>
+              <select name="timeInBusiness" required>
+                <option value="">Select</option>
+                <option>Under 6 months</option>
+                <option>6 – 12 months</option>
+                <option>1 – 2 years</option>
+                <option>2 – 5 years</option>
+                <option>5 – 10 years</option>
+                <option>Over 10 years</option>
+              </select>
+              <span class="ferr">Required.</span>
+            </label>
+            <label class="fld">
+              <!-- phone auto-formats to (XXX) XXX-XXXX -->
+              <span class="fld-label">Business Phone</span>
+              <input type="tel" name="bizPhone" required inputmode="numeric" maxlength="14" autocomplete="tel" placeholder="(555) 123-4567">
+              <span class="ferr">Enter a 10-digit phone number.</span>
+            </label>
+          </div>
+
+          <label class="fld">
+            <span class="fld-label">Business Address</span>
+            <input type="text" name="bizAddress" required autocomplete="street-address" placeholder="140 Main St, Suite 3, Boca Raton, FL 33432">
+            <span class="ferr">Required.</span>
+          </label>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" id="backBtn">Back</button>
+            <button type="button" class="btn btn-primary" id="nextBtn">Continue</button>
+          </div>
+        </section>
+
+        <!-- ===== STEP 2 — OWNERS ===== -->
+        <section class="fstep" data-step="2" aria-label="Owner information">
+          <h2>Owner Information</h2>
+          <p class="step-sub">The first owner is required. Add the others only if they signed a guaranty or hold an ownership stake.</p>
+
+          <div class="owners-grid" id="ownersGrid">
+            <!-- Owner cards are generated by JS so the four stay identical.
+                 Field names follow own1Name, own1Pct, own1Dob, own1Ssn, own1Phone,
+                 own1Address, own1Email … through own4. -->
+          </div>
+
+          <div class="notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.4v5M12 7.9h.01"/></svg>
+            <span>The SSN and date of birth are here because most advance agreements are backed by a personal guaranty, and the review has to establish who is personally exposed. Only the last four digits of the SSN leave this form.</span>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- ===== STEP 3 — DEBT ===== -->
+        <section class="fstep" data-step="3" aria-label="Current debt obligations">
+          <h2>Current Debt Obligations</h2>
+          <p class="step-sub">List every open advance, including the ones taken to cover other advances. One row each.</p>
+
+          <div class="dt-scroll">
+            <table class="dt">
+              <thead>
+                <tr>
+                  <th scope="col">Funder Name</th>
+                  <th scope="col">Original Amount</th>
+                  <th scope="col">Current Balance</th>
+                  <th scope="col">Regular Payment</th>
+                  <th scope="col">Payment Frequency</th>
+                  <th scope="col">Ending Date</th>
+                  <th scope="col" class="dt-x"><span class="sr-only" style="position:absolute;left:-9999px">Remove row</span></th>
+                </tr>
+              </thead>
+              <tbody id="debtBody"></tbody>
+            </table>
+          </div>
+          <span class="ferr" id="debtErr" style="margin-top:.6rem">Add at least one advance, with a funder name.</span>
+          <button type="button" class="addbtn" id="addRow">+ Add Row</button>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- ===== STEP 4 — DOCUMENTS ===== -->
+        <section class="fstep" data-step="4" aria-label="Document upload">
+          <h2>Document Upload</h2>
+          <p class="step-sub">This is the step that decides how fast the review moves. Send everything you have; we will tell you what is missing.</p>
+
+          <!-- NOTE: the drop zone is a <div>, not a <label>. A label around a hidden
+               file input plus a JS click handler makes the picker fire twice. -->
+          <div class="upload-block">
+            <span class="drop-label">Advance Agreements <span class="opt" style="color:var(--muted);font-weight:400">&mdash; one per open position</span></span>
+            <div class="drop" data-drop="agreements" tabindex="0" role="button" aria-label="Upload advance agreements">
+              <div class="drop-t">Drop files here, or click to choose</div>
+              <div class="drop-h">PDF, JPG or PNG &middot; multiple files welcome</div>
+              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+            </div>
+            <div class="flist" data-files="agreements"></div>
+          </div>
+
+          <div class="upload-block">
+            <span class="drop-label">Bank Statements <span class="opt" style="color:var(--muted);font-weight:400">&mdash; last 3 to 6 months, business account</span></span>
+            <div class="drop" data-drop="statements" tabindex="0" role="button" aria-label="Upload bank statements">
+              <div class="drop-t">Drop files here, or click to choose</div>
+              <div class="drop-h">PDF, JPG or PNG &middot; multiple files welcome</div>
+              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.csv">
+            </div>
+            <div class="flist" data-files="statements"></div>
+          </div>
+
+          <div class="notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.4v5M12 7.9h.01"/></svg>
+            <span>Don't have the agreements to hand? Continue anyway. The firm will follow up and can request copies from the funders directly.</span>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- ===== STEP 5 — REVIEW & SIGN ===== -->
+        <section class="fstep" data-step="5" aria-label="Review, consent and signature">
+          <h2>Review, Consent &amp; Signature</h2>
+          <p class="step-sub">Check what you have entered, then sign to send it to the firm.</p>
+
+          <div id="reviewBox"></div>
+
+          <h3 style="font-size:1.15rem;margin:1.8rem 0 .9rem">Consent</h3>
+          <label class="consent">
+            <input type="checkbox" id="c1">
+            <span>The information above is accurate and complete to the best of my knowledge.</span>
+          </label>
+          <label class="consent">
+            <input type="checkbox" id="c2">
+            <span>I authorize the firm to review the agreements and statements I have provided, and to contact the funders listed above on my behalf where I direct it.</span>
+          </label>
+          <label class="consent">
+            <input type="checkbox" id="c3">
+            <span>I understand this submission begins a review, does not create an attorney-client relationship, and that no outcome, reduction, or restructuring is promised or guaranteed.</span>
+          </label>
+          <span class="ferr" id="consentErr">Please check all three boxes to continue.</span>
+
+          <h3 style="font-size:1.15rem;margin:1.8rem 0 .9rem">Electronic Signature</h3>
+          <div class="frow">
+            <label class="fld sig-name">
+              <span class="fld-label">Type your full legal name</span>
+              <input type="text" name="sigName" placeholder="Jane Doe" autocomplete="name">
+              <span class="ferr">Type your name to sign.</span>
+            </label>
+            <label class="fld">
+              <span class="fld-label">Date</span>
+              <input type="text" name="sigDate" id="sigDate" readonly>
+            </label>
+          </div>
+
+          <div class="notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.4v5M12 7.9h.01"/></svg>
+            <span>Typing your name above is an electronic signature and carries the same weight as a written one.</span>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Submit for Review</button>
+          </div>
+        </section>
+
+      </div><!-- /form-card -->
+
+      <!-- success -->
+      <div class="done-card" id="doneCard" style="display:none">
+        <div class="done-mark" aria-hidden="true">&#10003;</div>
+        <h2>Received.</h2>
+        <p>Your file is with the firm. An attorney will review what you sent and reach out, usually within one business day, to confirm what is missing and set up a call.</p>
+        
+        <p>If the situation is urgent, call <a href="tel:+17607175184" style="color:var(--accent);font-weight:600">(760) 717-5184</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand">
+        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+      </a>
+      <p class="footer-tag">Counsel for Your Business</p>
+      <p>An attorney-led firm working exclusively on merchant cash advance debt: reading the agreements, telling you where you stand, and negotiating for terms your cash flow can survive.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <a href="index.html#services">Legal Review &amp; Opinion</a>
+      <a href="index.html#services">Funder Negotiation</a>
+      <a href="index.html#services">Restructured Terms</a>
+      <a href="apply.html">Start a Review</a>
+    </div>
+    <div class="footer-col">
+      <h5>Firm</h5>
+      <a href="index.html#about">About April Stone</a>
+      <a href="index.html#process">The Process</a>
+      <a href="index.html#faq">Common Questions</a>
+      <a href="consultation.html">Consultation</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <a href="tel:+17607175184">(760) 717-5184</a>
+      <a href="mailto:contact@example.com">contact@example.com</a>
+      <span>Mon&ndash;Fri, 9am to 6pm ET</span>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span>&copy; 2026 April H. Stone P.A.. All rights reserved.</span>
+    <span class="disclaimer">April H. Stone P.A. is a law firm providing legal services in connection with merchant cash advance agreements. Nothing on this site is legal advice, and no attorney-client relationship is formed by using this site or submitting a form. Outcomes depend on the specific agreements, the funder, and the facts of the business; no result is promised or guaranteed. Prior results do not predict future outcomes.</span>
+  </div>
+</footer>
+
+<script>
+/* ===== SHARED SITE SCRIPT — theme, menu, reveal, scrollspy =====
+   No localStorage / sessionStorage anywhere. Theme override lives in a JS variable
+   for the life of the page, which is why it resets on navigation — by design. */
+(function(){
+  "use strict";
+  var root = document.documentElement;
+
+  /* ---- THEME: follow the device, allow a manual override ---- */
+  var SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 1.8v3M12 19.2v3M4.5 4.5l2 2M17.5 17.5l2 2M1.8 12h3M19.2 12h3M4.5 19.5l2-2M17.5 6.5l2-2"/></svg>';
+  var MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  var themeBtn = document.getElementById('themeBtn');
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var manual = null; /* null = still following the device */
+
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    themeBtn.innerHTML = (theme === 'dark') ? SUN : MOON;
+    themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  function currentTheme(){ return manual || (mq.matches ? 'dark' : 'light'); }
+  applyTheme(currentTheme());
+  mq.addEventListener('change', function(){ if(manual === null) applyTheme(currentTheme()); });
+  themeBtn.addEventListener('click', function(){
+    manual = (currentTheme() === 'dark') ? 'light' : 'dark';
+    applyTheme(manual);
+  });
+
+  /* ---- MOBILE MENU ---- */
+  var burger = document.getElementById('burger');
+  var navMobile = document.getElementById('navMobile');
+  function closeMenu(){
+    navMobile.style.display = 'none';
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    navMobile.style.display = 'flex';
+    burger.classList.add('open');
+    burger.setAttribute('aria-expanded','true');
+  }
+  burger.addEventListener('click', function(){
+    if(burger.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  navMobile.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && burger.classList.contains('open')){ closeMenu(); burger.focus(); }
+  });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 980) closeMenu(); });
+
+  /* ---- REVEAL ON SCROLL ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12});
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- SCROLLSPY — light the nav link whose section is in view.
+         "Home" is active when we are above every section.
+         Silently no-ops on pages without these sections. ---- */
+  var sectionIds = ['services','process','about','faq'];
+  var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  if(!sections.length) return;
+
+  var navAll = document.querySelectorAll('.nav-links a, .nav-mobile a');
+  function setActive(target){
+    navAll.forEach(function(a){
+      a.classList.remove('active');
+      var href = a.getAttribute('href') || '';
+      if(target === 'home'){
+        if(/^(index\.html|\.\/|\/|)$/.test(href)) a.classList.add('active');
+      } else if(href.indexOf('#' + target) !== -1){
+        a.classList.add('active');
+      }
+    });
+  }
+  var visible = {};
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ visible[en.target.id] = en.isIntersecting; });
+    var current = null;
+    for(var i = 0; i < sections.length; i++){
+      if(visible[sections[i].id]){ current = sections[i].id; break; }
+    }
+    setActive(current || 'home');
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+  sections.forEach(function(s){ spy.observe(s); });
+  setActive('home');
+})();
+</script>
+
+<script>
+/* ===== APPLY — 5-step intake ===== */
+(function(){
+  "use strict";
+  var TOTAL = 5, current = 1;
+  var card     = document.getElementById('formCard');
+  var railItems= document.getElementById('rail').querySelectorAll('.rail-item');
+  var doneCard = document.getElementById('doneCard');
+  var uploaded = [];   /* {zone, name, size} — file metadata only, in a plain JS variable */
+
+  /* ---------- owner cards ---------- */
+  var ORDINALS = ['First','Second','Third','Fourth'];
+  function ownerCard(i){
+    var req = (i === 1);
+    var r   = req ? ' required' : '';
+    return '' +
+    '<div class="dcard">' +
+      '<div class="dc-title">' + ORDINALS[i-1] + ' Owner' +
+        (req ? '' : '<span class="opt">optional</span>') + '</div>' +
+      '<label class="fld"><span class="fld-label">Ownership %</span>' +
+        '<input type="text" name="own'+i+'Pct" inputmode="numeric" maxlength="3" placeholder="51"'+r+'>' +
+        '<span class="ferr">Required.</span></label>' +
+      '<label class="fld"><span class="fld-label">Full Legal Name</span>' +
+        '<input type="text" name="own'+i+'Name" autocomplete="name" placeholder="Jane Doe"'+r+'>' +
+        '<span class="ferr">Required.</span></label>' +
+      '<div class="frow">' +
+        '<label class="fld"><span class="fld-label">Date of Birth</span>' +
+          '<input type="date" name="own'+i+'Dob"'+r+'>' +
+          '<span class="ferr">Required.</span></label>' +
+        '<label class="fld"><span class="fld-label">SSN</span>' +
+          '<input type="text" name="own'+i+'Ssn" inputmode="numeric" maxlength="11" placeholder="123-45-6789"'+r+'>' +
+          '<span class="ferr">Enter 9 digits.</span></label>' +
+      '</div>' +
+      '<label class="fld"><span class="fld-label">Phone</span>' +
+        '<input type="tel" name="own'+i+'Phone" inputmode="numeric" maxlength="14" autocomplete="tel" placeholder="(555) 123-4567"'+r+'>' +
+        '<span class="ferr">Enter a 10-digit phone number.</span></label>' +
+      '<label class="fld"><span class="fld-label">Home Address</span>' +
+        '<input type="text" name="own'+i+'Address" autocomplete="street-address" placeholder="12 Elm St, Boca Raton, FL 33432"'+r+'>' +
+        '<span class="ferr">Required.</span></label>' +
+      '<label class="fld"><span class="fld-label">Email</span>' +
+        '<input type="email" name="own'+i+'Email" autocomplete="email" placeholder="jane@business.com"'+r+'>' +
+        '<span class="ferr">Enter a valid email address.</span></label>' +
+    '</div>';
+  }
+  (function buildOwners(){
+    var html = '';
+    for(var i = 1; i <= 4; i++) html += ownerCard(i);
+    document.getElementById('ownersGrid').innerHTML = html;
+  })();
+
+  /* ---------- debt table ---------- */
+  var FREQ = ['Daily','Weekly','Bi-weekly','Monthly'];
+  function addRow(){
+    var tr = document.createElement('tr');
+    var freqOpts = '<option value="">Select</option>' + FREQ.map(function(f){ return '<option>' + f + '</option>'; }).join('');
+    tr.innerHTML =
+      '<td><input type="text" data-k="funder" placeholder="Funder name"></td>' +
+      '<td><input type="text" data-k="originalAmt" inputmode="decimal" placeholder="$50,000"></td>' +
+      '<td><input type="text" data-k="balance" inputmode="decimal" placeholder="$38,400"></td>' +
+      '<td><input type="text" data-k="payment" inputmode="decimal" placeholder="$1,100"></td>' +
+      '<td><select data-k="frequency">' + freqOpts + '</select></td>' +
+      '<td><input type="date" data-k="endDate"></td>' +
+      '<td class="dt-x"><button type="button" aria-label="Remove this row">&#10005;</button></td>';
+    tr.querySelector('.dt-x button').addEventListener('click', function(){ tr.remove(); });
+    document.getElementById('debtBody').appendChild(tr);
+  }
+  document.getElementById('addRow').addEventListener('click', addRow);
+  addRow(); /* start with one empty row */
+
+  function debtRows(){
+    var rows = [];
+    document.querySelectorAll('#debtBody tr').forEach(function(tr){
+      var row = {}, any = false;
+      tr.querySelectorAll('[data-k]').forEach(function(f){
+        var v = f.value.trim();
+        if(v){ row[f.dataset.k] = v; any = true; }
+      });
+      if(any) rows.push(row);
+    });
+    return rows;
+  }
+
+  /* ---------- auto-formatting ---------- */
+  function fmtSsn(v){
+    var d = String(v || '').replace(/\D/g,'').slice(0,9);
+    if(d.length > 5) return d.slice(0,3) + '-' + d.slice(3,5) + '-' + d.slice(5);
+    if(d.length > 3) return d.slice(0,3) + '-' + d.slice(3);
+    return d;
+  }
+  function fmtEin(v){
+    var d = String(v || '').replace(/\D/g,'').slice(0,9);
+    return (d.length > 2) ? d.slice(0,2) + '-' + d.slice(2) : d;
+  }
+  function fmtPhone(v){
+    var d = String(v || '').replace(/\D/g,'').slice(0,10);
+    if(d.length > 6) return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+    if(d.length > 3) return '(' + d.slice(0,3) + ') ' + d.slice(3);
+    if(d.length > 0) return '(' + d;
+    return '';
+  }
+  card.addEventListener('input', function(e){
+    var t = e.target;
+    if(!t.name) return;
+    if(/Ssn$/.test(t.name))            t.value = fmtSsn(t.value);
+    else if(t.name === 'ein')          t.value = fmtEin(t.value);
+    else if(/Phone$/.test(t.name))     t.value = fmtPhone(t.value);
+    else if(/Pct$/.test(t.name))       t.value = t.value.replace(/\D/g,'').slice(0,3);
+  });
+
+  /* ---------- validation ---------- */
+  function badField(f, on){
+    f.classList.toggle('bad', on);
+    var wrap = f.closest('.fld');
+    if(wrap){
+      var err = wrap.querySelector('.ferr');
+      if(err) err.classList.toggle('show', on);
+    }
+  }
+  card.addEventListener('input', function(e){
+    if(e.target.matches('input,select,textarea')) badField(e.target, false);
+  });
+  document.querySelectorAll('#c1,#c2,#c3').forEach(function(b){
+    b.addEventListener('change', function(){
+      document.getElementById('consentErr').classList.remove('show');
+    });
+  });
+
+  function validate(n){
+    var step = card.querySelector('.fstep[data-step="' + n + '"]');
+    var ok = true, firstBad = null;
+
+    if(n === 3){
+      var rows = debtRows();
+      var hasFunder = rows.some(function(r){ return !!r.funder; });
+      document.getElementById('debtErr').classList.toggle('show', !hasFunder);
+      return hasFunder;
+    }
+
+    if(n === 5){
+      var allChecked = ['c1','c2','c3'].every(function(id){ return document.getElementById(id).checked; });
+      document.getElementById('consentErr').classList.toggle('show', !allChecked);
+      var sig = step.querySelector('input[name="sigName"]');
+      var sigBad = sig.value.trim().length < 2;
+      badField(sig, sigBad);
+      if(sigBad) sig.focus();
+      return allChecked && !sigBad;
+    }
+
+    step.querySelectorAll('input[required],select[required]').forEach(function(f){
+      var v = f.value.trim();
+      var bad = !v;
+      if(!bad && f.type === 'email')      bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      if(!bad && f.type === 'tel')        bad = v.replace(/\D/g,'').length !== 10;
+      if(!bad && /Ssn$/.test(f.name))     bad = v.replace(/\D/g,'').length !== 9;
+      if(!bad && f.name === 'ein')        bad = v.replace(/\D/g,'').length !== 9;
+      badField(f, bad);
+      if(bad){ ok = false; if(!firstBad) firstBad = f; }
+    });
+    if(firstBad) firstBad.focus();
+    return ok;
+  }
+
+  /* ---------- step navigation ---------- */
+  function show(n){
+    current = n;
+    card.querySelectorAll('.fstep').forEach(function(s){
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    railItems.forEach(function(r, i){
+      r.classList.remove('done','active');
+      if(i < n - 1) r.classList.add('done');
+      else if(i === n - 1) r.classList.add('active');
+    });
+    if(n === 5) buildReview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  card.addEventListener('click', function(e){
+    var next = e.target.closest('[data-next], #nextBtn');
+    var back = e.target.closest('[data-back], #backBtn');
+    if(next){
+      if(!validate(current)) return;
+      if(current === TOTAL) submitForm();
+      else show(current + 1);
+    } else if(back){
+      if(current > 1) show(current - 1);
+    }
+  });
+  document.getElementById('backBtn').style.visibility = 'hidden'; /* step 1 has nowhere to go back to */
+
+  /* ---------- uploads ----------
+     A <div> wrapper, an explicit input.click(), and stopPropagation on the input:
+     wrapping this in a <label> would forward the click natively as well and the
+     picker would open twice. */
+  document.querySelectorAll('.drop').forEach(function(zone){
+    var key   = zone.dataset.drop;
+    var input = zone.querySelector('input[type=file]');
+    var list  = document.querySelector('.flist[data-files="' + key + '"]');
+
+    zone.addEventListener('click', function(){ input.click(); });
+    zone.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); input.click(); }
+    });
+    input.addEventListener('click', function(e){ e.stopPropagation(); });
+    input.addEventListener('change', function(){ add(input.files); });
+
+    zone.addEventListener('dragover',  function(e){ e.preventDefault(); zone.classList.add('over'); });
+    zone.addEventListener('dragleave', function(){ zone.classList.remove('over'); });
+    zone.addEventListener('drop', function(e){
+      e.preventDefault();
+      zone.classList.remove('over');
+      add(e.dataTransfer.files);
+    });
+
+    function add(files){
+      Array.prototype.forEach.call(files, function(f){
+        var rec = { zone: key, name: f.name, size: f.size };
+        uploaded.push(rec);
+
+        var kb   = Math.max(1, Math.round(f.size / 1024));
+        var chip = document.createElement('div');
+        chip.className = 'fchip';
+        chip.innerHTML = '<span>' + esc(f.name) + ' &middot; ' + kb + ' KB</span>' +
+                         '<button type="button" aria-label="Remove ' + esc(f.name) + '">&#10005;</button>';
+        chip.querySelector('button').addEventListener('click', function(){
+          uploaded.splice(uploaded.indexOf(rec), 1);
+          chip.remove();
+          input.value = ''; /* so the same file can be picked again */
+        });
+        list.appendChild(chip);
+      });
+      input.value = '';
+    }
+  });
+
+  /* ---------- review ---------- */
+  function val(name){
+    var f = card.querySelector('[name="' + name + '"]');
+    var v = f && f.value ? f.value.trim() : '';
+    return v || '\u2014';
+  }
+  function revRow(k, v){
+    return '<div class="rev-row"><span class="rk">' + k + '</span><span class="rv">' + esc(v) + '</span></div>';
+  }
+  function buildReview(){
+    var rows = debtRows();
+    var owners = 0;
+    for(var i = 1; i <= 4; i++){ if(val('own' + i + 'Name') !== '\u2014') owners++; }
+
+    var h = '';
+    h += '<div class="rev-card"><h4>Business</h4>' +
+         revRow('Company', val('businessName')) +
+         revRow('Entity Type', val('entityType')) +
+         revRow('Industry', val('industry')) +
+         revRow('EIN / Tax ID', val('ein')) +
+         revRow('Annual Revenue', val('annualRevenue')) +
+         revRow('Time in Business', val('timeInBusiness')) +
+         revRow('Phone', val('bizPhone')) +
+         revRow('Address', val('bizAddress')) + '</div>';
+
+    h += '<div class="rev-card"><h4>Owners</h4>' +
+         revRow('Primary Owner', val('own1Name')) +
+         revRow('Ownership', val('own1Pct') === '\u2014' ? '\u2014' : val('own1Pct') + '%') +
+         revRow('Email', val('own1Email')) +
+         revRow('Phone', val('own1Phone')) +
+         revRow('Owners Listed', String(owners)) + '</div>';
+
+    var debtHtml = rows.length
+      ? rows.map(function(r){
+          return revRow(r.funder || 'Unnamed funder',
+            (r.balance || '\u2014') + ' balance' + (r.payment ? ' \u00b7 ' + r.payment + ' ' + (r.frequency || '').toLowerCase() : ''));
+        }).join('')
+      : revRow('Advances listed', 'None');
+    h += '<div class="rev-card"><h4>Debt Obligations</h4>' + debtHtml + '</div>';
+
+    var agr = uploaded.filter(function(u){ return u.zone === 'agreements'; }).length;
+    var stm = uploaded.filter(function(u){ return u.zone === 'statements'; }).length;
+    h += '<div class="rev-card"><h4>Documents</h4>' +
+         revRow('Advance agreements', agr ? agr + ' file' + (agr === 1 ? '' : 's') : 'None attached') +
+         revRow('Bank statements', stm ? stm + ' file' + (stm === 1 ? '' : 's') : 'None attached') + '</div>';
+
+    document.getElementById('reviewBox').innerHTML = h;
+  }
+
+  /* ---------- submit ---------- */
+  function submitForm(){
+    var btn = card.querySelector('.fstep[data-step="5"] [data-next]');
+    var data = { formType: 'restructuring' };
+
+    card.querySelectorAll('[name]').forEach(function(f){
+      if(f.type === 'checkbox' || f.type === 'file') return;
+      var v = f.value ? f.value.trim() : '';
+      if(v) data[f.name] = v;
+    });
+
+    var rows = debtRows();
+    if(rows.length) data.debtRows = rows;
+    if(uploaded.length) data.documents = uploaded.map(function(u){ return { zone: u.zone, name: u.name }; });
+    data.consent = 'All three consents affirmed';
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(r){ return r.json().catch(function(){ return { error: 'Unexpected response from the server.' }; }); })
+    .then(function(resp){
+      if(resp && resp.ok){
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('rail').style.display = 'none';
+        document.getElementById('applyGrid').style.gridTemplateColumns = '1fr';
+        doneCard.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert('That did not send: ' + ((resp && resp.error) || 'Unknown error') + '\n\nPlease try again, or call the firm directly.');
+        btn.disabled = false;
+        btn.textContent = 'Submit for Review';
+      }
+    })
+    .catch(function(){
+      alert('The submission could not be sent — check your connection and try again, or call the firm directly.');
+      btn.disabled = false;
+      btn.textContent = 'Submit for Review';
+    });
+  }
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+
+  /* ---------- init ---------- */
+  document.getElementById('sigDate').value =
+    new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  show(1);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Schedule a Consultation — April H. Stone P.A.</title>
+<meta name="description" content="Speak with an attorney about your merchant cash advance debt. The first conversation is free, carries no obligation, and ends with a straight answer.">
+<!-- PLACEHOLDER: domain https://example.com -->
+<link rel="canonical" href="https://example.com/consultation.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   April H. Stone P.A. — shared stylesheet (inlined on every page, intentionally)
+   Attorney-led MCA debt restructuring.
+   Device-aware light/dark, manual toggle overrides.
+   ============================================================ */
+
+/* ---------- TOKENS ---------- */
+:root{
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --radius:3px;
+  --maxw:1180px;
+  --danger:#b2382c;
+}
+[data-theme="light"]{
+  --bg:#faf8f4;
+  --surface:#ffffff;
+  --surface-2:#f3f0e9;
+  --ink:#1c1a15;
+  --text:#46423a;
+  --muted:#7c766a;
+  --line:#e4dfd3;
+  --line-strong:#d3ccbb;
+  --band:#1c1a15;
+  --band-ink:#fbf9f4;
+  --band-text:#cdc6b6;
+  --shadow:0 18px 44px -28px rgba(40,34,18,.40);
+  --nav-bg:rgba(250,248,244,.92);
+  --field:#ffffff;
+  --accent:#8a6c30;
+  --accent-deep:#6f5626;
+  --accent-soft:rgba(138,108,48,.09);
+  --green:#23402f;
+  --panel-ink:#ffffff;
+  --panel-text:#cdd6cb;
+  --panel-kicker:#b9c9bd;
+}
+[data-theme="dark"]{
+  --bg:#121110;
+  --surface:#1a1917;
+  --surface-2:#222119;
+  --ink:#f4f1e9;
+  --text:#c4bfb2;
+  --muted:#8a847a;
+  --line:#2d2b27;
+  --line-strong:#3a3833;
+  --band:#0c0b0a;
+  --band-ink:#f6f3ea;
+  --band-text:#bdb7a8;
+  --shadow:0 24px 56px -28px rgba(0,0,0,.7);
+  --nav-bg:rgba(18,17,16,.92);
+  --field:#16150f;
+  --accent:#bd9a52;
+  --accent-deep:#a5843f;
+  --accent-soft:rgba(189,154,82,.10);
+  --green:#1e3729;
+  --panel-ink:#f2f6f0;
+  --panel-text:#c3cfc2;
+  --panel-kicker:#a9bdaf;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{
+  font-family:var(--body);background:var(--bg);color:var(--text);
+  line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  font-size:16.5px;transition:background .25s ease,color .25s ease;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.wrap-narrow{max-width:780px}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---------- TYPE ---------- */
+h1,h2,h3,h4{
+  font-family:var(--display);color:var(--ink);font-weight:600;
+  line-height:1.12;letter-spacing:0;
+}
+h1{font-size:clamp(2.5rem,5.2vw,4.05rem);font-weight:500}
+h2{font-size:clamp(1.95rem,3.6vw,2.8rem);font-weight:500}
+h3{font-size:1.42rem}
+.kicker{
+  font-family:var(--body);font-weight:600;font-size:.74rem;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:1.1rem;
+}
+.lede{font-size:1.12rem;color:var(--text);max-width:62ch}
+.serif-em{font-family:var(--display);font-style:italic;color:var(--accent);font-weight:500}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--body);font-weight:600;font-size:.92rem;
+  letter-spacing:.02em;padding:.95rem 1.9rem;border:1px solid transparent;
+  border-radius:var(--radius);cursor:pointer;
+  transition:background .16s,color .16s,border-color .16s,transform .16s;
+}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn-primary:disabled{opacity:.6;cursor:default}
+.btn-outline{background:transparent;border-color:var(--line-strong);color:var(--ink)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-onband{background:transparent;border-color:rgba(255,255,255,.30);color:var(--band-ink)}
+.btn-onband:hover{border-color:var(--accent);color:var(--accent)}
+.btn-lg{padding:1.1rem 2.3rem;font-size:1rem}
+.btn-ghostlink{
+  font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-ghostlink:hover{color:var(--accent-deep)}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:.85rem 32px;
+  display:flex;align-items:center;gap:1.4rem;
+}
+.brand{display:flex;align-items:center;flex-shrink:0;min-width:0}
+.brand-lock{display:flex;flex-direction:column;line-height:1;min-width:0}
+.brand-logo{height:27px;width:auto;display:block}
+[data-theme="light"] .logo-light{display:none}
+[data-theme="dark"]  .logo-dark{display:none}
+.brand-sub{
+  font-family:var(--body);font-size:.6rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);margin-top:6px;padding-left:2px;
+  white-space:nowrap;
+}
+.footer-brand .brand-logo{height:38px}
+.footer-tag{
+  font-family:var(--display);font-style:italic;font-size:1.08rem;
+  color:var(--accent);margin-top:.75rem;
+}
+.nav-links{display:flex;gap:1.7rem;margin-left:auto;align-items:center}
+.nav-links a{font-size:.86rem;font-weight:500;color:var(--text);transition:color .15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-side{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.theme-btn{
+  width:38px;height:38px;border:1px solid var(--line-strong);background:transparent;
+  border-radius:var(--radius);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.theme-btn svg{width:17px;height:17px}
+.burger{
+  display:none;flex-direction:column;gap:5px;width:40px;height:40px;
+  background:none;border:none;cursor:pointer;align-items:center;justify-content:center;
+}
+.burger span{width:22px;height:2px;background:var(--ink);transition:.22s;display:block}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{
+  display:none;flex-direction:column;background:var(--surface);
+  border-bottom:1px solid var(--line);padding:.5rem 32px 1.3rem;
+}
+.nav-mobile a{
+  padding:.85rem .2rem;font-size:.95rem;font-weight:500;color:var(--text);
+  border-bottom:1px solid var(--line);
+}
+.nav-mobile a.active{color:var(--accent)}
+.nav-mobile a:last-of-type{border-bottom:none}
+.nav-mobile .btn{margin-top:1rem}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--band);color:var(--band-text);padding:11rem 0 6.5rem;position:relative}
+.hero h1{color:var(--band-ink);max-width:19ch;margin-bottom:1.6rem}
+.hero .lede{color:var(--band-text);font-size:1.15rem;max-width:56ch;margin-bottom:1rem}
+.hero-attr{
+  font-family:var(--display);font-style:italic;font-size:1.16rem;
+  color:var(--accent);margin-bottom:2.4rem;
+}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.hero-rule{height:1px;background:rgba(255,255,255,.12);margin-bottom:2.4rem}
+.hero-points{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem}
+.hero-point .hp-label{
+  font-family:var(--display);font-size:1.7rem;color:var(--accent);
+  font-weight:600;margin-bottom:.2rem;
+}
+.hero-point p{font-size:.92rem;color:var(--band-text)}
+
+/* page-header used on consultation / apply */
+.page-head{background:var(--band);color:var(--band-text);padding:9.5rem 0 4rem;text-align:center}
+.page-head h1{color:var(--band-ink);max-width:20ch;margin:0 auto 1.1rem;font-size:clamp(2.2rem,4.4vw,3.3rem)}
+.page-head p{color:var(--band-text);max-width:56ch;margin:0 auto;font-size:1.05rem}
+
+/* ---------- SECTION ---------- */
+.section{padding:6rem 0}
+.section-alt{background:var(--surface)}
+.section-head{max-width:64ch;margin-bottom:3.4rem}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.section-head p{margin-top:.9rem;color:var(--muted)}
+
+/* ---------- SERVICES ---------- */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.svc{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:2.1rem 1.9rem;transition:border-color .18s,transform .18s;
+}
+.section-alt .svc{background:var(--bg)}
+.svc:hover{border-color:var(--accent);transform:translateY(-3px)}
+.svc-no{
+  font-family:var(--display);font-size:1.15rem;color:var(--accent);
+  border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.svc-no .svc-tag{
+  font-family:var(--body);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+}
+.svc h3{margin-bottom:.5rem}
+.svc p{font-size:.96rem;color:var(--text)}
+.svc .svc-link{margin-top:1.1rem;display:inline-block}
+
+/* ---------- FEATURE BAND ---------- */
+.feature{display:grid;grid-template-columns:1.05fr .95fr;gap:3.6rem;align-items:center}
+.feature-panel{background:var(--green);color:var(--panel-text);border-radius:var(--radius);padding:2.6rem 2.4rem}
+.feature-panel .kicker{color:var(--panel-kicker)}
+.feature-panel h3{color:var(--panel-ink);font-size:1.7rem;margin-bottom:1rem}
+.feature-panel p{color:var(--panel-text);font-size:.98rem;margin-bottom:1.4rem}
+.feature-list{list-style:none;display:grid;gap:.9rem}
+.feature-list li{position:relative;padding-left:1.6rem;font-size:.95rem;color:var(--panel-text)}
+.feature-list li::before{
+  content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;
+  background:var(--accent);border-radius:50%;
+}
+.feature-text p{margin-bottom:1.1rem;color:var(--text)}
+.feature-text p strong{color:var(--ink);font-weight:600}
+
+/* ---------- PROCESS ---------- */
+.proc{display:grid;gap:0;border-top:1px solid var(--line)}
+.proc-step{
+  display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:start;
+  padding:2.1rem 0;border-bottom:1px solid var(--line);
+}
+.proc-no{
+  font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--accent);
+  line-height:1;width:2.4rem;padding-top:.15rem;
+}
+.proc-body h3{font-size:1.32rem;margin-bottom:.4rem}
+.proc-body p{font-size:.96rem;color:var(--text);max-width:66ch}
+.proc-when{
+  font-family:var(--body);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;padding-top:.55rem;text-align:right;
+}
+.proc-foot{
+  margin-top:2rem;font-size:.92rem;color:var(--muted);max-width:70ch;
+  padding-left:1.1rem;border-left:2px solid var(--accent);
+}
+
+/* ---------- ABOUT ---------- */
+.about{display:grid;grid-template-columns:.85fr 1.15fr;gap:3.6rem;align-items:start}
+.about-text p{margin-bottom:1.1rem;color:var(--text)}
+.about-text p strong{color:var(--ink);font-weight:600}
+.portrait{
+  border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);
+  padding:1rem 1rem .2rem;box-shadow:var(--shadow);position:sticky;top:112px;
+}
+.section-alt .portrait{background:var(--bg)}
+.portrait img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;background:#b9b4ac;
+  border:1px solid var(--line);border-radius:2px;
+}
+[data-theme="dark"] .portrait img{background:#4a4740}
+.portrait-cap{padding:1.05rem .3rem 1.2rem;border-top:1px solid var(--line);margin-top:1rem}
+.portrait-name{font-family:var(--display);font-size:1.55rem;font-weight:600;color:var(--ink);line-height:1.2}
+.portrait-role{
+  font-family:var(--body);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-top:.4rem;
+}
+.portrait-note{font-size:.9rem;color:var(--muted);margin-top:.8rem;line-height:1.55}
+
+
+/* ---------- WHY GRID ---------- */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.4rem 3rem}
+.why-item{display:grid;grid-template-columns:auto 1fr;gap:1.1rem}
+.why-icon{
+  width:42px;height:42px;flex-shrink:0;border:1px solid var(--accent);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--display);font-size:1.2rem;
+}
+.why-item h3{font-size:1.22rem;margin-bottom:.3rem}
+.why-item p{font-size:.95rem;color:var(--text)}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:0;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  cursor:pointer;padding:1.3rem .2rem;font-family:var(--display);
+  font-size:1.22rem;font-weight:600;color:var(--ink);
+  list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:1.4rem;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 .2rem 1.4rem;color:var(--text);font-size:.98rem;max-width:72ch}
+.faq details p + p{padding-top:0;margin-top:-.6rem}
+
+/* ---------- CTA BAND ---------- */
+.cta{background:var(--green);color:var(--panel-text);padding:5rem 0;text-align:center}
+.cta h2{color:var(--panel-ink);margin-bottom:.7rem}
+.cta p{color:var(--panel-text);margin:0 auto 2rem;max-width:52ch}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ---------- FOOTER ---------- */
+.footer{background:var(--surface);border-top:1px solid var(--line);padding:3.6rem 0 0}
+.footer-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2.8rem}
+.footer-brand p{color:var(--muted);font-size:.92rem;max-width:34ch;margin-top:1rem}
+.footer-col h5{
+  font-family:var(--body);font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.26rem 0}
+.footer-col a:hover{color:var(--accent)}
+.footer-base{
+  border-top:1px solid var(--line);padding:1.5rem 0 2rem;
+  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+}
+.footer-base span{color:var(--muted);font-size:.8rem}
+.footer-base .disclaimer{max-width:64ch;line-height:1.55}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .btn,.svc{transition:none}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:980px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .svc-grid{grid-template-columns:1fr}
+  .feature,.about{grid-template-columns:1fr;gap:2.4rem}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-points{gap:1.6rem}
+  .portrait{position:static;max-width:420px}
+  .proc-step{grid-template-columns:auto 1fr;gap:1.2rem}
+  .proc-when{grid-column:2;text-align:left;padding-top:.6rem}
+}
+@media(max-width:560px){
+  html{scroll-padding-top:74px}
+  .wrap{padding:0 22px}
+  .nav-inner{padding:.7rem 22px;gap:.6rem}
+  .nav-mobile{padding-left:22px;padding-right:22px}
+  .brand-sub{display:none}
+  .hero{padding:8rem 0 4rem}
+  .page-head{padding:7.5rem 0 3rem}
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn{width:100%}
+  .hero-points{grid-template-columns:1fr;gap:1.3rem}
+  .section{padding:3.6rem 0}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-base{flex-direction:column;gap:.6rem}
+  .feature-panel{padding:2rem 1.6rem}
+  .cta-actions .btn{width:100%}
+}
+
+/* ---------- CONSULTATION PAGE ---------- */
+.consult-card{
+  max-width:560px;margin:0 auto;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:2.6rem 2.2rem;text-align:center;
+}
+.consult-kicker{
+  font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);
+}
+.consult-phone{
+  display:inline-flex;align-items:center;gap:.7rem;
+  font-family:var(--display);font-size:clamp(2rem,5vw,2.9rem);
+  font-weight:600;color:var(--accent);margin:.7rem 0 .9rem;letter-spacing:.01em;
+}
+.consult-phone:hover{color:var(--ink)}
+.consult-phone svg{width:28px;height:28px;flex-shrink:0}
+.consult-hours{color:var(--muted);font-size:.95rem;margin-bottom:1.6rem}
+.consult-sub{color:var(--text);font-size:1.02rem;line-height:1.6;margin-bottom:0}
+.consult-points{display:grid;gap:1.1rem;max-width:620px;margin:2.8rem auto 0;text-align:left}
+.consult-point{display:flex;gap:.9rem;align-items:flex-start}
+.consult-point svg{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:4px}
+.consult-point p{margin:0;color:var(--text);font-size:.96rem;line-height:1.55}
+.consult-point strong{color:var(--ink);font-weight:600}
+.consult-or{
+  text-align:center;color:var(--muted);font-size:.75rem;letter-spacing:.16em;
+  text-transform:uppercase;margin:3.4rem 0 1.6rem;
+  display:flex;align-items:center;gap:1rem;max-width:560px;margin-left:auto;margin-right:auto;
+}
+.consult-or::before,.consult-or::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* email form */
+.cf-card{
+  max-width:560px;margin:0 auto;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:2.4rem 2.2rem;
+}
+.cf-card h2{margin:0 0 .4rem;text-align:center;font-size:1.9rem}
+.cf-card .cf-sub{color:var(--muted);font-size:.96rem;text-align:center;margin-bottom:1.8rem}
+.cf-field{margin-bottom:1.1rem}
+.cf-field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.cf-field .opt{color:var(--muted);font-weight:400}
+.cf-field input,.cf-field textarea{
+  width:100%;padding:.78rem .85rem;background:var(--field);
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  color:var(--ink);font-family:var(--body);font-size:16px;
+  transition:border-color .15s,box-shadow .15s;
+}
+.cf-field input:focus,.cf-field textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+}
+.cf-field input.bad,.cf-field textarea.bad{
+  border-color:var(--danger);box-shadow:0 0 0 3px rgba(178,56,44,.12);
+}
+.cf-field textarea{resize:vertical;min-height:130px;line-height:1.55}
+.cf-err{display:none;color:var(--danger);font-size:.78rem;margin-top:.3rem;font-weight:500}
+.cf-err.show{display:block}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.cf-submit{width:100%;margin-top:.5rem}
+.cf-note{font-size:.8rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.55}
+.cf-done{text-align:center;padding:1.5rem 0}
+.cf-done .done-mark{
+  width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 1.2rem;
+}
+.cf-done h3{margin:0 0 .6rem;font-size:1.7rem}
+.cf-done p{color:var(--muted);margin:0 auto;max-width:40ch}
+@media(max-width:520px){
+  .cf-row{grid-template-columns:1fr;gap:0}
+  .consult-card,.cf-card{padding:1.9rem 1.4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="April H. Stone P.A. — home">
+      <span class="brand-lock">
+        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-sub">Counsel for Your Business</span>
+      </span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="consultation.html" class="active">Consultation</a>
+    </nav>
+    <div class="nav-side">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light or dark theme"></button>
+      <a href="apply.html" class="btn btn-primary" style="padding:.7rem 1.3rem">Start a Review</a>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#process">Process</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="consultation.html" class="active">Consultation</a>
+    <a href="apply.html" class="btn btn-primary">Start a Review</a>
+  </div>
+</header>
+
+<!-- ===== PAGE HEAD ===== -->
+<section class="page-head">
+  <div class="wrap">
+    <span class="kicker">Consultation</span>
+    <h1>Describe the situation. Get a straight answer.</h1>
+    <p>No script, no sales pitch, and no fee for the call. You describe what you took and what is being pulled out of the account. We tell you whether this is something the firm can help with.</p>
+  </div>
+</section>
+
+<!-- ===== PHONE CARD ===== -->
+<section class="section">
+  <div class="wrap">
+    <div class="consult-card reveal">
+      <span class="consult-kicker">Call the firm directly</span>
+      
+      <a href="tel:+17607175184" class="consult-phone" aria-label="Call the firm at (760) 717-5184">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>
+        </svg>
+        (760) 717-5184
+      </a>
+      <div class="consult-hours">Monday to Friday, 9am to 6pm ET</div>
+      <p class="consult-sub">If the daily withdrawals are already outrunning your deposits, call. Fifteen minutes on the phone will tell you more than a week of searching, and it costs you nothing.</p>
+    </div>
+
+    <div class="consult-points reveal">
+      <div class="consult-point">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <p><strong>You speak with the firm, not a call center.</strong> This is a law practice. There is no floor of commissioned salespeople between you and counsel.</p>
+      </div>
+      <div class="consult-point">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <p><strong>Nothing is promised on this call.</strong> No percentage, no guaranteed reduction, no number pulled out of the air. You get an honest read on whether the firm can help.</p>
+      </div>
+      <div class="consult-point">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <p><strong>A conversation is not a commitment.</strong> No engagement agreement, no fee, no obligation. If we are not the right fit, we will say so.</p>
+      </div>
+    </div>
+
+    <div class="consult-or reveal">Prefer to email?</div>
+
+    <!-- ===== EMAIL FORM ===== -->
+    <div class="cf-card reveal" id="cfCard">
+      <div id="cfForm">
+        <h2>Send the details instead</h2>
+        <p class="cf-sub">Tell us what is going on and the firm will get back to you, usually within one business day.</p>
+
+        <div class="cf-row">
+          <div class="cf-field">
+            <label for="cfName">Your name</label>
+            <input type="text" id="cfName" name="name" autocomplete="name" placeholder="Jane Doe">
+            <span class="cf-err" data-err="cfName">Please enter your name.</span>
+          </div>
+          <div class="cf-field">
+            <label for="cfPhone">Phone</label>
+            <input type="tel" id="cfPhone" name="phone" autocomplete="tel" inputmode="numeric" maxlength="14" placeholder="(555) 123-4567">
+            <span class="cf-err" data-err="cfPhone">Please enter a valid phone number.</span>
+          </div>
+        </div>
+
+        <div class="cf-field">
+          <label for="cfEmail">Email</label>
+          <input type="email" id="cfEmail" name="email" autocomplete="email" placeholder="you@business.com">
+          <span class="cf-err" data-err="cfEmail">Please enter a valid email address.</span>
+        </div>
+
+        <div class="cf-field">
+          <label for="cfBiz">Business name</label>
+          <input type="text" id="cfBiz" name="businessName" autocomplete="organization" placeholder="Doe Contracting LLC">
+          <span class="cf-err" data-err="cfBiz">Please enter your business name.</span>
+        </div>
+
+        <div class="cf-field">
+          <label for="cfMsg">What's going on? <span class="opt">&mdash; how many advances, who the funders are, what's being drawn</span></label>
+          <textarea id="cfMsg" name="message" placeholder="Two advances outstanding. Roughly $1,100 pulled out every business day and payroll is Friday…"></textarea>
+          <span class="cf-err" data-err="cfMsg">Please tell us briefly what's going on.</span>
+        </div>
+
+        <button type="button" class="btn btn-primary cf-submit" id="cfSubmit">Send to the firm</button>
+        <p class="cf-note">Sending this does not create an attorney-client relationship and does not make what you send privileged.</p>
+      </div>
+
+      <div class="cf-done" id="cfDone" style="display:none">
+        <div class="done-mark" aria-hidden="true">&#10003;</div>
+        <h3>Received.</h3>
+        <p>The firm has your details and will get back to you, usually within one business day. If it is urgent, call <a href="tel:+17607175184" style="color:var(--accent);font-weight:600">(760) 717-5184</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand">
+        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+      </a>
+      <p class="footer-tag">Counsel for Your Business</p>
+      <p>An attorney-led firm working exclusively on merchant cash advance debt: reading the agreements, telling you where you stand, and negotiating for terms your cash flow can survive.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <a href="index.html#services">Legal Review &amp; Opinion</a>
+      <a href="index.html#services">Funder Negotiation</a>
+      <a href="index.html#services">Restructured Terms</a>
+      <a href="apply.html">Start a Review</a>
+    </div>
+    <div class="footer-col">
+      <h5>Firm</h5>
+      <a href="index.html#about">About April Stone</a>
+      <a href="index.html#process">The Process</a>
+      <a href="index.html#faq">Common Questions</a>
+      <a href="consultation.html">Consultation</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <a href="tel:+17607175184">(760) 717-5184</a>
+      <a href="mailto:contact@example.com">contact@example.com</a>
+      <span>Mon&ndash;Fri, 9am to 6pm ET</span>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span>&copy; 2026 April H. Stone P.A.. All rights reserved.</span>
+    <span class="disclaimer">April H. Stone P.A. is a law firm providing legal services in connection with merchant cash advance agreements. Nothing on this site is legal advice, and no attorney-client relationship is formed by using this site or submitting a form. Outcomes depend on the specific agreements, the funder, and the facts of the business; no result is promised or guaranteed. Prior results do not predict future outcomes.</span>
+  </div>
+</footer>
+
+<script>
+/* ===== SHARED SITE SCRIPT — theme, menu, reveal, scrollspy =====
+   No localStorage / sessionStorage anywhere. Theme override lives in a JS variable
+   for the life of the page, which is why it resets on navigation — by design. */
+(function(){
+  "use strict";
+  var root = document.documentElement;
+
+  /* ---- THEME: follow the device, allow a manual override ---- */
+  var SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 1.8v3M12 19.2v3M4.5 4.5l2 2M17.5 17.5l2 2M1.8 12h3M19.2 12h3M4.5 19.5l2-2M17.5 6.5l2-2"/></svg>';
+  var MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  var themeBtn = document.getElementById('themeBtn');
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var manual = null; /* null = still following the device */
+
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    themeBtn.innerHTML = (theme === 'dark') ? SUN : MOON;
+    themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  function currentTheme(){ return manual || (mq.matches ? 'dark' : 'light'); }
+  applyTheme(currentTheme());
+  mq.addEventListener('change', function(){ if(manual === null) applyTheme(currentTheme()); });
+  themeBtn.addEventListener('click', function(){
+    manual = (currentTheme() === 'dark') ? 'light' : 'dark';
+    applyTheme(manual);
+  });
+
+  /* ---- MOBILE MENU ---- */
+  var burger = document.getElementById('burger');
+  var navMobile = document.getElementById('navMobile');
+  function closeMenu(){
+    navMobile.style.display = 'none';
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    navMobile.style.display = 'flex';
+    burger.classList.add('open');
+    burger.setAttribute('aria-expanded','true');
+  }
+  burger.addEventListener('click', function(){
+    if(burger.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  navMobile.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && burger.classList.contains('open')){ closeMenu(); burger.focus(); }
+  });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 980) closeMenu(); });
+
+  /* ---- REVEAL ON SCROLL ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12});
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- SCROLLSPY — light the nav link whose section is in view.
+         "Home" is active when we are above every section.
+         Silently no-ops on pages without these sections. ---- */
+  var sectionIds = ['services','process','about','faq'];
+  var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  if(!sections.length) return;
+
+  var navAll = document.querySelectorAll('.nav-links a, .nav-mobile a');
+  function setActive(target){
+    navAll.forEach(function(a){
+      a.classList.remove('active');
+      var href = a.getAttribute('href') || '';
+      if(target === 'home'){
+        if(/^(index\.html|\.\/|\/|)$/.test(href)) a.classList.add('active');
+      } else if(href.indexOf('#' + target) !== -1){
+        a.classList.add('active');
+      }
+    });
+  }
+  var visible = {};
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ visible[en.target.id] = en.isIntersecting; });
+    var current = null;
+    for(var i = 0; i < sections.length; i++){
+      if(visible[sections[i].id]){ current = sections[i].id; break; }
+    }
+    setActive(current || 'home');
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+  sections.forEach(function(s){ spy.observe(s); });
+  setActive('home');
+})();
+</script>
+
+<script>
+/* ===== CONSULTATION FORM ===== */
+(function(){
+  "use strict";
+  var form   = document.getElementById('cfForm');
+  var done   = document.getElementById('cfDone');
+  var submit = document.getElementById('cfSubmit');
+
+  var fields = {
+    cfName:  { el: document.getElementById('cfName'),  test: function(v){ return v.length > 1; } },
+    cfPhone: { el: document.getElementById('cfPhone'), test: function(v){ return v.replace(/\D/g,'').length === 10; } },
+    cfEmail: { el: document.getElementById('cfEmail'), test: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
+    cfBiz:   { el: document.getElementById('cfBiz'),   test: function(v){ return v.length > 1; } },
+    cfMsg:   { el: document.getElementById('cfMsg'),   test: function(v){ return v.length > 4; } }
+  };
+
+  function setBad(id, bad){
+    fields[id].el.classList.toggle('bad', bad);
+    var err = form.querySelector('.cf-err[data-err="' + id + '"]');
+    if(err) err.classList.toggle('show', bad);
+  }
+
+  /* clear the error state as soon as they start fixing it */
+  Object.keys(fields).forEach(function(id){
+    fields[id].el.addEventListener('input', function(){ setBad(id, false); });
+  });
+
+  /* phone auto-format: (XXX) XXX-XXXX */
+  fields.cfPhone.el.addEventListener('input', function(e){
+    var d = e.target.value.replace(/\D/g,'').slice(0,10);
+    if(d.length > 6)      e.target.value = '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+    else if(d.length > 3) e.target.value = '(' + d.slice(0,3) + ') ' + d.slice(3);
+    else if(d.length > 0) e.target.value = '(' + d;
+    else                  e.target.value = '';
+  });
+
+  function validate(){
+    var ok = true, firstBad = null;
+    Object.keys(fields).forEach(function(id){
+      var bad = !fields[id].test(fields[id].el.value.trim());
+      setBad(id, bad);
+      if(bad){ ok = false; if(!firstBad) firstBad = fields[id].el; }
+    });
+    if(firstBad) firstBad.focus();
+    return ok;
+  }
+
+  submit.addEventListener('click', function(){
+    if(!validate()) return;
+
+    var data = { formType: 'consultation' };
+    Object.keys(fields).forEach(function(id){
+      data[fields[id].el.name] = fields[id].el.value.trim();
+    });
+
+    submit.disabled = true;
+    submit.textContent = 'Sending…';
+
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(r){ return r.json().catch(function(){ return { error: 'Unexpected response from the server.' }; }); })
+    .then(function(resp){
+      if(resp && resp.ok){
+        form.style.display = 'none';
+        done.style.display = 'block';
+        document.getElementById('cfCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert('That did not send: ' + ((resp && resp.error) || 'Unknown error') + '\n\nPlease try again, or call the firm directly.');
+        submit.disabled = false;
+        submit.textContent = 'Send to the firm';
+      }
+    })
+    .catch(function(){
+      alert('The message could not be sent — check your connection and try again, or call the firm directly.');
+      submit.disabled = false;
+      submit.textContent = 'Send to the firm';
+    });
+  });
+})();
+</script>
+</body>
+</html>
