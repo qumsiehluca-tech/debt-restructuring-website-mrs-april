@@ -35,19 +35,22 @@
   --muted:#7c766a;
   --line:#e4dfd3;
   --line-strong:#d3ccbb;
-  --band:#1c1a15;
+  --band:#1b3325;
   --band-ink:#fbf9f4;
   --band-text:#cdc6b6;
-  --shadow:0 18px 44px -28px rgba(40,34,18,.40);
+  --band-accent:#c9a961;
+  --shadow:0 18px 44px -28px rgba(20,45,30,.42);
   --nav-bg:rgba(250,248,244,.92);
   --field:#ffffff;
   --accent:#8a6c30;
   --accent-deep:#6f5626;
   --accent-soft:rgba(138,108,48,.09);
-  --green:#23402f;
+  --btn-ink:#ffffff;
+  --green:#16291d;
+  --numeral:#23402f;
   --panel-ink:#ffffff;
   --panel-text:#cdd6cb;
-  --panel-kicker:#b9c9bd;
+  --panel-kicker:#c9a961;
 }
 [data-theme="dark"]{
   --bg:#121110;
@@ -58,19 +61,22 @@
   --muted:#8a847a;
   --line:#2d2b27;
   --line-strong:#3a3833;
-  --band:#0c0b0a;
+  --band:#12211a;
   --band-ink:#f6f3ea;
   --band-text:#bdb7a8;
+  --band-accent:#c9a961;
   --shadow:0 24px 56px -28px rgba(0,0,0,.7);
   --nav-bg:rgba(18,17,16,.92);
   --field:#16150f;
   --accent:#bd9a52;
   --accent-deep:#a5843f;
   --accent-soft:rgba(189,154,82,.10);
-  --green:#1e3729;
+  --btn-ink:#17140c;
+  --green:#0e1b14;
+  --numeral:#7fc492;
   --panel-ink:#f2f6f0;
   --panel-text:#c3cfc2;
-  --panel-kicker:#a9bdaf;
+  --panel-kicker:#c9a961;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -110,7 +116,7 @@ h3{font-size:1.42rem}
   border-radius:var(--radius);cursor:pointer;
   transition:background .16s,color .16s,border-color .16s,transform .16s;
 }
-.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary{background:var(--accent);color:var(--btn-ink);border-color:var(--accent)}
 .btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
 .btn-primary:disabled{opacity:.6;cursor:default}
 .btn-outline{background:transparent;border-color:var(--line-strong);color:var(--ink)}
@@ -183,15 +189,16 @@ h3{font-size:1.42rem}
 .hero{background:var(--band);color:var(--band-text);padding:11rem 0 6.5rem;position:relative}
 .hero h1{color:var(--band-ink);max-width:19ch;margin-bottom:1.6rem}
 .hero .lede{color:var(--band-text);font-size:1.15rem;max-width:56ch;margin-bottom:1rem}
+.hero .kicker,.page-head .kicker{color:var(--band-accent)}
 .hero-attr{
   font-family:var(--display);font-style:italic;font-size:1.16rem;
-  color:var(--accent);margin-bottom:2.4rem;
+  color:var(--band-accent);margin-bottom:2.4rem;
 }
 .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
 .hero-rule{height:1px;background:rgba(255,255,255,.12);margin-bottom:2.4rem}
 .hero-points{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem}
 .hero-point .hp-label{
-  font-family:var(--display);font-size:1.7rem;color:var(--accent);
+  font-family:var(--display);font-size:1.7rem;color:var(--band-accent);
   font-weight:600;margin-bottom:.2rem;
 }
 .hero-point p{font-size:.92rem;color:var(--band-text)}
@@ -209,7 +216,7 @@ h3{font-size:1.42rem}
 .section-head p{margin-top:.9rem;color:var(--muted)}
 
 /* ---------- SERVICES ---------- */
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem}
 .svc{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   padding:2.1rem 1.9rem;transition:border-color .18s,transform .18s;
@@ -217,7 +224,7 @@ h3{font-size:1.42rem}
 .section-alt .svc{background:var(--bg)}
 .svc:hover{border-color:var(--accent);transform:translateY(-3px)}
 .svc-no{
-  font-family:var(--display);font-size:1.15rem;color:var(--accent);
+  font-family:var(--display);font-size:1.15rem;color:var(--numeral);
   border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;
   display:flex;justify-content:space-between;align-items:baseline;
 }
@@ -239,7 +246,7 @@ h3{font-size:1.42rem}
 .feature-list li{position:relative;padding-left:1.6rem;font-size:.95rem;color:var(--panel-text)}
 .feature-list li::before{
   content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;
-  background:var(--accent);border-radius:50%;
+  background:var(--band-accent);border-radius:50%;
 }
 .feature-text p{margin-bottom:1.1rem;color:var(--text)}
 .feature-text p strong{color:var(--ink);font-weight:600}
@@ -251,7 +258,7 @@ h3{font-size:1.42rem}
   padding:2.1rem 0;border-bottom:1px solid var(--line);
 }
 .proc-no{
-  font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--accent);
+  font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--numeral);
   line-height:1;width:2.4rem;padding-top:.15rem;
 }
 .proc-body h3{font-size:1.32rem;margin-bottom:.4rem}
@@ -262,7 +269,7 @@ h3{font-size:1.42rem}
 }
 .proc-foot{
   margin-top:2rem;font-size:.92rem;color:var(--muted);max-width:70ch;
-  padding-left:1.1rem;border-left:2px solid var(--accent);
+  padding-left:1.1rem;border-left:2px solid var(--numeral);
 }
 
 /* ---------- ABOUT ---------- */
@@ -292,9 +299,9 @@ h3{font-size:1.42rem}
 .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.4rem 3rem}
 .why-item{display:grid;grid-template-columns:auto 1fr;gap:1.1rem}
 .why-icon{
-  width:42px;height:42px;flex-shrink:0;border:1px solid var(--accent);
+  width:42px;height:42px;flex-shrink:0;border:1px solid var(--numeral);
   border-radius:50%;display:flex;align-items:center;justify-content:center;
-  color:var(--accent);font-family:var(--display);font-size:1.2rem;
+  color:var(--numeral);font-family:var(--display);font-size:1.2rem;
 }
 .why-item h3{font-size:1.22rem;margin-bottom:.3rem}
 .why-item p{font-size:.95rem;color:var(--text)}
@@ -314,9 +321,9 @@ h3{font-size:1.42rem}
 .faq details p + p{padding-top:0;margin-top:-.6rem}
 
 /* ---------- CTA BAND ---------- */
-.cta{background:var(--green);color:var(--panel-text);padding:5rem 0;text-align:center}
-.cta h2{color:var(--panel-ink);margin-bottom:.7rem}
-.cta p{color:var(--panel-text);margin:0 auto 2rem;max-width:52ch}
+.cta{background:var(--band);color:var(--band-text);padding:5rem 0;text-align:center}
+.cta h2{color:var(--band-ink);margin-bottom:.7rem}
+.cta p{color:var(--band-text);margin:0 auto 2rem;max-width:52ch}
 .cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 
 /* ---------- FOOTER ---------- */
@@ -560,7 +567,7 @@ h3{font-size:1.42rem}
       <a href="index.html">Home</a>
       <a href="index.html#services">Services</a>
       <a href="index.html#process">Process</a>
-      <a href="index.html#about">About</a>
+      <a href="attorney.html">Attorney</a>
       <a href="index.html#faq">FAQ</a>
       <a href="consultation.html">Consultation</a>
     </nav>
@@ -576,7 +583,7 @@ h3{font-size:1.42rem}
     <a href="index.html">Home</a>
     <a href="index.html#services">Services</a>
     <a href="index.html#process">Process</a>
-    <a href="index.html#about">About</a>
+    <a href="attorney.html">Attorney</a>
     <a href="index.html#faq">FAQ</a>
     <a href="consultation.html">Consultation</a>
     <a href="apply.html" class="btn btn-primary">Start a Review</a>
@@ -865,18 +872,19 @@ h3{font-size:1.42rem}
         <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
       </a>
       <p class="footer-tag">Counsel for Your Business</p>
-      <p>An attorney-led firm working exclusively on merchant cash advance debt: reading the agreements, telling you where you stand, and negotiating for terms your cash flow can survive.</p>
+      <p>An attorney-led firm for businesses under financial pressure: merchant cash advance restructuring and bankruptcy representation, from a litigator who has spent fifteen years in both.</p>
     </div>
     <div class="footer-col">
       <h5>Services</h5>
       <a href="index.html#services">Legal Review &amp; Opinion</a>
       <a href="index.html#services">Funder Negotiation</a>
       <a href="index.html#services">Restructured Terms</a>
+      <a href="index.html#services">Bankruptcy Representation</a>
       <a href="apply.html">Start a Review</a>
     </div>
     <div class="footer-col">
       <h5>Firm</h5>
-      <a href="index.html#about">About April Stone</a>
+      <a href="attorney.html">About April Stone</a>
       <a href="index.html#process">The Process</a>
       <a href="index.html#faq">Common Questions</a>
       <a href="consultation.html">Consultation</a>
@@ -885,12 +893,13 @@ h3{font-size:1.42rem}
       <h5>Contact</h5>
       <a href="tel:+17607175184">(760) 717-5184</a>
       <a href="mailto:contact@example.com">contact@example.com</a>
+      <span>Boca Raton, Florida</span>
       <span>Mon&ndash;Fri, 9am to 6pm ET</span>
     </div>
   </div>
   <div class="wrap footer-base">
     <span>&copy; 2026 April H. Stone P.A.. All rights reserved.</span>
-    <span class="disclaimer">April H. Stone P.A. is a law firm providing legal services in connection with merchant cash advance agreements. Nothing on this site is legal advice, and no attorney-client relationship is formed by using this site or submitting a form. Outcomes depend on the specific agreements, the funder, and the facts of the business; no result is promised or guaranteed. Prior results do not predict future outcomes.</span>
+    <span class="disclaimer">April H. Stone P.A. is a law firm located in Boca Raton, Florida, providing legal services in connection with merchant cash advance agreements and bankruptcy matters. Nothing on this site is legal advice, and no attorney-client relationship is formed by using this site or submitting a form. Outcomes depend on the specific agreements, the funder, and the facts of the business; no result is promised or guaranteed. Prior results do not predict future outcomes.</span>
   </div>
 </footer>
 

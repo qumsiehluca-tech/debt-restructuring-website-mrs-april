@@ -3,42 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>April H. Stone P.A. — MCA Restructuring &amp; Bankruptcy Counsel</title>
-<meta name="description" content="April H. Stone P.A. is a Boca Raton law firm for businesses under financial pressure: merchant cash advance restructuring and bankruptcy representation, led by a litigator with fifteen years in default and bankruptcy matters.">
+<title>April H. Stone, Attorney — April H. Stone P.A.</title>
+<meta name="description" content="April Stone is a litigator with fifteen years of experience in default and bankruptcy litigation. Levin College of Law, judicial clerk to Chief Bankruptcy Judge Paul Glenn, formerly of Akerman's bankruptcy and restructuring litigation group.">
 <!-- PLACEHOLDER: domain https://example.com -->
-<link rel="canonical" href="https://example.com/">
-<meta property="og:title" content="April H. Stone P.A. — Attorney-Led MCA Debt Restructuring">
-<meta property="og:description" content="An attorney reads your advance agreements, tells you where you stand, and negotiates with funders. A review is a conversation, not a commitment.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://example.com/">
+<link rel="canonical" href="https://example.com/attorney.html">
+<meta property="og:title" content="April H. Stone, Attorney">
+<meta property="og:description" content="Fifteen years in default and bankruptcy litigation. MCA restructuring and bankruptcy representation, Boca Raton, Florida.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://example.com/attorney.html">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LegalService",
-  "name": "April H. Stone P.A.",
-  "url": "https://example.com/",
-  "description": "Attorney-led merchant cash advance debt restructuring and bankruptcy representation. An attorney reviews existing advance agreements, provides a plain-English legal opinion, negotiates with funders where possible, and handles bankruptcy matters where restructuring is not enough.",
+  "@type": "Attorney",
+  "name": "April H. Stone",
+  "url": "https://example.com/attorney.html",
+  "image": "https://example.com/assets/april-stone.jpg",
+  "jobTitle": "Attorney",
   "telephone": "(760) 717-5184",
   "email": "contact@example.com",
-  "areaServed": "US",
-  "priceRange": "$$",
-  "founder": {
-    "@type": "Person",
-    "name": "April H. Stone",
-    "jobTitle": "Attorney",
-    "alumniOf": [
-      { "@type": "CollegeOrUniversity", "name": "University of Florida Levin College of Law" },
-      { "@type": "CollegeOrUniversity", "name": "University of Southern California" }
-    ]
-  },
+  "worksFor": { "@type": "LegalService", "name": "April H. Stone P.A." },
+  "alumniOf": [
+    { "@type": "CollegeOrUniversity", "name": "University of Florida Levin College of Law" },
+    { "@type": "CollegeOrUniversity", "name": "University of Southern California" }
+  ],
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Boca Raton",
     "addressRegion": "FL",
     "addressCountry": "US"
-  },
-  "sameAs": []
+  }
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -422,6 +415,34 @@ h3{font-size:1.42rem}
   .feature-panel{padding:2rem 1.6rem}
   .cta-actions .btn{width:100%}
 }
+
+/* ---------- ATTORNEY PAGE ---------- */
+.atty{display:grid;grid-template-columns:.85fr 1.15fr;gap:3.6rem;align-items:start;padding-top:1rem}
+.atty-body p{margin-bottom:1.15rem;color:var(--text)}
+.atty-body p strong{color:var(--ink);font-weight:600}
+.atty-lead{
+  font-family:var(--display);font-size:1.42rem;line-height:1.45;color:var(--ink);
+  font-weight:500;margin-bottom:1.6rem;
+}
+.atty-rule{height:1px;background:var(--line);margin:2.2rem 0}
+.atty-h3{font-size:1.3rem;margin-bottom:.8rem}
+.cred{list-style:none;display:grid;gap:1rem;margin-bottom:1.6rem}
+.cred li{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:baseline}
+.cred .c-year{
+  font-family:var(--body);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--numeral);white-space:nowrap;padding-top:.15rem;font-weight:600;
+}
+.cred .c-body{font-size:.96rem;color:var(--text)}
+.cred .c-body strong{color:var(--ink);font-weight:600;display:block}
+.atty-cta{
+  background:var(--surface-2);border:1px solid var(--line);border-left:2px solid var(--numeral);
+  border-radius:var(--radius);padding:1.5rem 1.6rem;margin-top:2.2rem;
+}
+.atty-cta p{margin-bottom:1rem;color:var(--text);font-size:.98rem}
+@media(max-width:980px){
+  .atty{grid-template-columns:1fr;gap:2.4rem}
+}
+
 </style>
 </head>
 <body>
@@ -436,10 +457,10 @@ h3{font-size:1.42rem}
       </span>
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Primary">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="index.html#services">Services</a>
       <a href="index.html#process">Process</a>
-      <a href="attorney.html">Attorney</a>
+      <a href="attorney.html" class="active">Attorney</a>
       <a href="index.html#faq">FAQ</a>
       <a href="consultation.html">Consultation</a>
     </nav>
@@ -452,207 +473,33 @@ h3{font-size:1.42rem}
     </div>
   </div>
   <div class="nav-mobile" id="navMobile">
-    <a href="index.html" class="active">Home</a>
+    <a href="index.html">Home</a>
     <a href="index.html#services">Services</a>
     <a href="index.html#process">Process</a>
-    <a href="attorney.html">Attorney</a>
+    <a href="attorney.html" class="active">Attorney</a>
     <a href="index.html#faq">FAQ</a>
     <a href="consultation.html">Consultation</a>
     <a href="apply.html" class="btn btn-primary">Start a Review</a>
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
+<!-- ===== PAGE HEAD ===== -->
+<section class="page-head">
   <div class="wrap">
-    <span class="kicker reveal">Merchant Cash Advance Debt &middot; Bankruptcy &middot; Attorney-Led</span>
-    <h1 class="reveal">The daily draw should not be the thing that decides whether your business survives.</h1>
-    <p class="lede reveal">You took an advance. Then another, to cover the first. Now the ACH hits before the deposits do. An attorney reads the agreements you actually signed, tells you plainly where you stand, and where the facts allow it, negotiates with the funders for terms your cash flow can carry. Where that is not enough, the same attorney handles the bankruptcy.</p>
-    <p class="hero-attr reveal">A review is a starting conversation, not a commitment.</p>
-    <div class="hero-cta reveal">
-      <a href="apply.html" class="btn btn-primary btn-lg">Start a Review</a>
-      <a href="consultation.html" class="btn btn-onband btn-lg">Speak With the Firm</a>
-    </div>
-    <div class="hero-rule reveal"></div>
-    <div class="hero-points reveal">
-      <div class="hero-point">
-        <div class="hp-label">Read first</div>
-        <p>Before anything is negotiated, an attorney reads every advance agreement in front of you and explains what it does.</p>
-      </div>
-      <div class="hero-point">
-        <div class="hp-label">Straight answer</div>
-        <p>If the numbers do not support a restructuring, you will hear that in the first conversation, not the fifth.</p>
-      </div>
-      <div class="hero-point">
-        <div class="hp-label">No promised number</div>
-        <p>No firm can guarantee a reduction. Anyone who does is selling you something. We work the facts instead.</p>
-      </div>
-    </div>
+    <span class="kicker">The Attorney</span>
+    <h1>April H. Stone</h1>
+    <p>A litigator with fifteen years in default and bankruptcy matters, and the person who will actually read your file.</p>
   </div>
 </section>
 
-<!-- ===== SERVICES ===== -->
-<section class="section" id="services">
+<!-- ===== BIO ===== -->
+<section class="section">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="kicker">What the Firm Does</span>
-      <h2>Two routes out, and the judgment to know which one is yours.</h2>
-      <p>The practice covers merchant cash advance restructuring and bankruptcy. Most owners who call are hoping to avoid the second, and often that is achievable. What matters is being told honestly which route your numbers actually support &mdash; by someone who does both, and therefore has no reason to steer you toward either.</p>
-    </div>
-    <div class="svc-grid">
-      <article class="svc reveal">
-        <div class="svc-no">01<span class="svc-tag">Where it starts</span></div>
-        <h3>Legal Review &amp; Opinion</h3>
-        <p>An attorney reads every advance agreement you have signed and gives you a written, plain-English opinion: what the lien actually covers, how the daily or weekly draw is calculated, whether you signed a confession of judgment or a personal guaranty, and which terms are enforceable as written. Most owners have never been given this reading of their own paperwork.</p>
-      </article>
-      <article class="svc reveal">
-        <div class="svc-no">02<span class="svc-tag">Where the work is</span></div>
-        <h3>Funder Negotiation</h3>
-        <p>Armed with that opinion, the firm contacts the funders on your behalf and negotiates. Some funders will restructure rather than push a business into default and collect nothing. Some will not. We tell you which is which as we learn it, and we do not pretend leverage exists where it does not.</p>
-      </article>
-      <article class="svc reveal">
-        <div class="svc-no">03<span class="svc-tag">Where it lands</span></div>
-        <h3>Restructured Terms</h3>
-        <p>Where a funder agrees, the outcome is a written, executed modification: a lower or less frequent payment, a longer schedule, a pause, or a negotiated resolution of the balance. You see the document, an attorney explains it, and you decide. Nothing is signed on your behalf.</p>
-      </article>
-      <article class="svc reveal">
-        <div class="svc-no">04<span class="svc-tag">Where it ends, if it must</span></div>
-        <h3>Bankruptcy Representation</h3>
-        <p>Where restructuring is not enough, the firm handles the bankruptcy itself rather than referring you elsewhere. Fifteen years of bankruptcy and default litigation, and a clerkship inside a bankruptcy court, sit behind that advice &mdash; including the advice not to file, when filing would cost you more than it saves.</p>
-        <a href="consultation.html" class="btn-ghostlink svc-link">Talk it through first &rarr;</a>
-      </article>
-    </div>
-  </div>
-</section>
+    <div class="atty">
 
-<!-- ===== WHY AN ATTORNEY ===== -->
-<section class="section section-alt">
-  <div class="wrap">
-    <div class="feature">
-      <div class="feature-text reveal">
-        <span class="kicker">Why Counsel</span>
-        <h2>A broker has a commission. A funder has a lien. An attorney has a client.</h2>
-        <p>By the time most owners call, three parties have already handled their file, and not one of them was working for them. The broker was paid at closing. The funder holds a security interest in the receivables. And the debt relief company now calling twice a day is not a law firm at all, cannot appear for you anywhere, and is often paid the same whether your situation improves or not.</p>
-        <p><strong>An attorney is different in kind, not degree.</strong> The duty runs to you. The advice is privileged. And when an agreement contains a confession of judgment, a personal guaranty, or a reconciliation clause the funder has quietly stopped honoring, a lawyer is the person qualified to tell you exactly what that means for your account and your personal exposure.</p>
-        <p>It also means you get told no. If a restructuring will not help your business, the firm will say so and explain what would.</p>
-      </div>
-      <aside class="feature-panel reveal">
-        <span class="kicker">What the Review Covers</span>
-        <h3>By the end, you will know:</h3>
-        <p>Every agreement is read closely and explained in terms you can act on.</p>
-        <ul class="feature-list">
-          <li>What the lien on your future receivables actually reaches</li>
-          <li>How each daily or weekly payment is calculated and drawn</li>
-          <li>Whether you signed a personal guaranty, and what it exposes</li>
-          <li>Whether a confession of judgment is in the file</li>
-          <li>Whether your reconciliation right is being honored</li>
-          <li>Which balances are realistically negotiable, and which are not</li>
-        </ul>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PROCESS ===== -->
-<section class="section" id="process">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="kicker">The Process</span>
-      <h2>Five steps, and honest timelines for each.</h2>
-      <p>Restructuring is negotiation, and negotiation runs on the other side's clock as much as ours. Here is what actually happens, and roughly how long each part takes.</p>
-    </div>
-    <div class="proc reveal">
-      <div class="proc-step">
-        <div class="proc-no">01</div>
-        <div class="proc-body">
-          <h3>The first call</h3>
-          <p>Fifteen or twenty minutes. You describe what you took, from whom, and what is being pulled out of the account each day. We tell you whether this is the kind of situation the firm can help with. If it is not, we say so on that call.</p>
-        </div>
-        <div class="proc-when">Same or next business day</div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-no">02</div>
-        <div class="proc-body">
-          <h3>Documents</h3>
-          <p>You send the advance agreements for every open position, plus the last three to six months of business bank statements. Complete paperwork is the single biggest factor in how fast the rest of this moves. Missing agreements are the usual reason a file stalls here.</p>
-        </div>
-        <div class="proc-when">1&ndash;3 days, on you</div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-no">03</div>
-        <div class="proc-body">
-          <h3>Legal review and written opinion</h3>
-          <p>An attorney reads the file and writes up your position: the lien, the draw, the guaranty, the confession of judgment if there is one, the reconciliation clause, and a candid read on which balances have room to move. You get it in writing and we walk through it together.</p>
-        </div>
-        <div class="proc-when">3&ndash;5 business days</div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-no">04</div>
-        <div class="proc-body">
-          <h3>Negotiation with the funders</h3>
-          <p>The firm contacts each funder and negotiates. This is the step nobody can put a clean number on. A responsive funder can agree in a week or two. A slow one takes a month or more. Some refuse outright, and when that happens you will be told, along with what options remain.</p>
-        </div>
-        <div class="proc-when">2&ndash;8 weeks, funder-dependent</div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-no">05</div>
-        <div class="proc-body">
-          <h3>Restructured agreement, or a straight answer</h3>
-          <p>Where a funder agrees, you receive the written modification, an attorney explains what changed, and you sign only if it works for the business. Where no funder agrees, you still leave with a clear legal picture of your position and a frank conversation about what comes next.</p>
-        </div>
-        <div class="proc-when">On agreement</div>
-      </div>
-    </div>
-    <p class="proc-foot reveal">Anyone who tells you this takes exactly thirty days, or that a specific percentage will come off the balance, is guessing at best. Timelines here depend on your funders, your paperwork, and your numbers.</p>
-  </div>
-</section>
-
-<!-- ===== WHY ===== -->
-<section class="section section-alt">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="kicker">Why an Attorney</span>
-      <h2>What changes when the person reading it works for you.</h2>
-    </div>
-    <div class="why-grid">
-      <div class="why-item reveal">
-        <div class="why-icon">&sect;</div>
-        <div>
-          <h3>A lawyer reads it</h3>
-          <p>Every advance agreement is read by an attorney and explained in plain English &mdash; the lien, the draw, the guaranty, the confession of judgment if there is one.</p>
-        </div>
-      </div>
-      <div class="why-item reveal">
-        <div class="why-icon">&#9670;</div>
-        <div>
-          <h3>The advice is privileged</h3>
-          <p>Once you are a client, what you tell the firm is protected. A debt relief company cannot offer you that, because it is not a law firm.</p>
-        </div>
-      </div>
-      <div class="why-item reveal">
-        <div class="why-icon">&#9679;</div>
-        <div>
-          <h3>Leverage that is real</h3>
-          <p>Funders negotiate differently with counsel who has litigated these agreements and knows what a default actually costs them.</p>
-        </div>
-      </div>
-      <div class="why-item reveal">
-        <div class="why-icon">&#9650;</div>
-        <div>
-          <h3>You get told no</h3>
-          <p>If restructuring will not help your business, you will hear that plainly, along with what would. Nobody here is paid to keep you hopeful.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== ABOUT ===== -->
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="about">
       <aside class="portrait reveal">
-        <img src="assets/april-stone.jpg" alt="April H. Stone" width="800" height="1000" loading="lazy">
+        <!-- Headshot: assets/april-stone.jpg (800x1000, 4:5). Replace the file to swap it. -->
+        <img src="assets/april-stone.jpg" alt="April H. Stone" width="800" height="1000">
         <div class="portrait-cap">
           <div class="portrait-name">April H. Stone</div>
           <div class="portrait-role">Attorney &middot; Founder</div>
@@ -662,87 +509,41 @@ h3{font-size:1.42rem}
             <li><span class="cv-k">Undergraduate</span><span class="cv-v">B.A., University of Southern California, magna cum laude</span></li>
             <li><span class="cv-k">Clerkship</span><span class="cv-v">Judicial clerk to Chief Bankruptcy Judge Paul Glenn</span></li>
             <li><span class="cv-k">Previously</span><span class="cv-v">Bankruptcy &amp; restructuring litigation, Akerman</span></li>
+            <li><span class="cv-k">Office</span><span class="cv-v">Boca Raton, Florida</span></li>
           </ul>
         </div>
       </aside>
-      <div class="about-text reveal">
-        <span class="kicker">About the Firm</span>
-        <h2>Fifteen years of default and bankruptcy litigation, pointed at one problem.</h2>
-        <p>This firm exists because of a pattern that repeats almost word for word. A business needs cash quickly. A broker moves fast and is paid at closing. The owner signs a stack of documents nobody walks them through. Months later the daily withdrawals have outrun the deposits, a second advance was taken to service the first, and the operating account is being emptied by a contract the owner has still never had explained to them.</p>
-        <p><strong>April Stone is a litigator.</strong> She has spent fifteen years in default and bankruptcy matters, is a graduate of the University of Florida Levin College of Law, and clerked for Chief Bankruptcy Judge Paul Glenn before joining the bankruptcy and restructuring litigation group at Akerman.</p>
-        <p>That background is the reason this works at the negotiating table. <strong>A funder's willingness to restructure depends entirely on what happens if it refuses.</strong> Someone who has litigated these agreements &mdash; and who can file the bankruptcy if it comes to that &mdash; knows which provisions hold up, what a default actually costs both sides, and when a funder is bluffing.</p>
-        <div class="about-actions">
-          <a href="attorney.html" class="btn btn-primary">Read Her Full Background</a>
-          <a href="consultation.html" class="btn btn-outline">Speak With the Firm</a>
+
+      <div class="atty-body reveal">
+        <span class="kicker">Background</span>
+        <p class="atty-lead">April Stone is a seasoned litigator with fifteen years of experience in default and bankruptcy litigation, known for her zealous advocacy on behalf of clients navigating complex financial disputes.</p>
+
+        <p>April earned her Bachelor&rsquo;s degree from the University of Southern California, graduating magna cum laude, before going on to earn her Juris Doctor from the University of Florida Levin College of Law, where she graduated with honors. Following law school, April served as a judicial clerk to Chief Bankruptcy Judge Paul Glenn, gaining invaluable insight into the inner workings of bankruptcy proceedings that continues to inform her practice today.</p>
+
+        <p>April began her career at Akerman&rsquo;s bankruptcy and restructuring litigation group, where she honed her skills in high-stakes default and bankruptcy matters. Over the course of her career, she has built a reputation for her deep knowledge of bankruptcy law and her tenacious representation of clients in default proceedings.</p>
+
+        <p>A significant focus of April&rsquo;s practice has been representing clients in merchant cash advance (MCA) litigation, where she helps small businesses navigate financial distress and, whenever possible, avoid the need to file for bankruptcy altogether. Her work in this area reflects both her technical expertise and her genuine commitment to protecting the businesses she represents.</p>
+
+        <div class="atty-rule"></div>
+
+        <h3 class="atty-h3">Why that background matters to your file</h3>
+        <p>By the time most owners call, several parties have already handled their paperwork and not one of them was working for them. The broker was paid at closing. The funder holds a security interest in the receivables. The debt relief company calling twice a day is not a law firm at all.</p>
+        <p><strong>A funder&rsquo;s willingness to restructure depends entirely on what happens if it refuses.</strong> Counsel who has litigated these agreements &mdash; and who can file the bankruptcy if it comes to that &mdash; knows which provisions hold up, what a default actually costs both sides, and when a funder is bluffing. That is leverage, and it is not something a call center has.</p>
+        <p>It also means both routes sit in one place. A firm that only restructures has a reason to tell you restructuring is the answer. Here, you get told which one your numbers actually support &mdash; including when the answer is neither.</p>
+
+        <div class="atty-cta">
+          <p>The initial consultation is free and commits you to nothing. Describe the situation and you will get a straight read on whether the firm can help.</p>
+          <div class="cta-actions" style="justify-content:flex-start">
+            <a href="consultation.html" class="btn btn-primary">Speak With the Firm</a>
+            <a href="apply.html" class="btn btn-outline">Start a Review</a>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ===== FAQ ===== -->
-<section class="section section-alt" id="faq">
-  <div class="wrap wrap-narrow">
-    <div class="section-head center reveal">
-      <span class="kicker">Common Questions</span>
-      <h2>The things owners actually ask.</h2>
-    </div>
-    <div class="faq reveal">
-      <details>
-        <summary>Is this a loan, or refinancing?</summary>
-        <p>No. This firm does not lend money, arrange advances, or broker any financing. There is no new money involved at any point. This is a legal service: an attorney reviews the advance agreements you already have and negotiates with the funders who already hold them. If what you actually need is capital, we are not the right call, and we will tell you that.</p>
-      </details>
-      <details>
-        <summary>What does it cost?</summary>
-        <p>The initial consultation is free and carries no obligation. If you decide to move forward, fees depend on how many positions you hold and what the file requires, and they are set out in a written engagement agreement that you sign before any billable work begins. You will never be billed for something you did not agree to in writing.</p>
-      </details>
-      <details>
-        <summary>Will this hurt my credit?</summary>
-        <p>Merchant cash advances usually sit outside consumer credit reporting, so the advances themselves typically are not what shows up on a personal credit report. But the surrounding facts can matter: many advances are backed by a personal guaranty, a default can lead to a judgment, and a judgment is a public record with real consequences. If you have signed a guaranty, that is one of the first things the review identifies, precisely so it can be discussed rather than discovered later.</p>
-      </details>
-      <details>
-        <summary>What if I'm already in default?</summary>
-        <p>Then you are in the situation this firm sees most often, and it is worth calling sooner rather than later. Default changes the position but does not end the conversation. Funders still recover more from a business that keeps operating than from one that closes, and that remains true after a default. What default does change is the urgency, the leverage, and sometimes the strategy, all of which the review addresses directly.</p>
-      </details>
-      <details>
-        <summary>Is bankruptcy my only way out of this?</summary>
-        <p>Often it is not, and a significant part of this practice is keeping businesses out of bankruptcy where that can be done. Restructuring the advances directly is usually the less destructive path, and it is the one worth exhausting first.</p>
-        <p>But the firm handles bankruptcy too, and that matters for a reason worth stating plainly: a firm that only restructures has a reason to tell you that restructuring is the answer. Here, both routes are in-house. If filing genuinely is the better tool for your situation, you will be told so and the firm can handle it &mdash; and if it is not, you will be told that instead.</p>
-      </details>
-      <details>
-        <summary>How long does the whole thing take?</summary>
-        <p>The part the firm controls is quick: the legal review is typically finished within three to five business days of receiving complete documents. Negotiation is the part that is not ours to schedule. A responsive funder may agree within a week or two; a slow one can take a month or more; some do not agree at all. Anyone quoting you a fixed timeline for a negotiation they have not started is guessing.</p>
-      </details>
-      <details>
-        <summary>Can you guarantee a reduction in what I owe?</summary>
-        <p>No. Not a percentage, not a dollar figure, not a guaranteed restructuring. Any firm that promises you one is either misrepresenting the work or does not understand it, and in this industry that promise is a reliable warning sign.</p>
-        <p>What can be committed to is the work itself: every agreement read by an attorney, a written opinion on where you stand, a negotiation pursued on the facts, and the truth told to you at each step, including when the truth is that a funder has refused.</p>
-      </details>
-      <details>
-        <summary>Does submitting a form make you my lawyer?</summary>
-        <p>No. Sending information through this site, including the intake form, does not create an attorney-client relationship and does not make what you send privileged. That relationship begins only when the firm and you both sign a written engagement agreement. Until then, treat this as what it is: a starting conversation.</p>
-      </details>
-      <details>
-        <summary>Do I have to stop paying my funders to work with you?</summary>
-        <p>The firm does not instruct businesses to stop paying as a negotiating tactic. Whether to keep paying, and at what level, is a decision that depends on your agreements, your cash position, and your exposure under any guaranty, and it is exactly the kind of question the legal review is meant to answer with facts rather than a script.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ===== CTA ===== -->
-<section class="cta">
-  <div class="wrap">
-    <h2>Start with a reading, not a promise.</h2>
-    <p>Send the agreements, or just call and describe the situation. Either way, the first conversation costs nothing and commits you to nothing.</p>
-    <div class="cta-actions">
-      <a href="apply.html" class="btn btn-primary btn-lg">Start a Review</a>
-      <a href="consultation.html" class="btn btn-onband btn-lg">Speak With the Firm</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
 <footer class="footer">
   <div class="wrap footer-grid">
     <div class="footer-brand">
