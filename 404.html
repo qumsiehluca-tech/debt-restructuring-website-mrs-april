@@ -109,9 +109,10 @@ h1,h2,h3,h4{
   font-family:var(--display);color:var(--ink);font-weight:600;
   line-height:1.12;letter-spacing:0;
 }
-h1{font-size:clamp(2.5rem,5.2vw,4.05rem);font-weight:500}
-h2{font-size:clamp(1.95rem,3.6vw,2.8rem);font-weight:500}
-h3{font-size:1.42rem}
+h1{font-size:clamp(2.5rem,5.2vw,4.05rem);font-weight:500;margin-bottom:1.1rem}
+h2{font-size:clamp(1.95rem,3.6vw,2.8rem);font-weight:500;margin-bottom:1.05rem}
+h3{font-size:1.42rem;margin-bottom:.5rem}
+h4{margin-bottom:.5rem}
 .kicker{
   font-family:var(--body);font-weight:600;font-size:.74rem;
   letter-spacing:.19em;text-transform:uppercase;color:var(--accent);
@@ -231,9 +232,9 @@ h3{font-size:1.42rem}
 /* ---------- SECTION ---------- */
 .section{padding:6rem 0}
 .section-alt{background:var(--surface)}
-.section-head{max-width:64ch;margin-bottom:3.4rem}
+.section-head{max-width:64ch;margin-bottom:3.2rem}
 .section-head.center{margin-left:auto;margin-right:auto;text-align:center}
-.section-head p{margin-top:.9rem;color:var(--muted)}
+.section-head p{margin-top:0;color:var(--muted)}
 
 /* ---------- SERVICES ---------- */
 .svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem}
@@ -281,7 +282,7 @@ h3{font-size:1.42rem}
   font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--numeral);
   line-height:1;width:2.4rem;padding-top:.15rem;
 }
-.proc-body h3{font-size:1.32rem;margin-bottom:.4rem}
+.proc-body h3{font-size:1.32rem;margin-bottom:.5rem}
 .proc-body p{font-size:.96rem;color:var(--text);max-width:66ch}
 .proc-when{
   font-family:var(--body);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;
@@ -303,8 +304,8 @@ h3{font-size:1.42rem}
 }
 .portrait{background:var(--surface)}
 .portrait img{
-  width:100%;aspect-ratio:4/5;object-fit:cover;background:#b9b4ac;
-  border:1px solid var(--line);border-radius:2px;
+  width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 22%;
+  background:#b9b4ac;border:1px solid var(--line);border-radius:2px;
 }
 [data-theme="dark"] .portrait img{background:#4a4740}
 .portrait-cap{padding:1.05rem .3rem 1.2rem;border-top:1px solid var(--line);margin-top:1rem}
@@ -331,7 +332,7 @@ h3{font-size:1.42rem}
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   color:var(--numeral);font-family:var(--display);font-size:1.2rem;
 }
-.why-item h3{font-size:1.22rem;margin-bottom:.3rem}
+.why-item h3{font-size:1.22rem;margin-bottom:.45rem}
 .why-item p{font-size:.95rem;color:var(--text)}
 
 /* ---------- FAQ ---------- */
