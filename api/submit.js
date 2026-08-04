@@ -2,30 +2,71 @@
  * api/submit.js — Vercel Serverless Function
  *
  * Receives a JSON POST from consultation.html or apply.html, builds a styled
- * HTML email, and delivers it through Resend.
+ * HTML email, attaches any uploaded documents, and delivers it through Resend.
  *
  * Environment variables (Vercel → Project → Settings → Environment Variables).
- * Nothing here is hardcoded — set all three before deploying:
+ * Nothing here is hardcoded — set all three, then REDEPLOY, because saving env
+ * vars alone does not update a live deployment:
  *
  *   RESEND_API_KEY   your Resend key (starts with "re_")
- *   TO_EMAIL         PLACEHOLDER — where submissions land, e.g. contact@example.com
+ *   TO_EMAIL         where submissions land, e.g. AprilHStonePA@gmail.com
  *   FROM_EMAIL       a sender on a domain VERIFIED IN RESEND. This cannot be a
- *                    gmail.com address. Until the firm's domain exists, use
+ *                    gmail.com address. Before the domain is verified, use
  *                    onboarding@resend.dev for testing.
  *
- * PLACEHOLDER in this file: example.com in the footer line of each template.
+ * Optional:
+ *   ALLOWED_ORIGIN   locks CORS to one origin, e.g. https://aprilstonelaw.com
+ *                    Falls back to DEFAULT_ORIGIN below.
  */
 
 const BRAND = 'April H. Stone P.A.';
-const SITE  = 'example.com';  // PLACEHOLDER: swap for the real domain once it exists
+const SITE = 'aprilstonelaw.com';
+const DEFAULT_ORIGIN = 'https://aprilstonelaw.com';
+
+// Attachment ceiling. Vercel caps the request body around 4.5 MB and base64
+// inflates by ~33%, so the browser is told to keep raw files under 3 MB.
+const MAX_ATTACH_BYTES = 4 * 1024 * 1024;
+const MAX_ATTACHMENTS = 20;
+
+// Burst limiter. Warm serverless instances keep this Map between invocations,
+// which is enough to blunt scripted floods. Not a distributed limiter — if
+// abuse becomes a real problem, move this to Upstash/Redis.
+const RATE = new Map();
+const RATE_WINDOW_MS = 60 * 1000;
+const RATE_MAX = 5;
+
+function rateLimited(ip) {
+  const now = Date.now();
+  const hits = (RATE.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  hits.push(now);
+  RATE.set(ip, hits);
+  if (RATE.size > 5000) {
+    for (const [k, v] of RATE) {
+      if (!v.some((t) => now - t < RATE_WINDOW_MS)) RATE.delete(k);
+    }
+  }
+  return hits.length > RATE_MAX;
+}
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = process.env.ALLOWED_ORIGIN || DEFAULT_ORIGIN;
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
+
+  const ip =
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    (req.socket && req.socket.remoteAddress) ||
+    'unknown';
+
+  if (rateLimited(ip)) {
+    console.warn('Rate limited:', ip);
+    return res.status(429).json({ error: 'Too many submissions. Please wait a minute and try again.' });
+  }
 
   const { RESEND_API_KEY, TO_EMAIL, FROM_EMAIL } = process.env;
   if (!RESEND_API_KEY || !TO_EMAIL || !FROM_EMAIL) {
@@ -44,17 +85,41 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid request body.' });
   }
 
+  // Honeypot: a real person never sees that field, so anything in it is a bot.
+  // Return 200 so the bot believes it succeeded and does not retry.
+  if (typeof data.website === 'string' && data.website.trim() !== '') {
+    console.warn('Honeypot triggered from', ip);
+    return res.status(200).json({ ok: true });
+  }
+
   const isConsultation = data.formType === 'consultation';
   const formLabel = isConsultation ? 'Consultation Request' : 'Debt Restructuring Review';
-  const bizName = data.businessName || 'Unknown Business';
+  const bizName = clean(data.businessName) || 'Unknown Business';
 
-  // Reply-To the submitter, so hitting Reply in the inbox writes straight back to them.
-  // Consultation form sends name/email; the intake form sends own1Name/own1Email.
-  const contactEmail = data.email || data.own1Email;
-  const contactName = data.name || data.own1Name;
-  const replyTo = contactEmail
-    ? (contactName ? `${contactName} <${contactEmail}>` : contactEmail)
-    : undefined;
+  // Reply-To the submitter so hitting Reply writes straight back to them.
+  const contactEmail = clean(data.email) || clean(data.own1Email);
+  const contactName = clean(data.name) || clean(data.own1Name);
+  const replyTo = buildReplyTo(contactName, contactEmail);
+
+  // ---- attachments ----
+  const attachments = [];
+  let attachNote = '';
+  if (Array.isArray(data.attachments) && data.attachments.length) {
+    let total = 0;
+    for (const a of data.attachments.slice(0, MAX_ATTACHMENTS)) {
+      if (!a || typeof a.content !== 'string' || !a.filename) continue;
+      const bytes = Math.floor((a.content.length * 3) / 4);
+      if (total + bytes > MAX_ATTACH_BYTES) {
+        attachNote = 'Some files exceeded the size limit and were not attached — reply to request them.';
+        break;
+      }
+      total += bytes;
+      attachments.push({ filename: safeFilename(a.filename), content: a.content });
+    }
+  }
+  if (data.attachmentsOmitted) {
+    attachNote = 'The applicant selected files too large to attach — follow up for them.';
+  }
 
   try {
     const resendRes = await fetch('https://api.resend.com/emails', {
@@ -66,9 +131,12 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: `${BRAND} <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
-        reply_to: replyTo,
+        ...(replyTo ? { reply_to: replyTo } : {}),
         subject: `New ${formLabel} — ${bizName}`,
-        html: isConsultation ? consultationEmail(data) : intakeEmail(data),
+        html: isConsultation
+          ? consultationEmail(data)
+          : intakeEmail(data, attachments, attachNote),
+        ...(attachments.length ? { attachments } : {}),
       }),
     });
 
@@ -85,13 +153,33 @@ export default async function handler(req, res) {
   }
 }
 
+/* ─────────────────────────  sanitising  ───────────────────────── */
+
+// Strip CR/LF so user input can never inject extra email headers, and cap length.
+function clean(v, max = 300) {
+  if (v == null) return '';
+  return String(v).replace(/[\r\n\u2028\u2029]+/g, ' ').trim().slice(0, max);
+}
+
+function safeFilename(name) {
+  return clean(name, 120).replace(/[/\\]+/g, '-') || 'attachment';
+}
+
+function buildReplyTo(name, email) {
+  const e = clean(email, 200);
+  if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(e)) return undefined;
+  const n = clean(name, 100).replace(/[<>"]/g, '');
+  return n ? `${n} <${e}>` : e;
+}
+
 /* ─────────────────────────  email building blocks  ───────────────────────── */
 
 function row(label, value) {
-  if (!value) return '';
+  const v = clean(value, 2000);
+  if (!v) return '';
   return `<tr>
     <td style="padding:7px 14px;color:#7c766a;font-size:12px;white-space:nowrap;vertical-align:top;width:38%;border-bottom:1px solid #efeae0">${esc(label)}</td>
-    <td style="padding:7px 14px;color:#1c1a15;font-size:13px;font-weight:600;vertical-align:top;border-bottom:1px solid #efeae0">${esc(value)}</td>
+    <td style="padding:7px 14px;color:#1c1a15;font-size:13px;font-weight:600;vertical-align:top;border-bottom:1px solid #efeae0">${esc(v)}</td>
   </tr>`;
 }
 
@@ -139,10 +227,11 @@ function shell(heading, inner, replyName) {
 /* ─────────────────────────  consultation template  ───────────────────────── */
 
 function consultationEmail(data) {
-  const message = data.message
+  const msg = clean(data.message, 5000);
+  const message = msg
     ? `<div style="margin-bottom:22px">
          <div style="background:#1c1a15;color:#bd9a52;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px">What's Going On</div>
-         <div style="background:#fff;border:1px solid #e4dfd3;border-top:none;padding:14px;color:#1c1a15;font-size:14px;line-height:1.6;white-space:pre-wrap">${esc(data.message)}</div>
+         <div style="background:#fff;border:1px solid #e4dfd3;border-top:none;padding:14px;color:#1c1a15;font-size:14px;line-height:1.6;white-space:pre-wrap">${esc(String(data.message).slice(0, 5000))}</div>
        </div>`
     : '';
 
@@ -153,19 +242,18 @@ function consultationEmail(data) {
     row('Business', data.businessName),
   ]) + message;
 
-  return shell('New Consultation Request', inner, data.name);
+  return shell('New Consultation Request', inner, clean(data.name));
 }
 
 /* ─────────────────────────  intake template  ───────────────────────── */
 
 function ownerSection(data, i) {
-  const name = data[`own${i}Name`];
+  const name = clean(data[`own${i}Name`]);
   if (!name) return '';
   const ordinals = ['First', 'Second', 'Third', 'Fourth'];
-  const ssn = data[`own${i}Ssn`];
-  const digits = ssn ? String(ssn).replace(/\D/g, '') : '';
+  const digits = String(data[`own${i}Ssn`] || '').replace(/\D/g, '');
   const masked = digits ? `•••-••-${digits.slice(-4)}` : '';
-  const pct = data[`own${i}Pct`];
+  const pct = clean(data[`own${i}Pct`]);
 
   return section(`${ordinals[i - 1]} Owner`, [
     row('Name', name),
@@ -181,23 +269,14 @@ function ownerSection(data, i) {
 function debtTable(rows) {
   if (!Array.isArray(rows) || !rows.length) return '';
   const cols = [
-    ['funder', 'Funder'],
-    ['originalAmt', 'Original'],
-    ['balance', 'Balance'],
-    ['payment', 'Payment'],
-    ['frequency', 'Frequency'],
-    ['endDate', 'Ending'],
+    ['funder', 'Funder'], ['originalAmt', 'Original'], ['balance', 'Balance'],
+    ['payment', 'Payment'], ['frequency', 'Frequency'], ['endDate', 'Ending'],
   ];
   const thead = cols
-    .map(([, label]) => `<th style="padding:6px 10px;text-align:left;font-size:11px;border:1px solid #e4dfd3;color:#7c766a;background:#faf8f4;white-space:nowrap">${esc(label)}</th>`)
+    .map(([, l]) => `<th style="padding:6px 10px;text-align:left;font-size:11px;border:1px solid #e4dfd3;color:#7c766a;background:#faf8f4;white-space:nowrap">${esc(l)}</th>`)
     .join('');
-  const tbody = rows
-    .map((r) => {
-      const cells = cols
-        .map(([key]) => `<td style="padding:6px 10px;font-size:12px;color:#1c1a15;border:1px solid #e4dfd3;white-space:nowrap">${esc(r[key] || '—')}</td>`)
-        .join('');
-      return `<tr>${cells}</tr>`;
-    })
+  const tbody = rows.slice(0, 40)
+    .map((r) => `<tr>${cols.map(([k]) => `<td style="padding:6px 10px;font-size:12px;color:#1c1a15;border:1px solid #e4dfd3;white-space:nowrap">${esc(clean(r[k], 120) || '—')}</td>`).join('')}</tr>`)
     .join('');
 
   return `
@@ -212,16 +291,24 @@ function debtTable(rows) {
   </div>`;
 }
 
-function documentList(docs) {
-  if (!Array.isArray(docs) || !docs.length) return '';
+function documentBlock(data, attachments, note) {
+  const listed = Array.isArray(data.documents) ? data.documents : [];
+  if (!listed.length && !attachments.length) return '';
   const label = (z) => (z === 'agreements' ? 'Advance agreement' : 'Bank statement');
-  return section(
-    `Documents Attached by the Applicant (${docs.length})`,
-    docs.map((d) => row(label(d.zone), d.name))
+  const rows = listed.map((d) =>
+    row(label(d.zone), clean(d.name, 160) + (d.size ? ` (${Math.round(d.size / 1024)} KB)` : ''))
   );
+  const status = attachments.length
+    ? `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #23402f;font-size:12px;color:#46423a;line-height:1.6">
+         <strong>${attachments.length} file${attachments.length === 1 ? '' : 's'} attached to this email.</strong>${note ? ' ' + esc(note) : ''}
+       </div>`
+    : `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #8a6c30;font-size:12px;color:#46423a;line-height:1.6">
+         ${esc(note || 'Files were listed by the applicant but not attached — reply to request them.')}
+       </div>`;
+  return section(`Documents (${listed.length || attachments.length})`, rows) + status;
 }
 
-function intakeEmail(data) {
+function intakeEmail(data, attachments, note) {
   const inner =
     section('Business Information', [
       row('Company Name', data.businessName),
@@ -233,22 +320,18 @@ function intakeEmail(data) {
       row('Business Phone', data.bizPhone),
       row('Business Address', data.bizAddress),
     ]) +
-    ownerSection(data, 1) +
-    ownerSection(data, 2) +
-    ownerSection(data, 3) +
-    ownerSection(data, 4) +
+    ownerSection(data, 1) + ownerSection(data, 2) +
+    ownerSection(data, 3) + ownerSection(data, 4) +
     debtTable(data.debtRows) +
-    documentList(data.documents) +
+    documentBlock(data, attachments, note) +
     section('Consent & Signature', [
       row('Signed by', data.sigName),
       row('Date', data.sigDate),
       row('Consent', data.consent),
-    ]) +
-    `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #8a6c30;font-size:12px;color:#46423a;line-height:1.6">
-       Files the applicant selected are listed above by name only. They are not attached to this email — request them by replying, or wire the upload step to storage.
-     </div>`;
+    ]);
 
-  return shell('New Debt Restructuring Review', inner, data.own1Name || data.businessName);
+  return shell('New Debt Restructuring Review', inner,
+    clean(data.own1Name) || clean(data.businessName));
 }
 
 /* ─────────────────────────  utilities  ───────────────────────── */
