@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Start a Review — April H. Stone P.A.</title>
 <meta name="description" content="Begin an attorney review of your merchant cash advance agreements. Submitting this form starts a conversation; it does not create an attorney-client relationship.">
-<!-- PLACEHOLDER: domain https://example.com -->
-<link rel="canonical" href="https://example.com/apply.html">
+
+<link rel="canonical" href="https://aprilstonelaw.com/apply.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+/* Set the theme before first paint so there is no flash, and so the page is
+   still fully styled if this is the only script that runs. The static
+   data-theme="light" on <html> covers the no-JS case. */
+(function(){try{
+  document.documentElement.setAttribute('data-theme',
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}catch(e){}})();
+</script>
+<noscript><style>
+  /* without JS the IntersectionObserver never runs, so un-hide everything */
+  .reveal{opacity:1!important;transform:none!important}
+  .nav-side>.btn{display:inline-flex!important}
+</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +47,7 @@
   --surface-2:#f3f0e9;
   --ink:#1c1a15;
   --text:#46423a;
-  --muted:#7c766a;
+  --muted:#6e6857;
   --line:#e4dfd3;
   --line-strong:#d3ccbb;
   --band:#1b3325;
@@ -58,7 +73,7 @@
   --surface-2:#222119;
   --ink:#f4f1e9;
   --text:#c4bfb2;
-  --muted:#8a847a;
+  --muted:#948d81;
   --line:#2d2b27;
   --line-strong:#3a3833;
   --band:#12211a;
@@ -126,7 +141,7 @@ h3{font-size:1.42rem}
 .btn-lg{padding:1.1rem 2.3rem;font-size:1rem}
 .btn-ghostlink{
   font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--accent);
-  display:inline-flex;align-items:center;gap:.4rem;
+  display:inline-flex;align-items:center;gap:.4rem;min-height:44px;
 }
 .btn-ghostlink:hover{color:var(--accent-deep)}
 
@@ -139,11 +154,19 @@ h3{font-size:1.42rem}
   max-width:var(--maxw);margin:0 auto;padding:.85rem 32px;
   display:flex;align-items:center;gap:1.4rem;
 }
-.brand{display:flex;align-items:center;flex-shrink:0;min-width:0}
+.brand{display:flex;align-items:center;flex-shrink:1;min-width:0;min-height:44px}
 .brand-lock{display:flex;flex-direction:column;line-height:1;min-width:0}
-.brand-logo{height:27px;width:auto;display:block}
+.brand-logo{height:27px;width:auto;display:block;max-width:100%}
 [data-theme="light"] .logo-light{display:none}
 [data-theme="dark"]  .logo-dark{display:none}
+/* text wordmark shown only if the logo files fail to load */
+.brand-fallback{
+  display:none;font-family:var(--display);font-size:1.2rem;font-weight:600;
+  color:var(--ink);white-space:nowrap;letter-spacing:.01em;
+}
+.brand-fallback i{font-style:normal;color:var(--accent)}
+.logo-failed .brand-imgs{display:none}
+.logo-failed .brand-fallback{display:block}
 .brand-sub{
   font-family:var(--body);font-size:.6rem;letter-spacing:.15em;
   text-transform:uppercase;color:var(--muted);margin-top:6px;padding-left:2px;
@@ -159,14 +182,14 @@ h3{font-size:1.42rem}
 .nav-links a:hover,.nav-links a.active{color:var(--accent)}
 .nav-side{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
 .theme-btn{
-  width:38px;height:38px;border:1px solid var(--line-strong);background:transparent;
+  width:44px;height:44px;border:1px solid var(--line-strong);background:transparent;
   border-radius:var(--radius);color:var(--ink);cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;
 }
 .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .theme-btn svg{width:17px;height:17px}
 .burger{
-  display:none;flex-direction:column;gap:5px;width:40px;height:40px;
+  display:none;flex-direction:column;gap:5px;width:44px;height:44px;
   background:none;border:none;cursor:pointer;align-items:center;justify-content:center;
 }
 .burger span{width:22px;height:2px;background:var(--ink);transition:.22s;display:block}
@@ -334,7 +357,7 @@ h3{font-size:1.42rem}
   font-family:var(--body);font-size:.74rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
 }
-.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.26rem 0}
+.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.62rem 0}
 .footer-col a:hover{color:var(--accent)}
 .footer-base{
   border-top:1px solid var(--line);padding:1.5rem 0 2rem;
@@ -354,6 +377,7 @@ h3{font-size:1.42rem}
 
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:980px){
+  .why-grid{grid-template-columns:1fr;gap:1.8rem}
   .nav-links{display:none}
   .burger{display:flex}
   .svc-grid{grid-template-columns:1fr}
@@ -367,9 +391,14 @@ h3{font-size:1.42rem}
 @media(max-width:560px){
   html{scroll-padding-top:74px}
   .wrap{padding:0 22px}
-  .nav-inner{padding:.7rem 22px;gap:.6rem}
+  .nav-inner{padding:.7rem 18px;gap:.5rem}
   .nav-mobile{padding-left:22px;padding-right:22px}
   .brand-sub{display:none}
+  /* the CTA already sits in the mobile menu — drop it from the bar so the
+     logo, theme toggle and burger all fit on a 320px screen */
+  .nav-side > .btn{display:none}
+  .brand-logo{height:24px}
+  .brand-fallback{font-size:1.05rem}
   .hero{padding:8rem 0 4rem}
   .page-head{padding:7.5rem 0 3rem}
   .hero-cta{flex-direction:column}
@@ -388,6 +417,7 @@ h3{font-size:1.42rem}
 .apply-intro h1{font-size:clamp(2.1rem,4vw,3rem);margin-bottom:.9rem}
 .apply-intro p{color:var(--muted);font-size:1.02rem}
 .apply-grid{display:grid;grid-template-columns:250px 1fr;gap:3rem;align-items:start}
+.apply-grid > *{min-width:0}
 
 /* progress rail */
 .rail{position:sticky;top:108px;display:flex;flex-direction:column;gap:0}
@@ -408,7 +438,10 @@ h3{font-size:1.42rem}
 .form-card{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   padding:2.6rem 2.6rem 2rem;box-shadow:var(--shadow);
+  min-width:0;                 /* lets .dt-scroll actually scroll instead of expanding */
 }
+.fstep{min-width:0}
+.dt-scroll{max-width:100%}
 .fstep{display:none}
 .fstep.active{display:block;animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -452,20 +485,20 @@ h3{font-size:1.42rem}
 .dt td{padding:.45rem .4rem;border-bottom:1px solid var(--line);vertical-align:middle}
 .dt tr:last-child td{border-bottom:none}
 .dt input,.dt select{
-  width:100%;min-width:110px;padding:.6rem .6rem;background:var(--field);
+  width:100%;min-width:110px;padding:.78rem .6rem;background:var(--field);
   border:1px solid var(--line-strong);border-radius:var(--radius);
-  color:var(--ink);font-family:var(--body);font-size:15px;
+  color:var(--ink);font-family:var(--body);font-size:16px;
 }
 .dt input:focus,.dt select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .dt input.bad{border-color:var(--danger)}
-.dt .dt-x{width:34px}
+.dt .dt-x{width:50px}
 .dt-x button{
-  width:28px;height:28px;border:1px solid var(--line-strong);background:var(--field);
+  width:44px;height:44px;border:1px solid var(--line-strong);background:var(--field);
   border-radius:var(--radius);color:var(--muted);cursor:pointer;font-size:.8rem;line-height:1;
 }
 .dt-x button:hover{border-color:var(--danger);color:var(--danger)}
 .addbtn{
-  width:100%;padding:.8rem;background:transparent;border:1px dashed var(--line-strong);
+  width:100%;padding:.95rem;background:transparent;border:1px dashed var(--line-strong);
   border-radius:var(--radius);color:var(--accent);font-family:var(--body);
   font-size:.86rem;font-weight:600;cursor:pointer;margin-top:.8rem;transition:.15s;
 }
@@ -491,6 +524,15 @@ h3{font-size:1.42rem}
 .fchip button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1}
 .fchip button:hover{color:var(--danger)}
 .upload-block{margin-bottom:1.8rem}
+.upload-meter{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  font-size:.8rem;color:var(--muted);margin-top:.9rem;padding-top:.8rem;
+  border-top:1px solid var(--line);
+}
+.upload-meter.over{color:var(--danger);font-weight:600}
+.meter-bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.meter-fill{height:100%;background:var(--green);width:0;transition:width .25s}
+.upload-meter.over .meter-fill{background:var(--danger)}
 
 /* review */
 .rev-card{
@@ -559,7 +601,8 @@ h3{font-size:1.42rem}
   <div class="nav-inner">
     <a href="index.html" class="brand" aria-label="April H. Stone P.A. — home">
       <span class="brand-lock">
-        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-imgs"><img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284" onerror="this.closest('.brand-lock').classList.add('logo-failed')"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284" onerror="this.closest('.brand-lock').classList.add('logo-failed')"></span>
+        <span class="brand-fallback">April H. Stone <i>P.A.</i></span>
         <span class="brand-sub">Counsel for Your Business</span>
       </span>
     </a>
@@ -702,6 +745,12 @@ h3{font-size:1.42rem}
             </label>
           </div>
 
+          <!-- honeypot: hidden from people, tempting to bots. If it arrives filled,
+               the server silently discards the submission. -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+            <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
           <label class="fld">
             <span class="fld-label">Business Address</span>
             <input type="text" name="bizAddress" required autocomplete="street-address" placeholder="140 Main St, Suite 3, Boca Raton, FL 33432">
@@ -709,8 +758,8 @@ h3{font-size:1.42rem}
           </label>
 
           <div class="form-nav">
-            <button type="button" class="btn btn-outline" id="backBtn">Back</button>
-            <button type="button" class="btn btn-primary" id="nextBtn">Continue</button>
+            <button type="button" class="btn btn-outline" id="backBtn" data-back>Back</button>
+            <button type="button" class="btn btn-primary" id="nextBtn" data-next>Continue</button>
           </div>
         </section>
 
@@ -778,7 +827,7 @@ h3{font-size:1.42rem}
             <div class="drop" data-drop="agreements" tabindex="0" role="button" aria-label="Upload advance agreements">
               <div class="drop-t">Drop files here, or click to choose</div>
               <div class="drop-h">PDF, JPG or PNG &middot; multiple files welcome</div>
-              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+              <input type="file" multiple aria-label="Choose advance agreement files" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
             </div>
             <div class="flist" data-files="agreements"></div>
           </div>
@@ -788,14 +837,20 @@ h3{font-size:1.42rem}
             <div class="drop" data-drop="statements" tabindex="0" role="button" aria-label="Upload bank statements">
               <div class="drop-t">Drop files here, or click to choose</div>
               <div class="drop-h">PDF, JPG or PNG &middot; multiple files welcome</div>
-              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.csv">
+              <input type="file" multiple aria-label="Choose bank statement files" accept=".pdf,.jpg,.jpeg,.png,.csv">
             </div>
             <div class="flist" data-files="statements"></div>
           </div>
 
+          <div class="upload-meter" id="uploadMeter">
+            <span id="meterLabel">No files attached</span>
+            <span class="meter-bar"><span class="meter-fill" id="meterFill"></span></span>
+            <span id="meterCap">0 / 3.0 MB</span>
+          </div>
+
           <div class="notice">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.4v5M12 7.9h.01"/></svg>
-            <span>Don't have the agreements to hand? Continue anyway. The firm will follow up and can request copies from the funders directly.</span>
+            <span>Files are sent with your submission, up to 3&nbsp;MB in total. If your statements are larger than that, continue anyway &mdash; the firm will follow up with a secure way to send them. You can also continue with nothing attached; we can request copies from the funders directly.</span>
           </div>
 
           <div class="form-nav">
@@ -869,7 +924,8 @@ h3{font-size:1.42rem}
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="brand">
-        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-imgs"><img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284" onerror="this.closest('.brand').classList.add('logo-failed')"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284" onerror="this.closest('.brand').classList.add('logo-failed')"></span>
+        <span class="brand-fallback">April H. Stone <i>P.A.</i></span>
       </a>
       <p class="footer-tag">Counsel for Your Business</p>
       <p>An attorney-led firm for businesses under financial pressure: merchant cash advance restructuring and bankruptcy representation, from a litigator who has spent fifteen years in both.</p>
@@ -892,7 +948,7 @@ h3{font-size:1.42rem}
     <div class="footer-col">
       <h5>Contact</h5>
       <a href="tel:+17607175184">(760) 717-5184</a>
-      <a href="mailto:contact@example.com">contact@example.com</a>
+      <a href="mailto:contact@aprilstonelaw.com">contact@aprilstonelaw.com</a>
       <span>Boca Raton, Florida</span>
       <span>Mon&ndash;Fri, 9am to 6pm ET</span>
     </div>
@@ -1007,7 +1063,41 @@ h3{font-size:1.42rem}
   var card     = document.getElementById('formCard');
   var railItems= document.getElementById('rail').querySelectorAll('.rail-item');
   var doneCard = document.getElementById('doneCard');
-  var uploaded = [];   /* {zone, name, size} — file metadata only, in a plain JS variable */
+  var uploaded = [];   /* {zone, name, size, file} — held in a plain JS variable, no storage APIs */
+  var MAX_UPLOAD = 3 * 1024 * 1024;   /* 3 MB total; Vercel caps the request body at ~4.5 MB
+                                         and base64 inflates payloads by roughly a third */
+
+  function fmtSize(b){
+    return b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB'
+                        : Math.max(1, Math.round(b / 1024)) + ' KB';
+  }
+  function totalBytes(){
+    return uploaded.reduce(function(s, u){ return s + u.size; }, 0);
+  }
+  function updateMeter(){
+    var total = totalBytes();
+    var meter = document.getElementById('uploadMeter');
+    if(!meter) return;
+    var over = total > MAX_UPLOAD;
+    meter.classList.toggle('over', over);
+    document.getElementById('meterFill').style.width =
+      Math.min(100, (total / MAX_UPLOAD) * 100) + '%';
+    document.getElementById('meterCap').textContent = fmtSize(total) + ' / 3.0 MB';
+    document.getElementById('meterLabel').textContent =
+      !uploaded.length ? 'No files attached'
+      : over ? 'Too large to attach \u2014 the firm will follow up for these'
+      : uploaded.length + (uploaded.length === 1 ? ' file attached' : ' files attached');
+  }
+
+  /* read a File into base64 for the email attachment */
+  function toBase64(file){
+    return new Promise(function(resolve, reject){
+      var r = new FileReader();
+      r.onload  = function(){ resolve(String(r.result).split(',')[1] || ''); };
+      r.onerror = function(){ reject(new Error('Could not read ' + file.name)); };
+      r.readAsDataURL(file);
+    });
+  }
 
   /* ---------- owner cards ---------- */
   var ORDINALS = ['First','Second','Third','Fourth'];
@@ -1053,15 +1143,18 @@ h3{font-size:1.42rem}
   var FREQ = ['Daily','Weekly','Bi-weekly','Monthly'];
   function addRow(){
     var tr = document.createElement('tr');
+    var n = document.querySelectorAll('#debtBody tr').length + 1;
     var freqOpts = '<option value="">Select</option>' + FREQ.map(function(f){ return '<option>' + f + '</option>'; }).join('');
+    /* each control gets its own accessible name — column headers alone are not
+       announced for inputs inside table cells */
     tr.innerHTML =
-      '<td><input type="text" data-k="funder" placeholder="Funder name"></td>' +
-      '<td><input type="text" data-k="originalAmt" inputmode="decimal" placeholder="$50,000"></td>' +
-      '<td><input type="text" data-k="balance" inputmode="decimal" placeholder="$38,400"></td>' +
-      '<td><input type="text" data-k="payment" inputmode="decimal" placeholder="$1,100"></td>' +
-      '<td><select data-k="frequency">' + freqOpts + '</select></td>' +
-      '<td><input type="date" data-k="endDate"></td>' +
-      '<td class="dt-x"><button type="button" aria-label="Remove this row">&#10005;</button></td>';
+      '<td><input type="text" data-k="funder" aria-label="Funder name, advance ' + n + '" placeholder="Funder name"></td>' +
+      '<td><input type="text" data-k="originalAmt" inputmode="decimal" aria-label="Original amount, advance ' + n + '" placeholder="$50,000"></td>' +
+      '<td><input type="text" data-k="balance" inputmode="decimal" aria-label="Current balance, advance ' + n + '" placeholder="$38,400"></td>' +
+      '<td><input type="text" data-k="payment" inputmode="decimal" aria-label="Regular payment, advance ' + n + '" placeholder="$1,100"></td>' +
+      '<td><select data-k="frequency" aria-label="Payment frequency, advance ' + n + '">' + freqOpts + '</select></td>' +
+      '<td><input type="date" data-k="endDate" aria-label="Ending date, advance ' + n + '"></td>' +
+      '<td class="dt-x"><button type="button" aria-label="Remove advance ' + n + '">&#10005;</button></td>';
     tr.querySelector('.dt-x button').addEventListener('click', function(){ tr.remove(); });
     document.getElementById('debtBody').appendChild(tr);
   }
@@ -1105,7 +1198,11 @@ h3{font-size:1.42rem}
     if(/Ssn$/.test(t.name))            t.value = fmtSsn(t.value);
     else if(t.name === 'ein')          t.value = fmtEin(t.value);
     else if(/Phone$/.test(t.name))     t.value = fmtPhone(t.value);
-    else if(/Pct$/.test(t.name))       t.value = t.value.replace(/\D/g,'').slice(0,3);
+    else if(/Pct$/.test(t.name)){
+      var pct = t.value.replace(/\D/g,'').slice(0,3);
+      if(pct !== '' && +pct > 100) pct = '100';
+      t.value = pct;
+    }
   });
 
   /* ---------- validation ---------- */
@@ -1173,7 +1270,9 @@ h3{font-size:1.42rem}
       else if(i === n - 1) r.classList.add('active');
     });
     if(n === 5) buildReview();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // land on the form itself rather than the page header
+    var top = card.getBoundingClientRect().top + window.pageYOffset - 96;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }
   card.addEventListener('click', function(e){
     var next = e.target.closest('[data-next], #nextBtn');
@@ -1214,22 +1313,25 @@ h3{font-size:1.42rem}
 
     function add(files){
       Array.prototype.forEach.call(files, function(f){
-        var rec = { zone: key, name: f.name, size: f.size };
+        /* the File object itself is kept so the bytes can be sent, not just the name */
+        var rec = { zone: key, name: f.name, size: f.size, file: f };
         uploaded.push(rec);
 
-        var kb   = Math.max(1, Math.round(f.size / 1024));
         var chip = document.createElement('div');
         chip.className = 'fchip';
-        chip.innerHTML = '<span>' + esc(f.name) + ' &middot; ' + kb + ' KB</span>' +
+        chip.innerHTML = '<span>' + esc(f.name) + ' &middot; ' + fmtSize(f.size) + '</span>' +
                          '<button type="button" aria-label="Remove ' + esc(f.name) + '">&#10005;</button>';
         chip.querySelector('button').addEventListener('click', function(){
-          uploaded.splice(uploaded.indexOf(rec), 1);
+          var i = uploaded.indexOf(rec);
+          if(i > -1) uploaded.splice(i, 1);
           chip.remove();
           input.value = ''; /* so the same file can be picked again */
+          updateMeter();
         });
         list.appendChild(chip);
       });
       input.value = '';
+      updateMeter();
     }
   });
 
@@ -1289,19 +1391,36 @@ h3{font-size:1.42rem}
 
     card.querySelectorAll('[name]').forEach(function(f){
       if(f.type === 'checkbox' || f.type === 'file') return;
+      if(f.name === 'website') return;            /* honeypot, handled separately */
       var v = f.value ? f.value.trim() : '';
       if(v) data[f.name] = v;
     });
 
     var rows = debtRows();
     if(rows.length) data.debtRows = rows;
-    if(uploaded.length) data.documents = uploaded.map(function(u){ return { zone: u.zone, name: u.name }; });
+    if(uploaded.length) data.documents = uploaded.map(function(u){ return { zone: u.zone, name: u.name, size: u.size }; });
     data.consent = 'All three consents affirmed';
+    data.website = (card.querySelector('[name="website"]') || {}).value || '';
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    fetch('/api/submit', {
+    var withinCap = uploaded.length && totalBytes() <= MAX_UPLOAD;
+    data.attachmentsOmitted = uploaded.length ? !withinCap : false;
+
+    var prep = withinCap
+      ? Promise.all(uploaded.map(function(u){
+          return toBase64(u.file).then(function(b64){
+            return { filename: u.name, content: b64 };
+          });
+        })).then(function(atts){ data.attachments = atts; })
+          .catch(function(){ data.attachments = []; data.attachmentsOmitted = true; })
+      : Promise.resolve();
+
+    prep.then(function(){ return send(); });
+
+    function send(){
+    return fetch('/api/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -1313,7 +1432,8 @@ h3{font-size:1.42rem}
         document.getElementById('rail').style.display = 'none';
         document.getElementById('applyGrid').style.gridTemplateColumns = '1fr';
         doneCard.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        var dt = doneCard.getBoundingClientRect().top + window.pageYOffset - 96;
+        window.scrollTo({ top: Math.max(0, dt), behavior: 'smooth' });
       } else {
         alert('That did not send: ' + ((resp && resp.error) || 'Unknown error') + '\n\nPlease try again, or call the firm directly.');
         btn.disabled = false;
@@ -1325,6 +1445,7 @@ h3{font-size:1.42rem}
       btn.disabled = false;
       btn.textContent = 'Submit for Review';
     });
+    }
   }
 
   function esc(s){
@@ -1334,6 +1455,7 @@ h3{font-size:1.42rem}
   }
 
   /* ---------- init ---------- */
+  updateMeter();
   document.getElementById('sigDate').value =
     new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
   show(1);

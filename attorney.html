@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>April H. Stone, Attorney — April H. Stone P.A.</title>
 <meta name="description" content="April Stone is a litigator with fifteen years of experience in default and bankruptcy litigation. Levin College of Law, judicial clerk to Chief Bankruptcy Judge Paul Glenn, formerly of Akerman's bankruptcy and restructuring litigation group.">
-<!-- PLACEHOLDER: domain https://example.com -->
-<link rel="canonical" href="https://example.com/attorney.html">
+
+<link rel="canonical" href="https://aprilstonelaw.com/attorney.html">
 <meta property="og:title" content="April H. Stone, Attorney">
 <meta property="og:description" content="Fifteen years in default and bankruptcy litigation. MCA restructuring and bankruptcy representation, Boca Raton, Florida.">
 <meta property="og:type" content="profile">
-<meta property="og:url" content="https://example.com/attorney.html">
+<meta property="og:url" content="https://aprilstonelaw.com/attorney.html">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Attorney",
   "name": "April H. Stone",
-  "url": "https://example.com/attorney.html",
-  "image": "https://example.com/assets/april-stone.jpg",
+  "url": "https://aprilstonelaw.com/attorney.html",
+  "image": "https://aprilstonelaw.com/assets/april-stone.jpg",
   "jobTitle": "Attorney",
   "telephone": "(760) 717-5184",
-  "email": "contact@example.com",
+  "email": "contact@aprilstonelaw.com",
   "worksFor": { "@type": "LegalService", "name": "April H. Stone P.A." },
   "alumniOf": [
     { "@type": "CollegeOrUniversity", "name": "University of Florida Levin College of Law" },
@@ -34,6 +34,21 @@
   }
 }
 </script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+/* Set the theme before first paint so there is no flash, and so the page is
+   still fully styled if this is the only script that runs. The static
+   data-theme="light" on <html> covers the no-JS case. */
+(function(){try{
+  document.documentElement.setAttribute('data-theme',
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}catch(e){}})();
+</script>
+<noscript><style>
+  /* without JS the IntersectionObserver never runs, so un-hide everything */
+  .reveal{opacity:1!important;transform:none!important}
+  .nav-side>.btn{display:inline-flex!important}
+</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -58,7 +73,7 @@
   --surface-2:#f3f0e9;
   --ink:#1c1a15;
   --text:#46423a;
-  --muted:#7c766a;
+  --muted:#6e6857;
   --line:#e4dfd3;
   --line-strong:#d3ccbb;
   --band:#1b3325;
@@ -84,7 +99,7 @@
   --surface-2:#222119;
   --ink:#f4f1e9;
   --text:#c4bfb2;
-  --muted:#8a847a;
+  --muted:#948d81;
   --line:#2d2b27;
   --line-strong:#3a3833;
   --band:#12211a;
@@ -152,7 +167,7 @@ h3{font-size:1.42rem}
 .btn-lg{padding:1.1rem 2.3rem;font-size:1rem}
 .btn-ghostlink{
   font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--accent);
-  display:inline-flex;align-items:center;gap:.4rem;
+  display:inline-flex;align-items:center;gap:.4rem;min-height:44px;
 }
 .btn-ghostlink:hover{color:var(--accent-deep)}
 
@@ -165,11 +180,19 @@ h3{font-size:1.42rem}
   max-width:var(--maxw);margin:0 auto;padding:.85rem 32px;
   display:flex;align-items:center;gap:1.4rem;
 }
-.brand{display:flex;align-items:center;flex-shrink:0;min-width:0}
+.brand{display:flex;align-items:center;flex-shrink:1;min-width:0;min-height:44px}
 .brand-lock{display:flex;flex-direction:column;line-height:1;min-width:0}
-.brand-logo{height:27px;width:auto;display:block}
+.brand-logo{height:27px;width:auto;display:block;max-width:100%}
 [data-theme="light"] .logo-light{display:none}
 [data-theme="dark"]  .logo-dark{display:none}
+/* text wordmark shown only if the logo files fail to load */
+.brand-fallback{
+  display:none;font-family:var(--display);font-size:1.2rem;font-weight:600;
+  color:var(--ink);white-space:nowrap;letter-spacing:.01em;
+}
+.brand-fallback i{font-style:normal;color:var(--accent)}
+.logo-failed .brand-imgs{display:none}
+.logo-failed .brand-fallback{display:block}
 .brand-sub{
   font-family:var(--body);font-size:.6rem;letter-spacing:.15em;
   text-transform:uppercase;color:var(--muted);margin-top:6px;padding-left:2px;
@@ -185,14 +208,14 @@ h3{font-size:1.42rem}
 .nav-links a:hover,.nav-links a.active{color:var(--accent)}
 .nav-side{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
 .theme-btn{
-  width:38px;height:38px;border:1px solid var(--line-strong);background:transparent;
+  width:44px;height:44px;border:1px solid var(--line-strong);background:transparent;
   border-radius:var(--radius);color:var(--ink);cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;
 }
 .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .theme-btn svg{width:17px;height:17px}
 .burger{
-  display:none;flex-direction:column;gap:5px;width:40px;height:40px;
+  display:none;flex-direction:column;gap:5px;width:44px;height:44px;
   background:none;border:none;cursor:pointer;align-items:center;justify-content:center;
 }
 .burger span{width:22px;height:2px;background:var(--ink);transition:.22s;display:block}
@@ -368,7 +391,7 @@ h3{font-size:1.42rem}
   font-family:var(--body);font-size:.74rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
 }
-.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.26rem 0}
+.footer-col a,.footer-col span{display:block;color:var(--muted);font-size:.92rem;padding:.62rem 0}
 .footer-col a:hover{color:var(--accent)}
 .footer-base{
   border-top:1px solid var(--line);padding:1.5rem 0 2rem;
@@ -388,6 +411,7 @@ h3{font-size:1.42rem}
 
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:980px){
+  .why-grid{grid-template-columns:1fr;gap:1.8rem}
   .nav-links{display:none}
   .burger{display:flex}
   .svc-grid{grid-template-columns:1fr}
@@ -401,9 +425,14 @@ h3{font-size:1.42rem}
 @media(max-width:560px){
   html{scroll-padding-top:74px}
   .wrap{padding:0 22px}
-  .nav-inner{padding:.7rem 22px;gap:.6rem}
+  .nav-inner{padding:.7rem 18px;gap:.5rem}
   .nav-mobile{padding-left:22px;padding-right:22px}
   .brand-sub{display:none}
+  /* the CTA already sits in the mobile menu — drop it from the bar so the
+     logo, theme toggle and burger all fit on a 320px screen */
+  .nav-side > .btn{display:none}
+  .brand-logo{height:24px}
+  .brand-fallback{font-size:1.05rem}
   .hero{padding:8rem 0 4rem}
   .page-head{padding:7.5rem 0 3rem}
   .hero-cta{flex-direction:column}
@@ -452,7 +481,8 @@ h3{font-size:1.42rem}
   <div class="nav-inner">
     <a href="index.html" class="brand" aria-label="April H. Stone P.A. — home">
       <span class="brand-lock">
-        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-imgs"><img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284" onerror="this.closest('.brand-lock').classList.add('logo-failed')"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284" onerror="this.closest('.brand-lock').classList.add('logo-failed')"></span>
+        <span class="brand-fallback">April H. Stone <i>P.A.</i></span>
         <span class="brand-sub">Counsel for Your Business</span>
       </span>
     </a>
@@ -534,7 +564,7 @@ h3{font-size:1.42rem}
         <div class="atty-cta">
           <p>The initial consultation is free and commits you to nothing. Describe the situation and you will get a straight read on whether the firm can help.</p>
           <div class="cta-actions" style="justify-content:flex-start">
-            <a href="consultation.html" class="btn btn-primary">Speak With the Firm</a>
+            <a href="consultation.html" class="btn btn-primary">Schedule a Free Consultation with Counsel</a>
             <a href="apply.html" class="btn btn-outline">Start a Review</a>
           </div>
         </div>
@@ -548,7 +578,8 @@ h3{font-size:1.42rem}
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="brand">
-        <img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284">
+        <span class="brand-imgs"><img class="brand-logo logo-dark" src="assets/logo-dark.png" alt="April H. Stone P.A." width="1200" height="284" onerror="this.closest('.brand').classList.add('logo-failed')"><img class="brand-logo logo-light" src="assets/logo-light.png" alt="" aria-hidden="true" width="1200" height="284" onerror="this.closest('.brand').classList.add('logo-failed')"></span>
+        <span class="brand-fallback">April H. Stone <i>P.A.</i></span>
       </a>
       <p class="footer-tag">Counsel for Your Business</p>
       <p>An attorney-led firm for businesses under financial pressure: merchant cash advance restructuring and bankruptcy representation, from a litigator who has spent fifteen years in both.</p>
@@ -571,7 +602,7 @@ h3{font-size:1.42rem}
     <div class="footer-col">
       <h5>Contact</h5>
       <a href="tel:+17607175184">(760) 717-5184</a>
-      <a href="mailto:contact@example.com">contact@example.com</a>
+      <a href="mailto:contact@aprilstonelaw.com">contact@aprilstonelaw.com</a>
       <span>Boca Raton, Florida</span>
       <span>Mon&ndash;Fri, 9am to 6pm ET</span>
     </div>
