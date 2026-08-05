@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,14 @@
 <title>Schedule a Consultation — April H. Stone P.A.</title>
 <meta name="description" content="Speak with an attorney about your merchant cash advance debt. The first conversation is free, carries no obligation, and ends with a straight answer.">
 
-<link rel="canonical" href="https://aprilstonelaw.com/consultation.html">
+<link rel="canonical" href="https://aprilhstonepa.com/consultation.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script>
 /* Set the theme before first paint so there is no flash, and so the page is
    still fully styled if this is the only script that runs. The static
    data-theme="light" on <html> covers the no-JS case. */
 (function(){try{
-  document.documentElement.setAttribute('data-theme',
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme','dark');
 }catch(e){}})();
 </script>
 <noscript><style>
@@ -339,7 +338,13 @@ h4{margin-bottom:.5rem}
   list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center;
 }
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:var(--accent);font-size:1.4rem;transition:transform .2s}
+.faq summary::after{
+  content:"";width:14px;height:14px;flex-shrink:0;
+  background:
+    linear-gradient(var(--accent),var(--accent)) center / 100% 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) center / 2px 100% no-repeat;
+  transition:transform .2s ease;
+}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{padding:0 .2rem 1.4rem;color:var(--text);font-size:.98rem;max-width:72ch}
 .faq details p + p{padding-top:0;margin-top:-.6rem}
@@ -650,7 +655,7 @@ h4{margin-bottom:.5rem}
     <div class="footer-col">
       <h5>Contact</h5>
       <a href="tel:+17607175184">(760) 717-5184</a>
-      <a href="mailto:contact@aprilstonelaw.com">contact@aprilstonelaw.com</a>
+      <a href="mailto:contact@aprilhstonepa.com">contact@aprilhstonepa.com</a>
       <span>Boca Raton, Florida</span>
       <span>Mon&ndash;Fri, 9am to 6pm ET</span>
     </div>
@@ -673,17 +678,15 @@ h4{margin-bottom:.5rem}
   var SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 1.8v3M12 19.2v3M4.5 4.5l2 2M17.5 17.5l2 2M1.8 12h3M19.2 12h3M4.5 19.5l2-2M17.5 6.5l2-2"/></svg>';
   var MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
   var themeBtn = document.getElementById('themeBtn');
-  var mq = window.matchMedia('(prefers-color-scheme: dark)');
-  var manual = null; /* null = still following the device */
+  var manual = null; /* dark is the default; a click this session can override it */
 
   function applyTheme(theme){
     root.setAttribute('data-theme', theme);
     themeBtn.innerHTML = (theme === 'dark') ? SUN : MOON;
     themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
-  function currentTheme(){ return manual || (mq.matches ? 'dark' : 'light'); }
+  function currentTheme(){ return manual || 'dark'; }
   applyTheme(currentTheme());
-  mq.addEventListener('change', function(){ if(manual === null) applyTheme(currentTheme()); });
   themeBtn.addEventListener('click', function(){
     manual = (currentTheme() === 'dark') ? 'light' : 'dark';
     applyTheme(manual);
