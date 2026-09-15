@@ -1,5 +1,5 @@
 /**
- * api/blob-upload.js — Vercel Edge Function
+ * api/blob-upload.js — Vercel Function (Node.js runtime, Web handler style)
  *
  * Authorizes CLIENT uploads to Vercel Blob. The browser talks to Blob storage
  * directly for the actual file bytes — this route only ever exchanges one
@@ -8,22 +8,23 @@
  * one of our functions at all.
  *
  * Requires a Blob store connected to this project (Vercel dashboard → Storage
- * → Create Database → Blob). Vercel auto-injects BLOB_READ_WRITE_TOKEN once
- * that store is connected — nothing to copy in manually.
+ * → Create Database → Blob, access "Public"). Vercel auto-injects
+ * BLOB_READ_WRITE_TOKEN once that store is connected — nothing to copy in.
  *
  * If this route or Blob itself fails (store not connected, Hobby storage quota
  * used up, an outage), apply.html retries and then falls back to emailing the
  * file through api/relay-file.js — an applicant's documents are never dropped
  * just because Blob is unavailable.
  *
- * Runs on the Edge runtime (not the classic req/res Node style used by
- * api/submit.js) because @vercel/blob's client-upload handshake is built
- * around the standard Fetch Request/Response objects.
+ * Why named POST/OPTIONS exports instead of api/submit.js's req/res style:
+ * @vercel/blob's handleUpload() is built around standard Fetch
+ * Request/Response objects, and Vercel's Node runtime passes exactly those to
+ * named HTTP-method exports. Do NOT move this to the Edge runtime
+ * (`export const config = { runtime: 'edge' }`): @vercel/blob 2.x imports
+ * Node-only modules (crypto, undici) and the deployment fails to build.
  */
 
 import { handleUpload } from '@vercel/blob/client';
-
-export const config = { runtime: 'edge' };
 
 const DEFAULT_ORIGIN = 'https://aprilhstonepa.com';
 
@@ -64,38 +65,40 @@ function rateLimited(ip) {
   return hits.length > RATE_MAX;
 }
 
-function corsHeaders(origin) {
+function corsHeaders() {
   return {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || DEFAULT_ORIGIN,
     Vary: 'Origin',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
 }
 
-export default async function handler(request) {
-  const origin = (typeof process !== 'undefined' && process.env && process.env.ALLOWED_ORIGIN) || DEFAULT_ORIGIN;
-  const headers = corsHeaders(origin);
+function json(body, status) {
+  return new Response(JSON.stringify(body), { status, headers: corsHeaders() });
+}
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 200, headers });
-  }
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed.' }), { status: 405, headers });
-  }
+export function OPTIONS() {
+  return new Response(null, { status: 200, headers: corsHeaders() });
+}
 
+export function GET() {
+  return json({ error: 'Method not allowed.' }, 405);
+}
+
+export async function POST(request) {
   const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
   if (rateLimited(ip)) {
     console.warn('blob-upload rate limited:', ip);
-    return new Response(JSON.stringify({ error: 'Too many uploads. Please wait a few minutes.' }), { status: 429, headers });
+    return json({ error: 'Too many uploads. Please wait a few minutes.' }, 429);
   }
 
   let body;
   try {
     body = await request.json();
   } catch {
-    return new Response(JSON.stringify({ error: 'Invalid request body.' }), { status: 400, headers });
+    return json({ error: 'Invalid request body.' }, 400);
   }
 
   try {
@@ -111,12 +114,9 @@ export default async function handler(request) {
         maximumSizeInBytes: MAX_FILE_BYTES,
       }),
     });
-    return new Response(JSON.stringify(jsonResponse), { status: 200, headers });
+    return json(jsonResponse, 200);
   } catch (err) {
     console.error('blob-upload error:', err);
-    return new Response(
-      JSON.stringify({ error: (err && err.message) || 'Upload authorization failed.' }),
-      { status: 400, headers }
-    );
+    return json({ error: (err && err.message) || 'Upload authorization failed.' }, 400);
   }
 }
