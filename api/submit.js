@@ -2,7 +2,9 @@
  * api/submit.js — Vercel Serverless Function
  *
  * Receives a JSON POST from consultation.html or apply.html, builds a styled
- * HTML email, attaches any uploaded documents, and delivers it through Resend.
+ * HTML email, and delivers it through Resend. Uploaded documents travel as
+ * Vercel Blob links (see api/blob-upload.js), never as bytes through this
+ * function — that's what lets a submission carry files of any real size.
  *
  * Environment variables (Vercel → Project → Settings → Environment Variables).
  * Nothing here is hardcoded — set all three, then REDEPLOY, because saving env
@@ -15,18 +17,13 @@
  *                    onboarding@resend.dev for testing.
  *
  * Optional:
- *   ALLOWED_ORIGIN   locks CORS to one origin, e.g. https://aprilstonelaw.com
+ *   ALLOWED_ORIGIN   locks CORS to one origin, e.g. https://aprilhstonepa.com
  *                    Falls back to DEFAULT_ORIGIN below.
  */
 
 const BRAND = 'April H. Stone P.A.';
-const SITE = 'aprilstonelaw.com';
-const DEFAULT_ORIGIN = 'https://aprilstonelaw.com';
-
-// Attachment ceiling. Vercel caps the request body around 4.5 MB and base64
-// inflates by ~33%, so the browser is told to keep raw files under 3 MB.
-const MAX_ATTACH_BYTES = 4 * 1024 * 1024;
-const MAX_ATTACHMENTS = 20;
+const SITE = 'aprilhstonepa.com';
+const DEFAULT_ORIGIN = 'https://aprilhstonepa.com';
 
 // Burst limiter. Warm serverless instances keep this Map between invocations,
 // which is enough to blunt scripted floods. Not a distributed limiter — if
@@ -101,26 +98,6 @@ export default async function handler(req, res) {
   const contactName = clean(data.name) || clean(data.own1Name);
   const replyTo = buildReplyTo(contactName, contactEmail);
 
-  // ---- attachments ----
-  const attachments = [];
-  let attachNote = '';
-  if (Array.isArray(data.attachments) && data.attachments.length) {
-    let total = 0;
-    for (const a of data.attachments.slice(0, MAX_ATTACHMENTS)) {
-      if (!a || typeof a.content !== 'string' || !a.filename) continue;
-      const bytes = Math.floor((a.content.length * 3) / 4);
-      if (total + bytes > MAX_ATTACH_BYTES) {
-        attachNote = 'Some files exceeded the size limit and were not attached — reply to request them.';
-        break;
-      }
-      total += bytes;
-      attachments.push({ filename: safeFilename(a.filename), content: a.content });
-    }
-  }
-  if (data.attachmentsOmitted) {
-    attachNote = 'The applicant selected files too large to attach — follow up for them.';
-  }
-
   try {
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -135,8 +112,7 @@ export default async function handler(req, res) {
         subject: `New ${formLabel} — ${bizName}`,
         html: isConsultation
           ? consultationEmail(data)
-          : intakeEmail(data, attachments, attachNote),
-        ...(attachments.length ? { attachments } : {}),
+          : intakeEmail(data),
       }),
     });
 
@@ -159,10 +135,6 @@ export default async function handler(req, res) {
 function clean(v, max = 300) {
   if (v == null) return '';
   return String(v).replace(/[\r\n\u2028\u2029]+/g, ' ').trim().slice(0, max);
-}
-
-function safeFilename(name) {
-  return clean(name, 120).replace(/[/\\]+/g, '-') || 'attachment';
 }
 
 function buildReplyTo(name, email) {
@@ -291,26 +263,67 @@ function debtTable(rows) {
   </div>`;
 }
 
-function documentBlock(data, attachments, note) {
+// Only a genuine Vercel Blob public URL renders as a clickable link. Anything
+// else — including a value a bad-faith client crafted by POSTing straight to
+// this endpoint — falls back to plain escaped text, never a raw href.
+const BLOB_URL_RE = /^https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/[^\s"'<>]+$/i;
+
+function documentBlock(data) {
   const listed = Array.isArray(data.documents) ? data.documents : [];
-  if (!listed.length && !attachments.length) return '';
+  if (!listed.length) return '';
   const label = (z) => (z === 'agreements' ? 'Advance agreement' : 'Bank statement');
-  const rows = listed.map((d) =>
-    row(label(d.zone), clean(d.name, 160) + (d.size ? ` (${Math.round(d.size / 1024)} KB)` : ''))
-  );
-  const status = attachments.length
-    ? `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #23402f;font-size:12px;color:#46423a;line-height:1.6">
-         <strong>${attachments.length} file${attachments.length === 1 ? '' : 's'} attached to this email.</strong>${note ? ' ' + esc(note) : ''}
+  const ref = clean(data.ref, 20);
+  // Uploaded to Blob → clickable link. Couldn't reach Blob, so apply.html
+  // emailed it through api/relay-file.js → it's already in this inbox as its
+  // own email(s), marked with the same reference. Anything else never arrived.
+  const linked = (d) => !d.failed && d.via !== 'email' && isValidBlobUrl(d.url);
+  const emailed = (d) => !d.failed && d.via === 'email';
+  const emailedCount = listed.filter(emailed).length;
+  const missingCount = listed.length - emailedCount - listed.filter(linked).length;
+
+  const rows = listed.map((d) => {
+    const name = clean(d.name, 160);
+    const sizeTxt = d.size ? ` (${Math.round(d.size / 1024)} KB)` : '';
+    if (emailed(d)) {
+      const parts = Math.min(Math.max(parseInt(d.parts, 10) || 1, 1), 30);
+      return row(label(d.zone), `${name}${sizeTxt} — emailed separately` +
+        (parts > 1 ? ` in ${parts} parts (rejoin at ${SITE}/rejoin.html)` : ''));
+    }
+    if (linked(d)) {
+      return `<tr>
+        <td style="padding:7px 14px;color:#7c766a;font-size:12px;white-space:nowrap;vertical-align:top;width:38%;border-bottom:1px solid #efeae0">${esc(label(d.zone))}</td>
+        <td style="padding:7px 14px;font-size:13px;vertical-align:top;border-bottom:1px solid #efeae0">
+          <a href="${esc(d.url)}" style="color:#8a6c30;font-weight:600;text-decoration:underline">${esc(name)}</a>${esc(sizeTxt)}
+        </td>
+      </tr>`;
+    }
+    return row(label(d.zone), `${name}${sizeTxt} — not received, follow up directly`);
+  });
+
+  const notes = [];
+  if (emailedCount) {
+    notes.push(`${emailedCount} file${emailedCount === 1 ? '' : 's'} couldn't reach document storage and ${emailedCount === 1 ? 'was' : 'were'} emailed to this inbox instead — search for ${ref || 'this business name'}.`);
+  }
+  if (missingCount) {
+    notes.push(`${missingCount} of ${listed.length} file${listed.length === 1 ? '' : 's'} did not come through — if no separate email${ref ? ` marked ${ref}` : ''} arrives for ${missingCount === 1 ? 'it' : 'them'}, follow up directly.`);
+  }
+  const status = notes.length
+    ? `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #8a6c30;font-size:12px;color:#46423a;line-height:1.6">
+         ${notes.map(esc).join('<br><br>')}
        </div>`
-    : `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #8a6c30;font-size:12px;color:#46423a;line-height:1.6">
-         ${esc(note || 'Files were listed by the applicant but not attached — reply to request them.')}
-       </div>`;
-  return section(`Documents (${listed.length || attachments.length})`, rows) + status;
+    : '';
+
+  return section(`Documents (${listed.length})`, rows) + status;
 }
 
-function intakeEmail(data, attachments, note) {
+function isValidBlobUrl(url) {
+  return typeof url === 'string' && BLOB_URL_RE.test(url);
+}
+
+function intakeEmail(data) {
   const inner =
     section('Business Information', [
+      row('Reference #', data.ref),
       row('Company Name', data.businessName),
       row('Entity Type', data.entityType),
       row('Industry', data.industry),
@@ -323,7 +336,7 @@ function intakeEmail(data, attachments, note) {
     ownerSection(data, 1) + ownerSection(data, 2) +
     ownerSection(data, 3) + ownerSection(data, 4) +
     debtTable(data.debtRows) +
-    documentBlock(data, attachments, note) +
+    documentBlock(data) +
     section('Consent & Signature', [
       row('Signed by', data.sigName),
       row('Date', data.sigDate),

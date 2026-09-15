@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rejoin a Split Document — April H. Stone P.A.</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   rejoin.html — internal utility for the firm, not a marketing page.
+   When apply.html can't get a document into Vercel Blob, it emails the file
+   through api/relay-file.js; anything over 3 MB arrives split across several
+   emails. This page puts those pieces back together, entirely in the browser:
+   nothing is uploaded, sent, or stored. Kept out of sitemap.xml, noindex,
+   no nav/footer, dark only.
+   ============================================================ */
+:root{
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --radius:3px;
+  --bg:#121110;
+  --surface:#1a1917;
+  --surface-2:#222119;
+  --ink:#f4f1e9;
+  --text:#c4bfb2;
+  --muted:#948d81;
+  --line:#2d2b27;
+  --line-strong:#3a3833;
+  --accent:#bd9a52;
+  --accent-soft:rgba(189,154,82,.1);
+  --ok:#8fbf9c;
+  --warn:#e39a86;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.6;padding:3.5rem 1.25rem}
+.wrap{max-width:680px;margin:0 auto}
+.kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:var(--display);font-weight:500;color:var(--ink);font-size:clamp(2rem,5vw,2.6rem);line-height:1.1;margin:.5rem 0 1rem}
+p{margin-bottom:1rem}
+ol{margin:0 0 1.5rem 1.2rem}
+ol li{margin-bottom:.35rem}
+code{font-size:.85em;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);padding:.05rem .35rem;color:var(--ink);word-break:break-all}
+.drop{
+  border:1.5px dashed var(--line-strong);background:var(--surface);border-radius:var(--radius);
+  padding:2.2rem 1rem;text-align:center;cursor:pointer;transition:.15s;margin-bottom:1.2rem;
+}
+.drop:hover,.drop.over,.drop:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+.drop-t{font-weight:600;color:var(--ink)}
+.drop-h{color:var(--muted);font-size:.85rem;margin-top:.25rem}
+.drop input[type=file]{display:none}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:.8rem}
+.group-name{color:var(--ink);font-weight:600;word-break:break-word}
+.group-status{font-size:.88rem;margin:.2rem 0 .7rem}
+.group-status.ok{color:var(--ok)}
+.group-status.warn{color:var(--warn)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.6rem 1.3rem;
+  font:600 .9rem var(--body);border-radius:var(--radius);cursor:pointer;border:1px solid var(--accent);
+  background:var(--accent);color:#141210;
+}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-outline{background:none;color:var(--text);border-color:var(--line-strong)}
+.stray{font-size:.85rem;color:var(--muted);margin:.4rem 0 1rem}
+.privacy{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:1rem;margin-top:1.8rem}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <span class="kicker">April H. Stone P.A. &middot; For the firm</span>
+  <h1>Rejoin a split document</h1>
+  <p>When a client's document can't reach the firm's document storage, the intake form emails it instead. Anything larger than 3&nbsp;MB is split across several emails, with attachments named like <code>statement.pdf.part01-of-04</code>.</p>
+  <ol>
+    <li>Download every attachment from those emails (all the parts of one file).</li>
+    <li>Select or drag them all into the box below.</li>
+    <li>Click <strong>Download original</strong> to get the file back, ready to open.</li>
+  </ol>
+
+  <!-- a <div>, not a <label>, so the file picker doesn't open twice — same as apply.html -->
+  <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose the file parts">
+    <div class="drop-t">Drop the parts here, or click to choose</div>
+    <div class="drop-h">Select all parts at once &middot; you can add more afterwards</div>
+    <input type="file" id="picker" multiple aria-label="Choose the file parts">
+  </div>
+
+  <div id="out" aria-live="polite"></div>
+  <button type="button" class="btn btn-outline" id="clearBtn" hidden>Start over</button>
+
+  <p class="privacy">Everything happens inside this browser tab. The parts are not uploaded, sent, or saved anywhere.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var PART_BYTES = 3000000; /* keep in step with api/relay-file.js and apply.html */
+  /* "name.pdf.part02-of-05", also tolerating the " (1)" a browser adds when the
+     same attachment is downloaded twice, before or after the part suffix */
+  var PART_RE = /^(.*?)(?: \(\d+\))?\.part(\d{2})-of-(\d{2})(?: \(\d+\))?$/i;
+
+  var picked = [];  /* File objects, in memory only */
+  var drop = document.getElementById('drop');
+  var picker = document.getElementById('picker');
+  var out = document.getElementById('out');
+  var clearBtn = document.getElementById('clearBtn');
+
+  drop.addEventListener('click', function(){ picker.click(); });
+  drop.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); picker.click(); }
+  });
+  picker.addEventListener('click', function(e){ e.stopPropagation(); });
+  picker.addEventListener('change', function(){ addFiles(picker.files); picker.value = ''; });
+  drop.addEventListener('dragover', function(e){ e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', function(){ drop.classList.remove('over'); });
+  drop.addEventListener('drop', function(e){
+    e.preventDefault();
+    drop.classList.remove('over');
+    addFiles(e.dataTransfer.files);
+  });
+  clearBtn.addEventListener('click', function(){ picked = []; render(); });
+
+  function addFiles(files){
+    Array.prototype.forEach.call(files, function(f){
+      var dup = picked.some(function(p){ return p.name === f.name && p.size === f.size; });
+      if(!dup) picked.push(f);
+    });
+    render();
+  }
+
+  function groupParts(){
+    var map = {}, order = [], stray = [];
+    picked.forEach(function(f){
+      var m = PART_RE.exec(f.name);
+      if(!m){ stray.push(f.name); return; }
+      var total = +m[3], n = +m[2], key = m[1] + '|' + total;
+      if(!map[key]){ map[key] = { name: m[1], total: total, parts: {} }; order.push(key); }
+      map[key].parts[n] = f;
+    });
+    return { groups: order.map(function(k){ return map[k]; }), stray: stray };
+  }
+
+  function check(g){
+    var missing = [], damaged = [];
+    for(var i = 1; i <= g.total; i++){
+      var f = g.parts[i];
+      if(!f){ missing.push(i); continue; }
+      /* every piece but the last is exactly PART_BYTES; the last is at most that */
+      if(i < g.total ? f.size !== PART_BYTES : (f.size < 1 || f.size > PART_BYTES)) damaged.push(i);
+    }
+    return { missing: missing, damaged: damaged };
+  }
+
+  function render(){
+    out.textContent = '';
+    clearBtn.hidden = !picked.length;
+    var res = groupParts();
+
+    res.groups.forEach(function(g){
+      var c = check(g);
+      var box = document.createElement('div');
+      box.className = 'group';
+
+      var name = document.createElement('div');
+      name.className = 'group-name';
+      name.textContent = g.name;
+
+      var status = document.createElement('div');
+      var have = g.total - c.missing.length;
+      if(c.missing.length){
+        status.className = 'group-status warn';
+        status.textContent = have + ' of ' + g.total + ' parts — still need part' +
+          (c.missing.length === 1 ? ' ' : 's ') + c.missing.join(', ') + '.';
+      } else if(c.damaged.length){
+        status.className = 'group-status warn';
+        status.textContent = 'Part' + (c.damaged.length === 1 ? ' ' : 's ') + c.damaged.join(', ') +
+          ' look incomplete (wrong size). Download ' + (c.damaged.length === 1 ? 'it' : 'them') + ' from the email again.';
+      } else {
+        status.className = 'group-status ok';
+        status.textContent = 'All ' + g.total + ' parts here — ready.';
+      }
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn';
+      btn.textContent = 'Download original';
+      btn.disabled = !!(c.missing.length || c.damaged.length);
+      btn.addEventListener('click', function(){ rebuild(g); });
+
+      box.appendChild(name);
+      box.appendChild(status);
+      box.appendChild(btn);
+      out.appendChild(box);
+    });
+
+    if(res.stray.length){
+      var s = document.createElement('p');
+      s.className = 'stray';
+      s.textContent = 'Not split parts, so nothing to rejoin (these open normally): ' + res.stray.join(', ');
+      out.appendChild(s);
+    }
+  }
+
+  function rebuild(g){
+    var pieces = [];
+    for(var i = 1; i <= g.total; i++) pieces.push(g.parts[i]);
+    /* a Blob of Files just references them, so this is instant even for large files */
+    var url = URL.createObjectURL(new Blob(pieces, { type: 'application/octet-stream' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = g.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+  }
+})();
+</script>
+</body>
+</html>

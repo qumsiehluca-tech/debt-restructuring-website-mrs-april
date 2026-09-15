@@ -861,12 +861,12 @@ h4{margin-bottom:.5rem}
           <div class="upload-meter" id="uploadMeter">
             <span id="meterLabel">No files attached</span>
             <span class="meter-bar"><span class="meter-fill" id="meterFill"></span></span>
-            <span id="meterCap">0 / 3.0 MB</span>
+            <span id="meterCap">0 total</span>
           </div>
 
           <div class="notice">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.4v5M12 7.9h.01"/></svg>
-            <span>Files are sent with your submission, up to 3&nbsp;MB in total. If your statements are larger than that, continue anyway &mdash; the firm will follow up with a secure way to send them. You can also continue with nothing attached; we can request copies from the funders directly.</span>
+            <span>Files upload as soon as you add them, and large files are fine. You can also continue with nothing attached; we can request copies from the funders directly.</span>
           </div>
 
           <div class="form-nav">
@@ -1069,6 +1069,15 @@ h4{margin-bottom:.5rem}
 })();
 </script>
 
+<script type="module">
+/* Vercel's browser client for direct-to-Blob uploads. Served from this site
+   (assets/blob-client.js — how it was built is in its header) rather than a
+   third-party CDN, because this page collects SSNs. Bridged onto window so the
+   classic script below (which everything else lives in) can call it. If it
+   ever fails to load, uploads fall back to email (api/relay-file.js). */
+import { upload } from './assets/blob-client.js';
+window.__blobUpload = upload;
+</script>
 <script>
 /* ===== APPLY — 5-step intake ===== */
 (function(){
@@ -1077,40 +1086,174 @@ h4{margin-bottom:.5rem}
   var card     = document.getElementById('formCard');
   var railItems= document.getElementById('rail').querySelectorAll('.rail-item');
   var doneCard = document.getElementById('doneCard');
-  var uploaded = [];   /* {zone, name, size, file} — held in a plain JS variable, no storage APIs */
-  var MAX_UPLOAD = 3 * 1024 * 1024;   /* 3 MB total; Vercel caps the request body at ~4.5 MB
-                                         and base64 inflates payloads by roughly a third */
+  /* One record per picked file, in plain JS memory only (no storage APIs):
+       {id, zone, name, size, file, pct, url, via: 'blob'|'email', parts,
+        status: 'uploading'|'done'|'error', removed, abort, render}
+     Delivery starts the moment a file is picked and falls back quietly — the
+     applicant only ever sees a progress percentage:
+       1. Vercel Blob, straight from the browser (api/blob-upload.js authorizes).
+          Up to BLOB_TRIES attempts, each a fresh upload with a fresh link.
+          Files over 8 MB go multipart, which also retries individual chunks.
+       2. If Blob still fails (store full or down, network blocking it, library
+          didn't load), email: the file goes to api/relay-file.js in 3 MB
+          pieces and lands in the firm's inbox as attachment(s). Pieces of a
+          split file are put back together with /rejoin.html.
+     Either way, the final POST to api/submit.js carries only names, sizes,
+     links and how each file was delivered — never the file bytes. */
+  var uploaded = [];
+  var BLOB_TRIES = 3;
+  var BLOB_RETRY_DELAYS = [2000, 5000];
+  var MULTIPART_OVER = 8 * 1048576;
+  var PART_BYTES = 3000000;  /* keep in step with api/relay-file.js and rejoin.html */
+  var MAX_PARTS = 30;
+  /* printed in every email, so emailed documents can be matched to the
+     intake submission they belong to */
+  var REF = 'AHS-' + randomChars('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 6);
 
+  function randomChars(alphabet, n){
+    var bytes = new Uint8Array(n), s = '';
+    window.crypto.getRandomValues(bytes);
+    for(var i = 0; i < n; i++) s += alphabet[bytes[i] % alphabet.length];
+    return s;
+  }
+  function wait(ms){
+    return new Promise(function(resolve){ setTimeout(resolve, ms); });
+  }
   function fmtSize(b){
     return b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB'
                         : Math.max(1, Math.round(b / 1024)) + ' KB';
   }
-  function totalBytes(){
-    return uploaded.reduce(function(s, u){ return s + u.size; }, 0);
-  }
   function updateMeter(){
-    var total = totalBytes();
     var meter = document.getElementById('uploadMeter');
     if(!meter) return;
-    var over = total > MAX_UPLOAD;
-    meter.classList.toggle('over', over);
-    document.getElementById('meterFill').style.width =
-      Math.min(100, (total / MAX_UPLOAD) * 100) + '%';
-    document.getElementById('meterCap').textContent = fmtSize(total) + ' / 3.0 MB';
-    document.getElementById('meterLabel').textContent =
-      !uploaded.length ? 'No files attached'
-      : over ? 'Too large to attach \u2014 the firm will follow up for these'
-      : uploaded.length + (uploaded.length === 1 ? ' file attached' : ' files attached');
+    var uploading = uploaded.filter(function(u){ return u.status === 'uploading'; }).length;
+    var failed    = uploaded.filter(function(u){ return u.status === 'error'; }).length;
+    var done      = uploaded.filter(function(u){ return u.status === 'done'; }).length;
+    var total = uploaded.reduce(function(s, u){ return s + u.size; }, 0);
+    document.getElementById('meterCap').textContent = fmtSize(total) + ' total';
+    /* deliberately calm: a file that couldn't be delivered by any route is
+       noted without alarm, and the firm's email flags it for follow-up */
+    var label = !uploaded.length ? 'No files attached'
+      : uploading ? 'Uploading ' + uploading + (uploading === 1 ? ' file…' : ' files…')
+      : done + (done === 1 ? ' file attached' : ' files attached') +
+        (failed ? ' · the firm will follow up for ' + failed + ' more' : '');
+    document.getElementById('meterLabel').textContent = label;
+    document.getElementById('meterFill').style.width = overallPct() + '%';
+  }
+  function overallPct(){
+    var total = 0, sent = 0;
+    uploaded.forEach(function(u){
+      var size = Math.max(u.size, 1);
+      total += size;
+      sent += (u.status === 'uploading') ? size * (u.pct || 0) / 100 : size;
+    });
+    return total ? Math.round(sent / total * 100) : 0;
+  }
+  function setPct(rec, pct){
+    rec.pct = pct;
+    if(rec.render) rec.render();
+    updateMeter();
   }
 
-  /* read a File into base64 for the email attachment */
-  function toBase64(file){
+  /* the <script type="module"> above loads slightly after this classic script
+     parses. It's normally ready long before anyone picks a file; if it never
+     loads, stop waiting after 15s so the email fallback takes over */
+  function whenBlobReady(){
+    return new Promise(function(resolve, reject){
+      var started = Date.now();
+      (function poll(){
+        if(window.__blobUpload) resolve(window.__blobUpload);
+        else if(Date.now() - started > 15000) reject(new Error('Blob upload library did not load'));
+        else setTimeout(poll, 50);
+      })();
+    });
+  }
+
+  /* Blob URLs containing spaces or unusual characters would fail the strict
+     link check in api/submit.js, so the stored path keeps only safe
+     characters. The original file name still travels with the submission. */
+  function blobSafeName(name){
+    return String(name).replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '') || 'document';
+  }
+
+  /* ---- route 1: Vercel Blob, with retries ---- */
+  function sendToBlob(rec){
+    var attempt = 0;
+    function tryOnce(){
+      return whenBlobReady().then(function(blobUpload){
+        return blobUpload('intake/' + REF + '/' + blobSafeName(rec.name), rec.file, {
+          access: 'public',
+          handleUploadUrl: '/api/blob-upload',
+          multipart: rec.size > MULTIPART_OVER,
+          abortSignal: rec.abort ? rec.abort.signal : undefined,
+          onUploadProgress: function(ev){ setPct(rec, ev.percentage); }
+        });
+      }).catch(function(err){
+        attempt++;
+        /* no point retrying if the library itself never loaded */
+        if(rec.removed || attempt >= BLOB_TRIES || !window.__blobUpload) throw err;
+        console.warn('Blob upload attempt ' + attempt + ' failed, retrying:', err);
+        setPct(rec, 0);
+        return wait(BLOB_RETRY_DELAYS[attempt - 1]).then(tryOnce);
+      });
+    }
+    return tryOnce();
+  }
+
+  /* ---- route 2: email the file to the firm, in pieces if needed ---- */
+  function sendByEmail(rec){
+    var parts = Math.max(1, Math.ceil(rec.size / PART_BYTES));
+    if(parts > MAX_PARTS) return Promise.reject(new Error('Too large to email (' + parts + ' pieces)'));
+    rec.parts = parts;
+    setPct(rec, 0);
+    var sent = 0;
+    function next(){
+      if(rec.removed) return Promise.reject(new Error('Removed'));
+      if(sent === parts) return Promise.resolve();
+      var start = sent * PART_BYTES;
+      return toBase64(rec.file.slice(start, start + PART_BYTES))
+        .then(function(b64){ return postPiece(rec, sent + 1, parts, b64); })
+        .then(function(){ sent++; setPct(rec, sent / parts * 100); return next(); });
+    }
+    return next();
+  }
+
+  function postPiece(rec, part, parts, b64){
+    var tries = 0;
+    function attempt(){
+      return fetch('/api/relay-file', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ref: REF, fid: rec.id, zone: rec.zone, name: rec.name, size: rec.size,
+          part: part, parts: parts, content: b64,
+          businessName: fieldValue('businessName'),
+          contactName: fieldValue('own1Name'),
+          contactEmail: fieldValue('own1Email')
+        })
+      }).then(function(r){
+        if(!r.ok){ var e = new Error('Email relay returned ' + r.status); e.status = r.status; throw e; }
+      }).catch(function(err){
+        tries++;
+        /* a 400 means the piece itself was refused; resending won't change that */
+        if(rec.removed || tries >= 4 || err.status === 400) throw err;
+        return wait(err.status === 429 ? 20000 : 2500 * tries).then(attempt);
+      });
+    }
+    return attempt();
+  }
+
+  function toBase64(blob){
     return new Promise(function(resolve, reject){
       var r = new FileReader();
       r.onload  = function(){ resolve(String(r.result).split(',')[1] || ''); };
-      r.onerror = function(){ reject(new Error('Could not read ' + file.name)); };
-      r.readAsDataURL(file);
+      r.onerror = function(){ reject(new Error('Could not read the file')); };
+      r.readAsDataURL(blob);
     });
+  }
+  function fieldValue(name){
+    var f = card.querySelector('[name="' + name + '"]');
+    return f && f.value ? f.value.trim() : '';
   }
 
   /* ---------- owner cards ---------- */
@@ -1327,25 +1470,63 @@ h4{margin-bottom:.5rem}
 
     function add(files){
       Array.prototype.forEach.call(files, function(f){
-        /* the File object itself is kept so the bytes can be sent, not just the name */
-        var rec = { zone: key, name: f.name, size: f.size, file: f };
+        var rec = {
+          id: randomChars('abcdefghijklmnopqrstuvwxyz234567', 8),
+          zone: key, name: f.name, size: f.size, file: f, pct: 0,
+          url: null, via: null, parts: 0, status: 'uploading', removed: false,
+          abort: (typeof AbortController === 'function') ? new AbortController() : null
+        };
         uploaded.push(rec);
 
         var chip = document.createElement('div');
         chip.className = 'fchip';
-        chip.innerHTML = '<span>' + esc(f.name) + ' &middot; ' + fmtSize(f.size) + '</span>' +
-                         '<button type="button" aria-label="Remove ' + esc(f.name) + '">&#10005;</button>';
-        chip.querySelector('button').addEventListener('click', function(){
+        var label = document.createElement('span');
+        var shown = f.name + ' \u00b7 ' + fmtSize(f.size);
+        rec.render = function(){
+          label.textContent = rec.status === 'uploading'
+              ? shown + ' \u2014 ' + (rec.pct ? Math.round(rec.pct) + '%' : 'uploading\u2026')
+            : rec.status === 'error' ? shown + ' \u2014 the firm will follow up for this file'
+            : shown;
+        };
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.setAttribute('aria-label', 'Remove ' + f.name);
+        removeBtn.innerHTML = '&#10005;';
+        removeBtn.addEventListener('click', function(){
+          rec.removed = true;
+          if(rec.abort) rec.abort.abort();
           var i = uploaded.indexOf(rec);
           if(i > -1) uploaded.splice(i, 1);
           chip.remove();
           input.value = ''; /* so the same file can be picked again */
           updateMeter();
         });
+        chip.appendChild(label);
+        chip.appendChild(removeBtn);
         list.appendChild(chip);
+        rec.render();
+        updateMeter();
+
+        sendToBlob(rec).then(function(blob){
+          rec.url = blob.url;
+          rec.via = 'blob';
+        }, function(err){
+          if(rec.removed) throw err;
+          console.warn('Blob upload failed; emailing the file to the firm instead:', err);
+          return sendByEmail(rec).then(function(){ rec.via = 'email'; });
+        }).then(function(){
+          rec.status = 'done';
+          rec.render();
+          updateMeter();
+        }).catch(function(err){
+          if(rec.removed) return;
+          rec.status = 'error';
+          console.error('Document could not be delivered by upload or email:', err);
+          rec.render();
+          updateMeter();
+        });
       });
       input.value = '';
-      updateMeter();
     }
   });
 
@@ -1401,6 +1582,25 @@ h4{margin-bottom:.5rem}
   /* ---------- submit ---------- */
   function submitForm(){
     var btn = card.querySelector('.fstep[data-step="5"] [data-next]');
+
+    /* files upload the moment they're picked, back in step 4 — usually long
+       done by now. If one is still going (a big file, a slow connection, or
+       the email fallback working through pieces), wait for it rather than
+       submitting without it, for up to 10 minutes. */
+    if(uploaded.some(function(u){ return u.status === 'uploading'; })){
+      btn.disabled = true;
+      var started = Date.now();
+      (function waitForUploads(){
+        var pending = uploaded.some(function(u){ return u.status === 'uploading'; });
+        if(!pending || Date.now() - started > 10 * 60 * 1000){ buildAndSend(); return; }
+        btn.textContent = 'Finishing uploads… ' + overallPct() + '%';
+        setTimeout(waitForUploads, 400);
+      })();
+      return;
+    }
+    buildAndSend();
+
+    function buildAndSend(){
     var data = { formType: 'restructuring' };
 
     card.querySelectorAll('[name]').forEach(function(f){
@@ -1412,26 +1612,21 @@ h4{margin-bottom:.5rem}
 
     var rows = debtRows();
     if(rows.length) data.debtRows = rows;
-    if(uploaded.length) data.documents = uploaded.map(function(u){ return { zone: u.zone, name: u.name, size: u.size }; });
+    if(uploaded.length){
+      data.documents = uploaded.map(function(u){
+        var ok = u.status === 'done';
+        return { zone: u.zone, name: u.name, size: u.size, url: ok ? u.url : null,
+                 via: ok ? u.via : null, parts: u.parts, failed: !ok };
+      });
+    }
+    data.ref = REF;
     data.consent = 'All three consents affirmed';
     data.website = (card.querySelector('[name="website"]') || {}).value || '';
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    var withinCap = uploaded.length && totalBytes() <= MAX_UPLOAD;
-    data.attachmentsOmitted = uploaded.length ? !withinCap : false;
-
-    var prep = withinCap
-      ? Promise.all(uploaded.map(function(u){
-          return toBase64(u.file).then(function(b64){
-            return { filename: u.name, content: b64 };
-          });
-        })).then(function(atts){ data.attachments = atts; })
-          .catch(function(){ data.attachments = []; data.attachmentsOmitted = true; })
-      : Promise.resolve();
-
-    prep.then(function(){ return send(); });
+    send();
 
     function send(){
     return fetch('/api/submit', {
@@ -1459,6 +1654,7 @@ h4{margin-bottom:.5rem}
       btn.disabled = false;
       btn.textContent = 'Submit for Review';
     });
+    }
     }
   }
 
