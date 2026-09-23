@@ -132,8 +132,9 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: `${BRAND} <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
+        ...(copyList().length ? { bcc: copyList() } : {}),
         ...(replyTo ? { reply_to: replyTo } : {}),
-        subject: `Document for ${bizName} — ${name}${split ? ` (part ${part} of ${parts})` : ''} [${ref}]`,
+        subject: `${bizName} document: ${name}${split ? ` (${part} of ${parts})` : ''} [${ref}]`,
         html: relayEmail({
           bizName, ref, name, part, parts, contactName,
           size: Number(data.size) || 0,
@@ -162,10 +163,10 @@ function relayEmail({ bizName, ref, name, size, zone, part, parts, contactName }
   const split = parts > 1;
   const sizeTxt = size ? `${(size / 1048576).toFixed(1)} MB` : '';
   const how = split
-    ? `This file was too large for one email, so it was split into <strong>${parts} emails</strong>
-       (this is part ${part}). Once all ${parts} have arrived, download every attachment ending in
-       <em>-of-${pad(parts)}</em>, open <a href="https://${SITE}/rejoin.html" style="color:#8a6c30;font-weight:600">${SITE}/rejoin.html</a>,
-       and select them together &mdash; it rebuilds the original file on your computer.`
+    ? `This file was too large to send in one email, so it was split across <strong>${parts} emails</strong>
+       (this is part ${part}). Once all ${parts} arrive, download every attachment ending in
+       <em>-of-${pad(parts)}</em>, then open <a href="https://${SITE}/rejoin.html" style="color:#8a6c30;font-weight:600">${SITE}/rejoin.html</a>
+       and select them together. That rebuilds the original file on your computer.`
     : 'The original file is attached to this email.';
 
   const r = (label, value) => value
@@ -183,7 +184,7 @@ function relayEmail({ bizName, ref, name, size, zone, part, parts, contactName }
 
   <div style="background:#1c1a15;padding:22px 26px;border-bottom:2px solid #8a6c30">
     <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#bd9a52;margin-bottom:6px">${esc(BRAND)}</div>
-    <div style="font-size:21px;color:#faf8f4;font-weight:400;margin-bottom:4px">Intake Document${split ? ` &mdash; Part ${part} of ${parts}` : ''}</div>
+    <div style="font-size:21px;color:#faf8f4;font-weight:400;margin-bottom:4px">Intake Document${split ? ` (Part ${part} of ${parts})` : ''}</div>
     <div style="font-size:11px;color:#8a847a">Reference ${esc(ref)}</div>
   </div>
 
@@ -198,8 +199,8 @@ function relayEmail({ bizName, ref, name, size, zone, part, parts, contactName }
       ${how}
     </div>
     <p style="font-size:12px;color:#7c766a;line-height:1.6;margin:16px 0 0">
-      Sent automatically because this document couldn't reach the firm's document storage when the
-      applicant uploaded it. Their intake form, once submitted, arrives as its own email with the same reference.
+      Document storage was unavailable when the applicant uploaded this, so it was sent here instead.
+      Their intake form arrives as its own email under the same reference.
     </p>
   </div>
 
@@ -209,6 +210,16 @@ function relayEmail({ bizName, ref, name, size, zone, part, parts, contactName }
 }
 
 /* ─────────────────────────  utilities  ───────────────────────── */
+
+// Maintenance copies. COPY_EMAIL (comma-separated) gets a blind copy of each
+// relayed document so delivery failures are visible without waiting for a
+// report. Unset the variable in Vercel to switch the copies off.
+function copyList() {
+  return String(process.env.COPY_EMAIL || '')
+    .split(',')
+    .map((addr) => addr.trim())
+    .filter(Boolean);
+}
 
 // Strip CR/LF so user input can never inject extra email headers, and cap length.
 function clean(v, max = 300) {

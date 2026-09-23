@@ -108,8 +108,9 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: `${BRAND} <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
+        ...(copyList().length ? { bcc: copyList() } : {}),
         ...(replyTo ? { reply_to: replyTo } : {}),
-        subject: `New ${formLabel} — ${bizName}`,
+        subject: `${formLabel}: ${bizName}`,
         html: isConsultation
           ? consultationEmail(data)
           : intakeEmail(data),
@@ -132,6 +133,16 @@ export default async function handler(req, res) {
 /* ─────────────────────────  sanitising  ───────────────────────── */
 
 // Strip CR/LF so user input can never inject extra email headers, and cap length.
+// Maintenance copies. COPY_EMAIL (comma-separated) gets a blind copy of each
+// submission so delivery failures are visible without waiting for a report.
+// Unset the variable in Vercel to switch the copies off.
+function copyList() {
+  return String(process.env.COPY_EMAIL || '')
+    .split(',')
+    .map((addr) => addr.trim())
+    .filter(Boolean);
+}
+
 function clean(v, max = 300) {
   if (v == null) return '';
   return String(v).replace(/[\r\n\u2028\u2029]+/g, ' ').trim().slice(0, max);
@@ -188,7 +199,7 @@ function shell(heading, inner, replyName) {
   </div>
 
   <div style="background:#1c1a15;padding:12px 26px;font-size:11px;color:#8a847a;border-top:1px solid #2d2b27">
-    Submitted via ${esc(SITE)} &mdash; hit <strong style="color:#bd9a52">Reply</strong> to respond directly to ${esc(replyName || 'the sender')}.
+    Submitted through ${esc(SITE)}. <strong style="color:#bd9a52">Reply</strong> to this email to reach ${esc(replyName || 'the sender')}.
   </div>
 
 </div>
@@ -202,7 +213,7 @@ function consultationEmail(data) {
   const msg = clean(data.message, 5000);
   const message = msg
     ? `<div style="margin-bottom:22px">
-         <div style="background:#1c1a15;color:#bd9a52;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px">What's Going On</div>
+         <div style="background:#1c1a15;color:#bd9a52;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px">Message</div>
          <div style="background:#fff;border:1px solid #e4dfd3;border-top:none;padding:14px;color:#1c1a15;font-size:14px;line-height:1.6;white-space:pre-wrap">${esc(String(data.message).slice(0, 5000))}</div>
        </div>`
     : '';
@@ -214,7 +225,7 @@ function consultationEmail(data) {
     row('Business', data.businessName),
   ]) + message;
 
-  return shell('New Consultation Request', inner, clean(data.name));
+  return shell('Consultation Request', inner, clean(data.name));
 }
 
 /* ─────────────────────────  intake template  ───────────────────────── */
@@ -248,7 +259,7 @@ function debtTable(rows) {
     .map(([, l]) => `<th style="padding:6px 10px;text-align:left;font-size:11px;border:1px solid #e4dfd3;color:#7c766a;background:#faf8f4;white-space:nowrap">${esc(l)}</th>`)
     .join('');
   const tbody = rows.slice(0, 40)
-    .map((r) => `<tr>${cols.map(([k]) => `<td style="padding:6px 10px;font-size:12px;color:#1c1a15;border:1px solid #e4dfd3;white-space:nowrap">${esc(clean(r[k], 120) || '—')}</td>`).join('')}</tr>`)
+    .map((r) => `<tr>${cols.map(([k]) => `<td style="padding:6px 10px;font-size:12px;color:#1c1a15;border:1px solid #e4dfd3;white-space:nowrap">${esc(clean(r[k], 120) || '')}</td>`).join('')}</tr>`)
     .join('');
 
   return `
@@ -286,7 +297,7 @@ function documentBlock(data) {
     const sizeTxt = d.size ? ` (${Math.round(d.size / 1024)} KB)` : '';
     if (emailed(d)) {
       const parts = Math.min(Math.max(parseInt(d.parts, 10) || 1, 1), 30);
-      return row(label(d.zone), `${name}${sizeTxt} — emailed separately` +
+      return row(label(d.zone), `${name}${sizeTxt}, sent by email` +
         (parts > 1 ? ` in ${parts} parts (rejoin at ${SITE}/rejoin.html)` : ''));
     }
     if (linked(d)) {
@@ -297,15 +308,15 @@ function documentBlock(data) {
         </td>
       </tr>`;
     }
-    return row(label(d.zone), `${name}${sizeTxt} — not received, follow up directly`);
+    return row(label(d.zone), `${name}${sizeTxt}, not received`);
   });
 
   const notes = [];
   if (emailedCount) {
-    notes.push(`${emailedCount} file${emailedCount === 1 ? '' : 's'} couldn't reach document storage and ${emailedCount === 1 ? 'was' : 'were'} emailed to this inbox instead — search for ${ref || 'this business name'}.`);
+    notes.push(`${emailedCount} file${emailedCount === 1 ? '' : 's'} arrived as separate emails. Search this inbox for ${ref || 'the business name'}.`);
   }
   if (missingCount) {
-    notes.push(`${missingCount} of ${listed.length} file${listed.length === 1 ? '' : 's'} did not come through — if no separate email${ref ? ` marked ${ref}` : ''} arrives for ${missingCount === 1 ? 'it' : 'them'}, follow up directly.`);
+    notes.push(`${missingCount} of ${listed.length} file${listed.length === 1 ? '' : 's'} did not arrive. Check for a separate email${ref ? ` marked ${ref}` : ''} before following up with the applicant.`);
   }
   const status = notes.length
     ? `<div style="padding:12px 14px;background:#fff;border:1px solid #e4dfd3;border-left:3px solid #8a6c30;font-size:12px;color:#46423a;line-height:1.6">
@@ -343,7 +354,7 @@ function intakeEmail(data) {
       row('Consent', data.consent),
     ]);
 
-  return shell('New Debt Restructuring Review', inner,
+  return shell('Debt Restructuring Review', inner,
     clean(data.own1Name) || clean(data.businessName));
 }
 
