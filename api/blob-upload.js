@@ -65,6 +65,19 @@ function rateLimited(ip) {
   return hits.length > RATE_MAX;
 }
 
+// A token pasted into Vercel's dashboard straight from the .env.local snippet
+// can arrive wrapped in quotes. Server-side calls (list/put) tolerate that, but
+// the client-upload handshake signs its payload with the secret half of this
+// string locally, so one stray character makes every browser upload fail with
+// "Access denied, please provide a valid token for this resource" while this
+// route still returns 200. Normalise before use rather than depending on how
+// the value was pasted.
+function blobToken() {
+  return (process.env.BLOB_READ_WRITE_TOKEN || '')
+    .trim()
+    .replace(/^['"]+|['"]+$/g, '');
+}
+
 function corsHeaders() {
   return {
     'Content-Type': 'application/json',
@@ -108,6 +121,7 @@ export async function POST(request) {
     const jsonResponse = await handleUpload({
       body,
       request,
+      token: blobToken(),
       onBeforeGenerateToken: async () => ({
         allowedContentTypes: ALLOWED_TYPES,
         addRandomSuffix: true, // unguessable URL suffix, since the resulting link doubles as the file's access control
